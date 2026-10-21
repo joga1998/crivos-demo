@@ -534,6 +534,10 @@ header.crivos-header,
   transform: translateX(0);
 }
 
+.sidebar-mobile-header {
+  display: none;
+}
+
 .sidebar-footer {
   border-top: 1px solid var(--border-color);
   padding: 8px 0;
@@ -1381,56 +1385,134 @@ footer.bauhaus-footer {
     100% { transform: scale(1); }
   }
   
-  /* DRAWER TÁTICO LATERAL MOBILE */
+  /* DRAWER TÁTICO LATERAL MOBILE - PREENCHIMENTO COMPLETO DA ALTURA */
   .sidebar-backdrop {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.65);
-    z-index: 101;
-    backdrop-filter: blur(2px);
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
   }
   .sidebar-backdrop.active {
-    display: block;
+    display: block !important;
   }
   .tactical-sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 280px;
-    height: 100dvh;
-    z-index: 105;
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: min(320px, 86vw) !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: none !important;
+    z-index: 1000 !important;
     transform: translateX(-100%);
     box-shadow: 6px 0px 0px var(--border-color);
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow: hidden !important;
+    background: var(--bg-card) !important;
   }
   [data-theme="dark"] .tactical-sidebar {
     box-shadow: 6px 0px 0px #000000;
   }
   .tactical-sidebar.open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
   }
-  .tactical-sidebar .sidebar-label {
-    opacity: 1;
-    transform: translateX(0);
+  .sidebar-mobile-header {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    height: 54px;
+    min-height: 54px;
+    border-bottom: 2px solid var(--border-color);
+    background: var(--bg-card);
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+  .sidebar-mobile-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sidebar-close-btn {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    color: var(--ink-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 2px 2px 0px var(--border-color);
+    transition: all 0.15s ease;
+  }
+  .sidebar-close-btn:active {
+    background: var(--crivos-red);
+    color: #FFFFFF;
+    transform: translate(1px, 1px);
   }
   .sidebar-track {
-    width: 100%;
-    padding-top: 50px;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    padding: 8px 0 !important;
+    gap: 2px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
   }
   .sidebar-footer {
-    width: 100%;
+    flex-shrink: 0 !important;
+    width: 100% !important;
+    padding: 8px 0 !important;
+    margin-top: 0 !important;
+    border-top: 2px solid var(--border-color) !important;
+    background: var(--bg-card) !important;
   }
-
+  .sidebar-theme-btn {
+    width: 100% !important;
+    height: 44px !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+  }
   .sidebar-item {
+    width: 100% !important;
+    height: 44px !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
     transform: translateX(-16px);
     opacity: 0;
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease, background-color 0.12s ease;
   }
   .tactical-sidebar.open .sidebar-item {
-    transform: translateX(0);
-    opacity: 1;
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+  }
+  .tactical-sidebar .sidebar-label {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    font-size: 12px !important;
+    color: var(--ink-primary) !important;
+  }
+  .sidebar-icon-box {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
   }
   .tactical-sidebar.open .sidebar-item:nth-child(1) { transition-delay: 0.03s; }
   .tactical-sidebar.open .sidebar-item:nth-child(2) { transition-delay: 0.06s; }
@@ -1556,6 +1638,14 @@ footer.bauhaus-footer {
 <div class="crivos-layout-container">
   <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
   <aside id="sidebar-nav" class="tactical-sidebar" aria-label="Navegação Tática Lateral">
+    <div class="sidebar-mobile-header">
+      <div class="sidebar-mobile-brand">
+        <span class="sq-red" style="width:12px;height:12px;background:var(--crivos-red);display:inline-block;border:1px solid var(--border-color);aspect-ratio:1/1;"></span>
+        <span style="font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:13px;color:var(--ink-primary);">CRIVOS</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted);">// MENU TÁTICO</span>
+      </div>
+      <button type="button" class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Fechar menu">✕</button>
+    </div>
     <div class="sidebar-track" id="nav"></div>
     <div class="sidebar-footer">
       <button type="button" class="sidebar-theme-btn theme-btn-trigger" id="sidebar-theme-btn" title="Alternar Modo Claro / Escuro">
@@ -1781,8 +1871,10 @@ function navSet(o) {
   }
   if (o) {
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
   } else {
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   }
 }
 
@@ -1797,6 +1889,9 @@ $('#navtog').onclick = e => {
   const s = $('#sidebar-nav');
   navSet(s ? !s.classList.contains('open') : false);
 };
+
+const closeBtn = $('#sidebar-close-btn');
+if (closeBtn) closeBtn.onclick = () => navSet(false);
 
 const backdrop = $('#sidebar-backdrop');
 if (backdrop) backdrop.onclick = () => navSet(false);
