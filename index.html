@@ -32,8 +32,8 @@
 <style>
 :root {
   --bg-paper: #F4F4F0;
-  --bg-card: rgba(255, 255, 255, 0.88);
-  --bg-subtle: rgba(234, 234, 228, 0.82);
+  --bg-card: rgba(255, 255, 255, 0.60);
+  --bg-subtle: rgba(234, 234, 228, 0.55);
   --bg-dark: #111111;
   --ink-primary: #111111;
   --ink-muted: #555555;
@@ -44,7 +44,7 @@
   --crivos-yellow: #F5B700;
   --shadow-hard: 3px 3px 0px #111111;
   --shadow-hard-lg: 5px 5px 0px #111111;
-  --nav-bg: rgba(244, 244, 240, 0.95);
+  --nav-bg: rgba(244, 244, 240, 0.85);
 
   /* Aliases para compatibilidade total com regras existentes */
   --bg: var(--bg-paper);
@@ -69,8 +69,8 @@
 /* Modo Escuro Refinado (Obsidiana / Grafite Técnico Suíço) */
 [data-theme="dark"] {
   --bg-paper: #0B0C0E;
-  --bg-card: rgba(19, 21, 25, 0.86);
-  --bg-subtle: rgba(27, 30, 36, 0.84);
+  --bg-card: rgba(19, 21, 25, 0.60);
+  --bg-subtle: rgba(27, 30, 36, 0.55);
   --bg-dark: #070809;
   --ink-primary: #F2F2EE;
   --ink-muted: #767E8F;
@@ -81,7 +81,7 @@
   --crivos-yellow: #FACC15;
   --shadow-hard: 3px 3px 0px #000000;
   --shadow-hard-lg: 5px 5px 0px #000000;
-  --nav-bg: rgba(11, 12, 14, 0.95);
+  --nav-bg: rgba(11, 12, 14, 0.85);
 
   /* Aliases Dark Mode */
   --bg: var(--bg-paper);
@@ -707,8 +707,8 @@ main {
   padding: 24px;
   margin-bottom: 24px;
   position: relative;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .card .card {
