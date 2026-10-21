@@ -1551,7 +1551,8 @@ footer.bauhaus-footer {
   .header-actions,
   #navtog,
   .tactical-sidebar,
-  .sidebar-backdrop {
+  .sidebar-backdrop,
+  footer.bauhaus-footer {
     display: none !important;
   }
 
@@ -1806,9 +1807,21 @@ footer.bauhaus-footer {
   }
 
   .bottom-sheet-footer {
-    padding: 10px 16px;
+    padding: 10px 16px 14px;
     border-top: 1px solid var(--border-color);
     background: var(--bg-card);
+  }
+
+  .bottom-sheet-legal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    margin-top: 10px;
+    border-top: 1px dashed var(--border-subtle);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
   }
 
   .sheet-theme-btn {
@@ -2087,6 +2100,14 @@ footer.bauhaus-footer {
       <span class="theme-icon-wrap" id="sheet-theme-icon">◐</span>
       <span id="sheet-theme-label">ALTERNAR MODO ESCURO</span>
     </button>
+    <div class="bottom-sheet-legal-footer">
+      <div style="display:inline-flex;align-items:center;gap:6px;">
+        <span style="width:8px;height:8px;background:var(--crivos-red);display:inline-block;aspect-ratio:1/1;"></span>
+        <strong style="font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.03em;color:var(--ink-primary);font-size:11px;">CRIVOS</strong>
+        <span style="font-size:10px;color:var(--ink-muted);font-family:'JetBrains Mono',monospace;">// INTELIGÊNCIA PARA CONCURSOS E EXAMES</span>
+      </div>
+      <div style="font-size:10px;color:var(--ink-muted);font-family:'JetBrains Mono',monospace;">v26.2</div>
+    </div>
   </div>
 </div>
 
