@@ -1302,6 +1302,13 @@ footer.bauhaus-footer {
   }
 }
 
+/* BOTTOM NAV & BOTTOM SHEET (OCULTOS NO DESKTOP) */
+.crivos-bottom-nav,
+.bottom-sheet,
+.bottom-sheet-backdrop {
+  display: none;
+}
+
 @media (max-width: 820px) {
   .crivos-layout-container {
     margin-top: 90px;
@@ -1351,168 +1358,286 @@ footer.bauhaus-footer {
   .crivos-header-countdown {
     display: none;
   }
-  .header-actions {
-    padding: 6px 10px;
-    display: flex;
-    align-items: center;
-  }
-  #navtog.mobile-menu-btn,
-  .header-actions .mobile-menu-btn {
-    display: inline-flex !important;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    color: var(--ink-primary);
-    padding: 6px 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: var(--shadow-hard);
-    transition: all 0.15s ease;
-    white-space: nowrap;
-  }
-  #navtog.mobile-menu-btn:hover,
-  .header-actions .mobile-menu-btn:hover {
-    background: var(--ink-primary);
-    color: var(--bg-paper);
-  }
-  #navtog.btn-pulse {
-    animation: menu-btn-recoil 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  @keyframes menu-btn-recoil {
-    0% { transform: scale(0.92); }
-    45% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
-  
-  /* DRAWER TÁTICO LATERAL MOBILE - PREENCHIMENTO COMPLETO DA ALTURA */
+  .header-actions,
+  #navtog,
+  .tactical-sidebar,
   .sidebar-backdrop {
-    display: none;
+    display: none !important;
+  }
+
+  /* BARRA DE ABAS INFERIOR (APP UI NATIVA PARA TELAS PEQUENAS) */
+  .crivos-bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 58px;
+    background: var(--bg-card);
+    border-top: 2px solid var(--border-color);
+    z-index: 900;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+    align-items: stretch;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+  [data-theme="dark"] .crivos-bottom-nav {
+    box-shadow: 0 -3px 0 #000000;
+  }
+
+  .bottom-tab-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: transparent;
+    border: none;
+    color: var(--ink-muted);
+    cursor: pointer;
+    padding: 6px 2px;
+    transition: all 0.14s ease;
+    text-decoration: none;
+    position: relative;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bottom-tab-btn:active {
+    background: var(--bg-subtle);
+  }
+
+  .bottom-tab-btn.on {
+    color: var(--ink-primary);
+  }
+
+  .bottom-tab-btn.on .bottom-tab-icon {
+    color: #FFFFFF;
+    background: var(--crivos-red);
+    border-color: var(--border-color);
+    box-shadow: 1px 1px 0px var(--border-color);
+  }
+
+  .bottom-tab-icon {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+    color: var(--ink-primary);
+  }
+
+  .bottom-tab-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .bottom-tab-btn.on .bottom-tab-label {
+    color: var(--ink-primary);
+    font-weight: 800;
+  }
+
+  /* Padding inferior no conteúdo para não ser coberto pela barra de abas */
+  .crivos-main-stage,
+  main {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* BOTTOM SHEET MODAL (MÓDULOS SECUNDÁRIOS) */
+  .bottom-sheet-backdrop {
+    display: block !important;
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 999;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 998;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
+    opacity: 1;
+    transition: opacity 0.25s ease;
   }
-  .sidebar-backdrop.active {
-    display: block !important;
+  .bottom-sheet-backdrop.hide {
+    display: none !important;
   }
-  .tactical-sidebar {
-    position: fixed !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: min(320px, 86vw) !important;
-    min-width: 0 !important;
-    height: 100% !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    max-height: none !important;
-    z-index: 1000 !important;
-    transform: translateX(-100%);
-    box-shadow: 6px 0px 0px var(--border-color);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  .bottom-sheet {
     display: flex !important;
-    flex-direction: column !important;
-    justify-content: space-between !important;
-    overflow: hidden !important;
-    background: var(--bg-card) !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 85dvh;
+    background: var(--bg-paper);
+    border-top: 3px solid var(--border-color);
+    box-shadow: 0 -6px 0 var(--border-color);
+    z-index: 999;
+    flex-direction: column;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(0);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  [data-theme="dark"] .tactical-sidebar {
-    box-shadow: 6px 0px 0px #000000;
+  [data-theme="dark"] .bottom-sheet {
+    box-shadow: 0 -6px 0 #000000;
   }
-  .tactical-sidebar.open {
-    transform: translateX(0) !important;
-  }
-  .sidebar-mobile-header {
+  .bottom-sheet.hide {
     display: flex !important;
+    transform: translateY(105%) !important;
+    pointer-events: none;
+  }
+
+  .bottom-sheet-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 16px 12px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .bottom-sheet-handle-bar {
+    width: 42px;
+    height: 4px;
+    background: var(--border-color);
+    margin-bottom: 10px;
+  }
+
+  .bottom-sheet-title-row {
+    width: 100%;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
-    height: 54px;
-    min-height: 54px;
-    border-bottom: 2px solid var(--border-color);
-    background: var(--bg-card);
-    flex-shrink: 0;
-    box-sizing: border-box;
   }
-  .sidebar-mobile-brand {
+
+  .bottom-sheet-brand {
     display: inline-flex;
     align-items: center;
     gap: 8px;
   }
-  .sidebar-close-btn {
-    width: 34px;
-    height: 34px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+
+  .bottom-sheet-close-btn {
+    width: 32px;
+    height: 32px;
     background: var(--bg-subtle);
     border: 1px solid var(--border-color);
     color: var(--ink-primary);
-    font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     box-shadow: 2px 2px 0px var(--border-color);
-    transition: all 0.15s ease;
   }
-  .sidebar-close-btn:active {
+  .bottom-sheet-close-btn:active {
     background: var(--crivos-red);
     color: #FFFFFF;
+  }
+
+  .bottom-sheet-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 16px;
+    background: var(--bg-paper);
+  }
+
+  @media (max-width: 440px) {
+    .bottom-sheet-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+  }
+
+  .sheet-grid-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 2px 2px 0px var(--border-color);
+    padding: 12px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    color: var(--ink-primary);
+    transition: all 0.12s ease;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .sheet-grid-item:active {
     transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--border-color);
   }
-  .sidebar-track {
-    flex: 1 1 auto !important;
-    width: 100% !important;
-    padding: 8px 0 !important;
-    gap: 2px !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
+
+  .sheet-grid-item.on {
+    background: var(--crivos-red);
+    color: #FFFFFF;
+    border-color: var(--border-color);
   }
-  .sidebar-footer {
-    flex-shrink: 0 !important;
-    width: 100% !important;
-    padding: 8px 0 !important;
-    margin-top: 0 !important;
-    border-top: 2px solid var(--border-color) !important;
-    background: var(--bg-card) !important;
+  .sheet-grid-item.on .sheet-item-icon {
+    color: #FFFFFF;
   }
-  .sidebar-theme-btn {
-    width: 100% !important;
-    height: 44px !important;
-    padding: 0 16px !important;
-    box-sizing: border-box !important;
+
+  .sheet-item-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-primary);
   }
-  .sidebar-item {
-    width: 100% !important;
-    height: 44px !important;
-    padding: 0 16px !important;
-    box-sizing: border-box !important;
-    transform: translateX(-16px);
-    opacity: 0;
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease, background-color 0.12s ease;
+
+  .sheet-item-name {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
-  .tactical-sidebar.open .sidebar-item {
-    transform: translateX(0) !important;
-    opacity: 1 !important;
+
+  .bottom-sheet-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-card);
   }
-  .tactical-sidebar .sidebar-label {
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-    font-size: 12px !important;
-    color: var(--ink-primary) !important;
+
+  .sheet-theme-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    box-shadow: 2px 2px 0px var(--border-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--ink-primary);
+    text-transform: uppercase;
   }
-  .sidebar-icon-box {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
+  .sheet-theme-btn:active {
+    transform: translate(1px, 1px);
   }
   .tactical-sidebar.open .sidebar-item:nth-child(1) { transition-delay: 0.03s; }
   .tactical-sidebar.open .sidebar-item:nth-child(2) { transition-delay: 0.06s; }
@@ -1665,6 +1790,65 @@ footer.bauhaus-footer {
       </div>
       <div>REV 2026.1</div>
     </footer>
+  </div>
+</div>
+
+<!-- BOTTOM TAB BAR NATIVA MOBILE (UI DE APLICATIVO) -->
+<nav class="crivos-bottom-nav" id="bottom-nav" aria-label="Navegação Principal do Aplicativo">
+  <button type="button" class="bottom-tab-btn" data-v="home" id="tab-home">
+    <span class="bottom-tab-icon">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 10l9-7 9 7v10H3V10z"/><path d="M9 20v-6h6v6"/></svg>
+    </span>
+    <span class="bottom-tab-label">INÍCIO</span>
+  </button>
+  <button type="button" class="bottom-tab-btn" data-v="crono" id="tab-crono">
+    <span class="bottom-tab-icon">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="15" r="1.5" fill="currentColor"/><circle cx="12" cy="15" r="1.5" fill="currentColor"/><circle cx="16" cy="15" r="1.5" fill="currentColor"/></svg>
+    </span>
+    <span class="bottom-tab-label">CRONO</span>
+  </button>
+  <button type="button" class="bottom-tab-btn" data-v="textos" id="tab-textos">
+    <span class="bottom-tab-icon">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M4 3h16v18H4V3z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="13" y2="16"/></svg>
+    </span>
+    <span class="bottom-tab-label">TEXTOS</span>
+  </button>
+  <button type="button" class="bottom-tab-btn" data-v="cards" id="tab-cards">
+    <span class="bottom-tab-icon">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="2" y="6" width="15" height="14"/><path d="M7 3h15v14h-3"/></svg>
+    </span>
+    <span class="bottom-tab-label">CARDS</span>
+  </button>
+  <button type="button" class="bottom-tab-btn" id="tab-more" aria-haspopup="dialog" aria-expanded="false">
+    <span class="bottom-tab-icon">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    </span>
+    <span class="bottom-tab-label" id="tab-more-label">MAIS</span>
+  </button>
+</nav>
+
+<!-- BOTTOM SHEET MODAL (MÓDULOS SECUNDÁRIOS) -->
+<div class="bottom-sheet-backdrop hide" id="bottom-sheet-backdrop"></div>
+<div class="bottom-sheet hide" id="bottom-sheet" role="dialog" aria-modal="true" aria-label="Módulos Adicionais">
+  <div class="bottom-sheet-header">
+    <div class="bottom-sheet-handle-bar"></div>
+    <div class="bottom-sheet-title-row">
+      <div class="bottom-sheet-brand">
+        <span class="sq-red" style="width:12px;height:12px;background:var(--crivos-red);display:inline-block;border:1px solid var(--border-color);aspect-ratio:1/1;"></span>
+        <span style="font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.03em;font-size:13px;color:var(--ink-primary);">CRIVOS</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-muted);">// MÓDULOS TÁTICOS</span>
+      </div>
+      <button type="button" class="bottom-sheet-close-btn" id="bottom-sheet-close" aria-label="Fechar painel">✕</button>
+    </div>
+  </div>
+  
+  <div class="bottom-sheet-grid" id="bottom-sheet-grid"></div>
+
+  <div class="bottom-sheet-footer">
+    <button type="button" class="sheet-theme-btn" id="sheet-theme-btn">
+      <span class="theme-icon-wrap" id="sheet-theme-icon">◐</span>
+      <span id="sheet-theme-label">ALTERNAR MODO ESCURO</span>
+    </button>
   </div>
 </div>
 
@@ -1838,17 +2022,88 @@ const TAB_ICONS = {
   perfil: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
 };
 
-function nav() {
-  const container = $('#nav');
-  if (!container) return;
-  container.innerHTML = TABS.map(([k, n]) => {
-    const iconSvg = TAB_ICONS[k] || '';
-    const isActive = (k === cur);
-    return `<button type="button" data-v="${k}" class="sidebar-item ${isActive ? 'on' : ''}" title="${n}">
-      <span class="sidebar-icon-box">${iconSvg}</span>
-      <span class="sidebar-label">${n}</span>
+const SHEET_MODULES = [
+  { id: 'pomo', num: '05', label: 'Pomodoro' },
+  { id: 'sim', num: '06', label: 'Simulado' },
+  { id: 'arg', num: '07', label: 'Arguição' },
+  { id: 'mapa', num: '08', label: 'Conexões' },
+  { id: 'links', num: '09', label: 'Links' },
+  { id: 'dicas', num: '10', label: 'Dicas' },
+  { id: 'dados', num: '11', label: 'Dados' },
+  { id: 'perfil', num: '12', label: 'Perfil' }
+];
+
+function initBottomSheetGrid() {
+  const grid = $('#bottom-sheet-grid');
+  if (!grid) return;
+  grid.innerHTML = SHEET_MODULES.map(m => {
+    const iconSvg = TAB_ICONS[m.id] || '';
+    const isActive = (m.id === cur);
+    return `<button type="button" class="sheet-grid-item ${isActive ? 'on' : ''}" data-v="${m.id}" title="${m.label}">
+      <span class="sheet-item-icon">${iconSvg}</span>
+      <span class="sheet-item-name">${m.label}</span>
     </button>`;
   }).join('');
+}
+
+function setBottomSheet(open) {
+  const sheet = $('#bottom-sheet');
+  const backdrop = $('#bottom-sheet-backdrop');
+  const moreBtn = $('#tab-more');
+  if (!sheet || !backdrop) return;
+  if (open) {
+    sheet.classList.remove('hide');
+    backdrop.classList.remove('hide');
+    if (moreBtn) moreBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  } else {
+    sheet.classList.add('hide');
+    backdrop.classList.add('hide');
+    if (moreBtn) moreBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+}
+
+function nav() {
+  const container = $('#nav');
+  if (container) {
+    container.innerHTML = TABS.map(([k, n]) => {
+      const iconSvg = TAB_ICONS[k] || '';
+      const isActive = (k === cur);
+      return `<button type="button" data-v="${k}" class="sidebar-item ${isActive ? 'on' : ''}" title="${n}">
+        <span class="sidebar-icon-box">${iconSvg}</span>
+        <span class="sidebar-label">${n}</span>
+      </button>`;
+    }).join('');
+  }
+
+  // Sincroniza abas primárias inferiores mobile
+  const primaryTabs = ['home', 'crono', 'textos', 'cards'];
+  const isPrimary = primaryTabs.includes(cur);
+
+  primaryTabs.forEach(id => {
+    const btn = $(`#tab-${id}`);
+    if (btn) btn.classList.toggle('on', cur === id);
+  });
+
+  const moreBtn = $('#tab-more');
+  const moreLabel = $('#tab-more-label');
+  if (moreBtn) {
+    moreBtn.classList.toggle('on', !isPrimary);
+  }
+  if (moreLabel) {
+    if (!isPrimary) {
+      const activeObj = SHEET_MODULES.find(m => m.id === cur);
+      moreLabel.textContent = activeObj ? activeObj.label.slice(0, 6).toUpperCase() : 'MAIS';
+    } else {
+      moreLabel.textContent = 'MAIS';
+    }
+  }
+
+  // Sincroniza cards secundários do Bottom Sheet
+  document.querySelectorAll('.sheet-grid-item').forEach(el => {
+    el.classList.toggle('on', el.dataset.v === cur);
+  });
 }
 
 $('#nav').onclick = e => {
@@ -1858,6 +2113,41 @@ $('#nav').onclick = e => {
     navSet(false);
   }
 };
+
+// Cliques na Barra de Abas Inferior Mobile
+const bottomNav = $('#bottom-nav');
+if (bottomNav) {
+  bottomNav.onclick = e => {
+    const btn = e.target.closest('.bottom-tab-btn');
+    if (!btn) return;
+    if (btn.id === 'tab-more') {
+      const sheet = $('#bottom-sheet');
+      const isHidden = sheet ? sheet.classList.contains('hide') : true;
+      setBottomSheet(isHidden);
+    } else if (btn.dataset.v) {
+      go(btn.dataset.v);
+      setBottomSheet(false);
+    }
+  };
+}
+
+// Fechamento e cliques no Bottom Sheet
+const sheetBackdrop = $('#bottom-sheet-backdrop');
+if (sheetBackdrop) sheetBackdrop.onclick = () => setBottomSheet(false);
+
+const sheetCloseBtn = $('#bottom-sheet-close');
+if (sheetCloseBtn) sheetCloseBtn.onclick = () => setBottomSheet(false);
+
+const sheetGrid = $('#bottom-sheet-grid');
+if (sheetGrid) {
+  sheetGrid.onclick = e => {
+    const item = e.target.closest('.sheet-grid-item');
+    if (item && item.dataset.v) {
+      go(item.dataset.v);
+      setBottomSheet(false);
+    }
+  };
+}
 
 function navSet(o) {
   const s = $('#sidebar-nav');
@@ -1901,6 +2191,11 @@ document.addEventListener('keydown', e => {
     if (s && s.classList.contains('open')) {
       navSet(false);
       if ($('#navtog')) $('#navtog').focus();
+    }
+    const sheet = $('#bottom-sheet');
+    if (sheet && !sheet.classList.contains('hide')) {
+      setBottomSheet(false);
+      if ($('#tab-more')) $('#tab-more').focus();
     }
   }
 });
@@ -2463,6 +2758,12 @@ function updateThemeUI() {
   const sideLabel = $('#sidebar-theme-label');
   if (sideLabel) sideLabel.textContent = isDark ? 'MODO CLARO' : 'MODO ESCURO';
 
+  const sheetIcon = $('#sheet-theme-icon');
+  if (sheetIcon) sheetIcon.textContent = isDark ? '◑' : '◐';
+
+  const sheetLabel = $('#sheet-theme-label');
+  if (sheetLabel) sheetLabel.textContent = isDark ? 'ALTERNAR MODO CLARO' : 'ALTERNAR MODO ESCURO';
+
   document.body.classList.toggle('hc', isDark);
 }
 
@@ -2501,7 +2802,7 @@ function toggleTheme() {
 window.toggleTheme = toggleTheme;
 
 function bindThemeTriggers() {
-  ['#sidebar-theme-btn', '#theme'].forEach(sel => {
+  ['#sidebar-theme-btn', '#theme', '#sheet-theme-btn'].forEach(sel => {
     const el = document.querySelector(sel);
     if (el) {
       el.onclick = (e) => {
@@ -2513,6 +2814,7 @@ function bindThemeTriggers() {
 }
 
 bindThemeTriggers();
+initBottomSheetGrid();
 updateThemeUI();
 syncUserIdentity();
 window.addEventListener('beforeunload', () => { if (P.run) pause(); });
@@ -2671,12 +2973,13 @@ go(initialTab);
 })();
 
 /* ------------------------------------------------------------------
-   CINEMATIC BOOT / AUDITORIA SEQUENCE (~1.0s RÁPIDO COM PERSPECTIVA SUÍÇA)
+   CINEMATIC BOOT / AUDITORIA SEQUENCE (~2.6s CADENCIADO COM PERSPECTIVA SUÍÇA)
    ------------------------------------------------------------------ */
 (function initBootSequence() {
   const bootOverlay = document.getElementById('boot-overlay');
   const bootCounter = document.getElementById('boot-counter');
   const bootBarFill = document.getElementById('boot-bar-fill');
+  const bootStatusText = document.getElementById('boot-status-text');
   const bootSkipBtn = document.getElementById('boot-skip');
   const bootLines = document.querySelectorAll('.boot-line');
   const bootShutters = document.querySelectorAll('.boot-shutter');
@@ -2695,15 +2998,15 @@ go(initialTab);
       gsap.to(['.boot-terminal', '.boot-top', '.boot-bottom'], {
         opacity: 0,
         y: -10,
-        duration: 0.18,
+        duration: 0.22,
         ease: 'power2.in'
       });
       gsap.to(bootShutters, {
         scaleY: 0,
-        duration: 0.45,
-        stagger: 0.04,
+        duration: 0.55,
+        stagger: 0.05,
         ease: 'power4.inOut',
-        delay: 0.1,
+        delay: 0.12,
         onComplete: () => {
           bootOverlay.style.display = 'none';
         }
@@ -2717,26 +3020,42 @@ go(initialTab);
 
   bootLines.forEach((line, idx) => {
     setTimeout(() => {
-      line.style.transition = 'opacity 0.16s ease, transform 0.16s ease';
+      line.style.transition = 'opacity 0.28s ease, transform 0.28s ease';
       line.style.opacity = '1';
       line.style.transform = 'translateY(0)';
-    }, idx * 160);
+    }, idx * 420);
   });
 
+  const statusPhases = [
+    { p: 25, text: 'CALIBRANDO PARÂMETROS DA BANCA...' },
+    { p: 50, text: 'ISOLANDO INCIDÊNCIA DE PARETO...' },
+    { p: 75, text: 'SINCRONIZANDO FILA DE REPETIÇÃO SM-2...' },
+    { p: 98, text: 'VALIDANDO PLANO DE ESTUDOS TÁTICO...' },
+    { p: 100, text: 'SISTEMA DESBLOQUEADO · ACESSO AUTORIZADO' }
+  ];
+
   let progress = 0;
+  // ~2.5s total: cada tick 35ms adiciona 1 a 2 pontos
   bootInterval = setInterval(() => {
-    progress += Math.floor(Math.random() * 12) + 8;
+    progress += Math.random() < 0.65 ? 1 : 2;
     if (progress >= 100) {
       progress = 100;
       if (bootCounter) bootCounter.textContent = '100%';
       if (bootBarFill) bootBarFill.style.width = '100%';
+      if (bootStatusText) bootStatusText.textContent = 'SISTEMA DESBLOQUEADO · ACESSO AUTORIZADO';
       clearInterval(bootInterval);
-      setTimeout(unlockInterface, 150);
+      setTimeout(unlockInterface, 250);
     } else {
       if (bootCounter) bootCounter.textContent = String(progress).padStart(2, '0') + '%';
       if (bootBarFill) bootBarFill.style.width = progress + '%';
+      if (bootStatusText) {
+        const currentPhase = statusPhases.find(phase => progress <= phase.p);
+        if (currentPhase && bootStatusText.textContent !== currentPhase.text) {
+          bootStatusText.textContent = currentPhase.text;
+        }
+      }
     }
-  }, 50);
+  }, 35);
 })();
 </script>
 </body>
