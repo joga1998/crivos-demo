@@ -4,7 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CRIVOS // Sistemas de Estudo Sob Demanda</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23D92B2B'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23D92B2B'/></svg>">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F4F0" media="(prefers-color-scheme: light)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CRIVOS">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -262,6 +270,23 @@ body {
   background: #242424;
   color: #FFFFFF;
   border-color: #555555;
+}
+.crivos-topbar-user.pomo-running {
+  background: var(--crivos-red) !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 2px 2px 0px #000000 !important;
+  animation: pomo-topbar-glow 2s infinite ease-in-out;
+}
+.crivos-topbar-user.pomo-running .crivos-mini-avatar {
+  background: #FFFFFF !important;
+  color: var(--crivos-red) !important;
+  font-weight: 900 !important;
+  border-color: #FFFFFF !important;
+}
+@keyframes pomo-topbar-glow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 }
 .crivos-mini-avatar {
   width: 16px;
@@ -2152,6 +2177,22 @@ const SHEET_MODULES = [
   { id: 'perfil', num: '12', label: 'Perfil' }
 ];
 
+// Feedback Háptico Tático (Vibração sutil em dispositivos móveis compatíveis)
+function haptic(pattern = 14) {
+  try {
+    if (navigator && typeof navigator.vibrate === 'function') {
+      navigator.vibrate(pattern);
+    }
+  } catch (e) {}
+}
+
+// Registro do Service Worker PWA para suporte offline e tela cheia
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
 function initBottomSheetGrid() {
   const grid = $('#bottom-sheet-grid');
   if (!grid) return;
@@ -2228,6 +2269,7 @@ function nav() {
 $('#nav').onclick = e => {
   const btn = e.target.closest('button[data-v]');
   if (btn && btn.dataset.v) {
+    haptic(12);
     go(btn.dataset.v);
     navSet(false);
   }
@@ -2240,10 +2282,12 @@ if (bottomNav) {
     const btn = e.target.closest('.bottom-tab-btn');
     if (!btn) return;
     if (btn.id === 'tab-more') {
+      haptic(16);
       const sheet = $('#bottom-sheet');
       const isHidden = sheet ? sheet.classList.contains('hide') : true;
       setBottomSheet(isHidden);
     } else if (btn.dataset.v) {
+      haptic(12);
       go(btn.dataset.v);
       setBottomSheet(false);
     }
@@ -2252,16 +2296,17 @@ if (bottomNav) {
 
 // Fechamento e cliques no Bottom Sheet
 const sheetBackdrop = $('#bottom-sheet-backdrop');
-if (sheetBackdrop) sheetBackdrop.onclick = () => setBottomSheet(false);
+if (sheetBackdrop) sheetBackdrop.onclick = () => { haptic(10); setBottomSheet(false); };
 
 const sheetCloseBtn = $('#bottom-sheet-close');
-if (sheetCloseBtn) sheetCloseBtn.onclick = () => setBottomSheet(false);
+if (sheetCloseBtn) sheetCloseBtn.onclick = () => { haptic(10); setBottomSheet(false); };
 
 const sheetGrid = $('#bottom-sheet-grid');
 if (sheetGrid) {
   sheetGrid.onclick = e => {
     const item = e.target.closest('.sheet-grid-item');
     if (item && item.dataset.v) {
+      haptic(14);
       go(item.dataset.v);
       setBottomSheet(false);
     }
@@ -2362,7 +2407,12 @@ V.home = () => {
     </div>`;
 };
 
-window.mark = (i, s) => { S.days[i] = S.days[i] === s ? '' : s; if (s === 'done') S.days[i + '_at'] = today(); save(); };
+window.mark = (i, s) => {
+  haptic(s === 'done' ? [12, 40, 18] : 14);
+  S.days[i] = S.days[i] === s ? '' : s;
+  if (s === 'done') S.days[i + '_at'] = today();
+  save();
+};
 
 V.crono = () => {
   const sc = sched(), t = today(), sug = suggestions();
@@ -2421,10 +2471,11 @@ function rc() {
   const c = Q[qi];
   let h = `<div class="card"><h3>Revisão espaçada (Algoritmo SM-2)</h3><p class="mu">${tot} cartões gerados das fichas (conceitos, citações com página e exercícios). Cartões novos entram só de textos marcados como lidos ou acima. ${seen} já vistos. Novos por dia: <input type="number" min="0" max="60" value="${S.newPerDay || 15}" style="width:70px" onchange="S.newPerDay=+this.value;save();V.cards()"></p><p><b>FILA DE HOJE: ${Q.length - qi} CARTÕES</b></p></div>`;
   if (!c) h += `<div class="card"><p>${Object.values(S.texts).some(x => x) ? 'Nada para revisar agora. Volte amanhã.' : 'Marque um texto como "lido" na aba Textos para liberar os cartões dele.'}</p></div>`;
-  else h += `<div class="card fc"><div>${c.f}</div>${show ? `<hr><div>${c.b}</div>${c.p ? `<p><a href="${pdf(TXI[c.t], c.p)}" target="_blank">ABRIR NO PDF</a></p>` : ''}` : ''}</div><div class="row" style="justify-content:center;margin:20px 0">${show ? [[0, '1 · ERREI'], [3, '2 · DIFÍCIL'], [4, '3 · BOM'], [5, '4 · FÁCIL']].map(([q, n]) => `<button class="btn ${q >= 4 ? 'p' : ''}" onclick="ans(${q})">${n}</button>`).join('') : '<button class="btn p" onclick="show=true;rc()">MOSTRAR RESPOSTA (ESPAÇO)</button>'}</div><p class="mu" style="text-align:center">Tente responder em voz alta ou por escrito antes de virar.</p>`;
+  else h += `<div class="card fc"><div>${c.f}</div>${show ? `<hr><div>${c.b}</div>${c.p ? `<p><a href="${pdf(TXI[c.t], c.p)}" target="_blank">ABRIR NO PDF</a></p>` : ''}` : ''}</div><div class="row" style="justify-content:center;margin:20px 0">${show ? [[0, '1 · ERREI'], [3, '2 · DIFÍCIL'], [4, '3 · BOM'], [5, '4 · FÁCIL']].map(([q, n]) => `<button class="btn ${q >= 4 ? 'p' : ''}" onclick="ans(${q})">${n}</button>`).join('') : '<button class="btn p" onclick="haptic(10);show=true;rc()">MOSTRAR RESPOSTA (ESPAÇO)</button>'}</div><p class="mu" style="text-align:center">Tente responder em voz alta ou por escrito antes de virar.</p>`;
   $('#app').innerHTML = h;
 }
 window.ans = q => {
+  haptic(q >= 4 ? [12, 30, 16] : 14);
   const c = Q[qi];
   const isNew = !S.cards[c.id];
   grade(c.id, q);
@@ -2460,11 +2511,74 @@ V.pomo = () => {
 };
 function logm(m) { if (m > 0) { S.log.push({d: today(), t: S.pomoT || '', m: Math.round(m * 10) / 10}); save(); } }
 function flush() { if (P.mode === 'w' && P.run) { P.acc += (Date.now() - P.start) / 6e4; P.start = Date.now(); } if (P.acc >= 0.5) logm(P.acc); P.acc = 0; }
-function startP() { P.run = true; P.start = Date.now(); P.tid = setInterval(() => { P.left--; if (P.left <= 0) { flush(); beep(); nextPhase(); } if (cur === 'pomo') tick(); }, 1000); }
-function pause() { if (P.run && P.mode === 'w') P.acc += (Date.now() - P.start) / 6e4; P.run = false; clearInterval(P.tid); flush(); }
-function nextPhase() { if (P.mode === 'w') { P.n++; P.mode = P.n % 4 ? 'b' : 'lb'; } else P.mode = 'w'; P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60; if (P.run) P.start = Date.now(); if (cur === 'pomo') V.pomo(); }
-function tick() { const e = $('#tm'); if (!e) return; e.textContent = String(Math.floor(P.left / 60)).padStart(2, '0') + ':' + String(P.left % 60).padStart(2, '0'); $('#pm').textContent = (P.mode === 'w' ? 'MODO FOCO' : 'MODO PAUSA') + ' · BLOCOS CONCLUÍDOS: ' + P.n; }
-function beep() { try { const a = new AudioContext(), o = a.createOscillator(); o.connect(a.destination); o.frequency.value = 880; o.start(); setTimeout(() => o.stop(), 400); } catch (e) {} }
+function updateTopbarPomodoro() {
+  const shortcut = $('#topbar-user-shortcut');
+  const elTopbarName = $('#topbar-user-name');
+  const elMiniAvatar = $('#topbar-mini-avatar');
+  if (!shortcut || !elTopbarName || !elMiniAvatar) return;
+
+  if (P.run) {
+    shortcut.classList.add('pomo-running');
+    shortcut.title = 'Pomodoro em Andamento: clique para abrir o cronômetro';
+    elMiniAvatar.textContent = '⏱';
+    const min = String(Math.floor(P.left / 60)).padStart(2, '0');
+    const sec = String(P.left % 60).padStart(2, '0');
+    elTopbarName.textContent = `${min}:${sec} · ${P.mode === 'w' ? 'FOCO' : 'PAUSA'}`;
+  } else {
+    shortcut.classList.remove('pomo-running');
+    shortcut.title = 'Abrir Perfil e Credenciais';
+    syncUserIdentity();
+  }
+}
+
+function startP() {
+  haptic(18);
+  P.run = true;
+  P.start = Date.now();
+  updateTopbarPomodoro();
+  P.tid = setInterval(() => {
+    P.left--;
+    if (P.left <= 0) { flush(); beep(); nextPhase(); }
+    tick();
+  }, 1000);
+}
+
+function pause() {
+  haptic(14);
+  if (P.run && P.mode === 'w') P.acc += (Date.now() - P.start) / 6e4;
+  P.run = false;
+  clearInterval(P.tid);
+  flush();
+  updateTopbarPomodoro();
+}
+
+function nextPhase() {
+  if (P.mode === 'w') { P.n++; P.mode = P.n % 4 ? 'b' : 'lb'; } else P.mode = 'w';
+  P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60;
+  if (P.run) P.start = Date.now();
+  updateTopbarPomodoro();
+  if (cur === 'pomo') V.pomo();
+}
+
+function tick() {
+  const e = $('#tm');
+  if (e) {
+    e.textContent = String(Math.floor(P.left / 60)).padStart(2, '0') + ':' + String(P.left % 60).padStart(2, '0');
+    $('#pm').textContent = (P.mode === 'w' ? 'MODO FOCO' : 'MODO PAUSA') + ' · BLOCOS CONCLUÍDOS: ' + P.n;
+  }
+  updateTopbarPomodoro();
+}
+
+function beep() {
+  haptic([80, 60, 80, 60, 140]);
+  try {
+    const a = new AudioContext(), o = a.createOscillator();
+    o.connect(a.destination);
+    o.frequency.value = 880;
+    o.start();
+    setTimeout(() => o.stop(), 400);
+  } catch (e) {}
+}
 function charts() {
   const c1 = $('#c1'), W = c1.clientWidth || 700, days = [];
   for (let i = 20; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); days.push(iso(d)); }
@@ -2659,24 +2773,17 @@ function syncUserIdentity() {
   const elHeaderName = $('#header-candidato-name');
   if (elHeaderName) elHeaderName.textContent = name;
 
-  const elTopbarName = $('#topbar-user-name');
-  if (elTopbarName) elTopbarName.textContent = name;
+  if (!P.run) {
+    const elTopbarName = $('#topbar-user-name');
+    if (elTopbarName) elTopbarName.textContent = name;
 
-  const elHeaderAvatar = $('#header-avatar');
-  if (elHeaderAvatar) {
-    if (avatar) {
-      elHeaderAvatar.innerHTML = '<img src="' + avatar + '" alt="Foto do Candidato">';
-    } else {
-      elHeaderAvatar.textContent = initials;
-    }
-  }
-
-  const elMiniAvatar = $('#topbar-mini-avatar');
-  if (elMiniAvatar) {
-    if (avatar) {
-      elMiniAvatar.innerHTML = '<img src="' + avatar + '" alt="Avatar">';
-    } else {
-      elMiniAvatar.textContent = initials;
+    const elMiniAvatar = $('#topbar-mini-avatar');
+    if (elMiniAvatar) {
+      if (avatar) {
+        elMiniAvatar.innerHTML = '<img src="' + avatar + '" alt="Avatar">';
+      } else {
+        elMiniAvatar.textContent = initials;
+      }
     }
   }
 
@@ -2866,7 +2973,12 @@ V.perfil = () => {
 
 $('#topbar-user-shortcut').onclick = (e) => {
   e.preventDefault();
-  go('perfil');
+  haptic(14);
+  if (P.run) {
+    go('pomo');
+  } else {
+    go('perfil');
+  }
 };
 
 // ---------- init & theme
@@ -2894,6 +3006,7 @@ function updateThemeUI() {
 }
 
 function toggleTheme() {
+  haptic(16);
   const current = document.documentElement.getAttribute('data-theme');
   const next = current === 'dark' ? 'light' : 'dark';
   if (next === 'dark') {
