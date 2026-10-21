@@ -32,8 +32,8 @@
 <style>
 :root {
   --bg-paper: #F4F4F0;
-  --bg-card: #FFFFFF;
-  --bg-subtle: #EAEAE4;
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --bg-subtle: rgba(234, 234, 228, 0.82);
   --bg-dark: #111111;
   --ink-primary: #111111;
   --ink-muted: #555555;
@@ -44,7 +44,7 @@
   --crivos-yellow: #F5B700;
   --shadow-hard: 3px 3px 0px #111111;
   --shadow-hard-lg: 5px 5px 0px #111111;
-  --nav-bg: rgba(244, 244, 240, 0.98);
+  --nav-bg: rgba(244, 244, 240, 0.95);
 
   /* Aliases para compatibilidade total com regras existentes */
   --bg: var(--bg-paper);
@@ -69,8 +69,8 @@
 /* Modo Escuro Refinado (Obsidiana / Grafite Técnico Suíço) */
 [data-theme="dark"] {
   --bg-paper: #0B0C0E;
-  --bg-card: #131519;
-  --bg-subtle: #1B1E24;
+  --bg-card: rgba(19, 21, 25, 0.86);
+  --bg-subtle: rgba(27, 30, 36, 0.84);
   --bg-dark: #070809;
   --ink-primary: #F2F2EE;
   --ink-muted: #767E8F;
@@ -81,7 +81,7 @@
   --crivos-yellow: #FACC15;
   --shadow-hard: 3px 3px 0px #000000;
   --shadow-hard-lg: 5px 5px 0px #000000;
-  --nav-bg: rgba(11, 12, 14, 0.98);
+  --nav-bg: rgba(11, 12, 14, 0.95);
 
   /* Aliases Dark Mode */
   --bg: var(--bg-paper);
@@ -707,6 +707,8 @@ main {
   padding: 24px;
   margin-bottom: 24px;
   position: relative;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .card .card {
@@ -1508,6 +1510,40 @@ footer.bauhaus-footer {
     box-shadow: 2px 2px 0px var(--border-color);
     max-width: 100%;
     box-sizing: border-box;
+  }
+  .grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+  }
+  .grid .card {
+    padding: 10px 10px !important;
+    margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .grid .card h3 {
+    font-size: 11px !important;
+    margin: 0 0 6px !important;
+    padding-bottom: 4px !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.2 !important;
+  }
+  .grid .card .big {
+    font-size: 20px !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.1 !important;
+    margin-bottom: 4px !important;
+  }
+  .grid .card .bar {
+    height: 4px !important;
+    margin: 4px 0 !important;
+  }
+  .grid .card .mu {
+    font-size: 9.5px !important;
+    line-height: 1.25 !important;
   }
   .crivos-topbar {
     padding: 0 14px;
@@ -3203,7 +3239,7 @@ $('#topbar-user-shortcut').onclick = (e) => {
 function updateThemeUI() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const btn = $('#theme');
-  if (btn) btn.textContent = isDark ? '[ ◑ NOITE ]' : '[ ◐ DIA ]';
+  if (btn) btn.textContent = isDark ? '[ ◑ ESCURO ]' : '[ ◐ CLARO ]';
   
   const icon = $('#theme-icon');
   if (icon) icon.textContent = isDark ? '◑' : '◐';
@@ -3212,13 +3248,13 @@ function updateThemeUI() {
   if (sideIcon) sideIcon.textContent = isDark ? '◑' : '◐';
 
   const sideLabel = $('#sidebar-theme-label');
-  if (sideLabel) sideLabel.textContent = isDark ? 'MODO CLARO' : 'MODO ESCURO';
+  if (sideLabel) sideLabel.textContent = isDark ? 'ESCURO' : 'CLARO';
 
   const sheetIcon = $('#sheet-theme-icon');
   if (sheetIcon) sheetIcon.textContent = isDark ? '◑' : '◐';
 
   const sheetLabel = $('#sheet-theme-label');
-  if (sheetLabel) sheetLabel.textContent = isDark ? 'ALTERNAR MODO CLARO' : 'ALTERNAR MODO ESCURO';
+  if (sheetLabel) sheetLabel.textContent = isDark ? 'MODO ESCURO' : 'MODO CLARO';
 
   document.body.classList.toggle('hc', isDark);
 }
