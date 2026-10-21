@@ -1202,23 +1202,12 @@ footer.bauhaus-footer {
   display: inline-block;
   flex-shrink: 0;
 }
-.boot-skip-btn {
-  background: rgba(255, 255, 255, 0.06);
-  color: #CCCCCC;
-  border: 1px solid rgba(244, 244, 240, 0.3);
-  padding: 0.4rem 0.8rem;
+.boot-top-meta {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  color: rgba(244, 244, 240, 0.45);
   text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  flex-shrink: 0;
-}
-.boot-skip-btn:hover {
-  color: #FFFFFF;
-  border-color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.18);
+  letter-spacing: 0.04em;
 }
 .boot-terminal {
   max-width: 760px;
@@ -1826,7 +1815,7 @@ footer.bauhaus-footer {
       <span class="boot-brand-sq"></span>
       <span>CRIVOS</span>
     </div>
-    <button class="boot-skip-btn" id="boot-skip" type="button">[ PULAR INTRO ↵ ]</button>
+    <div class="boot-top-meta">SISTEMA TÁTICO // PPGHS 2027</div>
   </div>
 
   <div class="boot-terminal" id="boot-terminal">
@@ -3117,7 +3106,6 @@ go(initialTab);
   const bootCounter = document.getElementById('boot-counter');
   const bootBarFill = document.getElementById('boot-bar-fill');
   const bootStatusText = document.getElementById('boot-status-text');
-  const bootSkipBtn = document.getElementById('boot-skip');
   const bootLines = document.querySelectorAll('.boot-line');
   const bootShutters = document.querySelectorAll('.boot-shutter');
 
@@ -3152,8 +3140,6 @@ go(initialTab);
       bootOverlay.style.display = 'none';
     }
   }
-
-  if (bootSkipBtn) bootSkipBtn.addEventListener('click', unlockInterface);
 
   bootLines.forEach((line, idx) => {
     setTimeout(() => {
