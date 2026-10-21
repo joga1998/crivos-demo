@@ -1,7 +1,7 @@
 {
-  "name": "CRIVOS // PPGHS UERJ 2027",
+  "name": "CRIVOS",
   "short_name": "CRIVOS",
-  "description": "Sistema Operacional Tático de Estudos Sob Demanda · Edição PPGHS UERJ 2027",
+  "description": "CRIVOS // Sistemas de Estudo Sob Demanda",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -24,7 +24,7 @@
       "purpose": "any maskable"
     },
     {
-      "src": "icon.svg",
+      "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
