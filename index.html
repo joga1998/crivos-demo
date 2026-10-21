@@ -954,6 +954,102 @@ textarea:focus, input:focus, select:focus {
   outline: none;
 }
 
+/* PAINEL DE SUPORTE TÁTICO & WHATSAPP */
+.support-category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 16px 0;
+}
+@media (max-width: 640px) {
+  .support-category-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+.support-cat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 2px 2px 0px var(--border-color);
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  user-select: none;
+}
+.support-cat-card:hover {
+  background: var(--bg-subtle);
+}
+.support-cat-card.active {
+  background: var(--bg-card);
+  border: 2px solid var(--crivos-red);
+  box-shadow: 3px 3px 0px var(--crivos-red);
+}
+.support-cat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.support-cat-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 11.5px;
+  color: var(--ink-primary);
+  text-transform: uppercase;
+}
+.support-cat-desc {
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.35;
+}
+.support-preview-box {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 12px 0 16px;
+}
+.whatsapp-support-btn {
+  background: #25D366 !important;
+  color: #FFFFFF !important;
+  border: 2px solid var(--border-color) !important;
+  box-shadow: 3px 3px 0px var(--border-color) !important;
+  padding: 12px 16px !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  width: 100%;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: all 0.12s ease;
+  cursor: pointer;
+}
+.whatsapp-support-btn:hover {
+  background: #1EBE5D !important;
+  color: #FFFFFF !important;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--border-color) !important;
+}
+.whatsapp-support-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--border-color) !important;
+}
+
 details {
   border: 1px solid var(--border-color);
   background: var(--bg-card);
@@ -2145,7 +2241,7 @@ const TABS = [
   ['mapa', '08 · Conexões'],
   ['links', '09 · Links'],
   ['dicas', '10 · Dicas'],
-  ['dados', '11 · Dados'],
+  ['dados', '11 · Suporte'],
   ['perfil', '12 · Perfil']
 ];
 
@@ -2160,7 +2256,7 @@ const TAB_ICONS = {
   mapa: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="12" cy="18" r="3"/><line x1="8.5" y1="7.5" x2="10.5" y2="15.5"/><line x1="15.5" y1="7.5" x2="13.5" y2="15.5"/></svg>',
   links: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
   dicas: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg>',
-  dados: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>',
+  dados: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
   perfil: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
 };
 
@@ -2171,7 +2267,7 @@ const SHEET_MODULES = [
   { id: 'mapa', num: '08', label: 'Conexões' },
   { id: 'links', num: '09', label: 'Links' },
   { id: 'dicas', num: '10', label: 'Dicas' },
-  { id: 'dados', num: '11', label: 'Dados' },
+  { id: 'dados', num: '11', label: 'Suporte' },
   { id: 'perfil', num: '12', label: 'Perfil' }
 ];
 
@@ -2730,13 +2826,163 @@ V.dicas = () => {
   <div class="card">${D.vespera.split('<h2>2.3')[0]}</div><div class="card"><details><summary>Como escrever a resposta numa prova sem consulta (guia, seção 6)</summary>${D.escrita}</details></div>`;
 };
 
-// ---------- dados
+// ---------- suporte tático & whatsapp
+const getCandidateName = () => localStorage.getItem('crivos_user_name') || 'CANDIDATO PPGHS';
+const getCandidateEmail = () => localStorage.getItem('crivos_user_email') || 'candidato@crivos.me';
+const getCandidateAvatar = () => localStorage.getItem('crivos_user_avatar') || '';
+
+const SUPPORT_CATEGORIES = [
+  {
+    id: 'duvida_edital',
+    tag: 'CONTEÚDO',
+    title: 'Dúvida Pedagógica / Edital',
+    desc: 'Esclarecimento sobre a bibliografia de 12 textos, eixos de Pareto ou metodologia do guia.',
+    template: 'Preciso de esclarecimento pedagógico sobre a bibliografia e os tópicos prioritários do edital.'
+  },
+  {
+    id: 'falha_tecnica',
+    tag: 'SISTEMA',
+    title: 'Falha Técnica na Interface',
+    desc: 'Problema com carregamento de PDFs, renderização de tela, botões ou comportamento no celular.',
+    template: 'Estou identificando uma falha técnica na interface do sistema (botão, visualização ou carregamento).'
+  },
+  {
+    id: 'cards_simulado',
+    tag: 'MÓDULOS',
+    title: 'Inconsistência nos Cards / Simulado',
+    desc: 'Dúvidas no algoritmo de repetição SM-2, cronômetro pomodoro ou grade de autocorreção.',
+    template: 'Gostaria de relatar uma inconsistência ou tirar dúvida sobre os módulos de Flashcards SM-2 / Simulado.'
+  },
+  {
+    id: 'backup_perda',
+    tag: 'DADOS',
+    title: 'Backup e Restauração de Dados',
+    desc: 'Dificuldade para exportar/importar progresso salvo ou migração de celular/computador.',
+    template: 'Preciso de auxílio para exportar, importar ou recuperar o histórico salvo dos meus estudos.'
+  },
+  {
+    id: 'upgrade_consultoria',
+    tag: 'CONSULTORIA',
+    title: 'Upgrade de Plano / Defesa Oral',
+    desc: 'Simulação individualizada da arguição de banca, revisão de pré-projeto ou mentoria.',
+    template: 'Gostaria de solicitar informações sobre simulação da arguição de banca e consultoria de pré-projeto.'
+  },
+  {
+    id: 'outro',
+    tag: 'GERAL',
+    title: 'Outro Assunto / Contato Geral',
+    desc: 'Falar diretamente com um membro da coordenação tática da CRIVOS.',
+    template: 'Gostaria de falar diretamente com a equipe da CRIVOS sobre meu plano de estudos.'
+  }
+];
+
+let selectedSupportCat = 'duvida_edital';
+let supportDetailText = '';
+
 V.dados = () => {
-  $('#app').innerHTML = `<div class="card"><h3>Backup do progresso</h3><p class="mu">O progresso fica salvo neste navegador (localStorage). Exporte para guardar ou passar para outro computador.</p><div class="row"><button class="btn p" id="ex">EXPORTAR JSON</button><label class="btn" style="cursor:pointer">IMPORTAR JSON<input type="file" id="im" accept=".json" class="hide"></label><button class="btn" id="rs" style="background:var(--red);color:#fff">APAGAR TUDO</button></div></div>`;
-  $('#ex').onclick = () => { const b = new Blob([JSON.stringify(S, null, 1)], {type: 'application/json'}), a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'progresso_ppghs_' + today() + '.json'; a.click(); };
+  const candName = getCandidateName();
+  const candEmail = getCandidateEmail();
+
+  function getMsg(catId, extra) {
+    const cat = SUPPORT_CATEGORIES.find(c => c.id === catId) || SUPPORT_CATEGORIES[0];
+    let msg = `Olá, equipe CRIVOS!\n\n`;
+    msg += `Sou aluno(a) ${candName} (E-mail: ${candEmail}), matriculado(a) no plano PPGHS / UERJ 2027 // ELITE.\n\n`;
+    msg += `📌 Categoria: ${cat.title}\n`;
+    msg += `📝 Motivo: ${cat.template}\n`;
+    if (extra && extra.trim()) {
+      msg += `\n💬 Detalhes adicionais:\n"${extra.trim()}"\n`;
+    }
+    msg += `\n⚙️ Canal: Sistema Tático CRIVOS v26.2`;
+    return msg;
+  }
+
+  const initialMsg = getMsg(selectedSupportCat, supportDetailText);
+  const waUrl = `https://wa.me/5521970821736?text=${encodeURIComponent(initialMsg)}`;
+
+  $('#app').innerHTML = `
+    <div class="card" style="border-left: 8px solid #25D366;">
+      <h3><span>Central de Suporte Tático</span><span class="tag" style="background:#25D366;color:#FFFFFF;border-color:var(--border-color);">WHATSAPP OFICIAL</span></h3>
+      <p class="mu">Atendimento direto com a equipe operacional da CRIVOS. Selecione a categoria do chamado e envie a mensagem pré-formatada no WhatsApp.</p>
+      
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;">
+        1. SELECIONE O TÓPICO DO ATENDIMENTO:
+      </div>
+      <div class="support-category-grid" id="support-cats">
+        ${SUPPORT_CATEGORIES.map(c => `
+          <div class="support-cat-card ${c.id === selectedSupportCat ? 'active' : ''}" data-cat="${c.id}">
+            <div class="support-cat-top">
+              <span class="support-cat-title">${c.title}</span>
+              <span class="tag" style="font-size:9px;padding:2px 4px;">${c.tag}</span>
+            </div>
+            <div class="support-cat-desc">${c.desc}</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;">
+        2. DETALHAMENTO ADICIONAL (OPCIONAL):
+      </div>
+      <textarea id="support-extra-text" rows="3" placeholder="Descreva o que ocorreu ou sua dúvida específica para acelerar a resposta...">${esc(supportDetailText)}</textarea>
+
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin:16px 0 6px;text-transform:uppercase;">
+        3. PRÉVIA DO PROTOCOLO GERADO PARA WHATSAPP:
+      </div>
+      <div class="support-preview-box" id="support-preview">${esc(initialMsg)}</div>
+
+      <a id="support-wa-btn" href="${waUrl}" target="_blank" rel="noopener" class="whatsapp-support-btn" onclick="haptic(16)">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        <span>Falar no WhatsApp (21 97082-1736)</span>
+      </a>
+    </div>
+
+    <div class="card">
+      <h3><span>Backup & Diagnóstico Local</span><span class="tag">DADOS</span></h3>
+      <p class="mu">Todo o progresso de cronograma, fichamentos e flashcards fica armazenado com segurança neste navegador (localStorage). Exporte seu arquivo de backup para segurança ou migração de máquina.</p>
+      <div class="row">
+        <button class="btn p" id="ex">EXPORTAR BACKUP (.JSON)</button>
+        <label class="btn" style="cursor:pointer">IMPORTAR BACKUP (.JSON)<input type="file" id="im" accept=".json" class="hide"></label>
+        <button class="btn" id="rs" style="background:var(--crivos-red);color:#FFFFFF;">LIMPAR MEMÓRIA LOCAL</button>
+      </div>
+    </div>
+  `;
+
+  $('#support-cats').onclick = e => {
+    const card = e.target.closest('.support-cat-card');
+    if (!card || !card.dataset.cat) return;
+    haptic(12);
+    selectedSupportCat = card.dataset.cat;
+    document.querySelectorAll('.support-cat-card').forEach(el => {
+      el.classList.toggle('active', el.dataset.cat === selectedSupportCat);
+    });
+    updateSupportUI();
+  };
+
+  $('#support-extra-text').oninput = e => {
+    supportDetailText = e.target.value;
+    updateSupportUI();
+  };
+
+  function updateSupportUI() {
+    const newMsg = getMsg(selectedSupportCat, supportDetailText);
+    const newUrl = `https://wa.me/5521970821736?text=${encodeURIComponent(newMsg)}`;
+    const preview = $('#support-preview');
+    if (preview) preview.textContent = newMsg;
+    const btn = $('#support-wa-btn');
+    if (btn) btn.href = newUrl;
+  }
+
+  $('#ex').onclick = () => {
+    haptic(14);
+    const b = new Blob([JSON.stringify(S, null, 1)], {type: 'application/json'}), a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'backup_crivos_ppghs_' + today() + '.json';
+    a.click();
+  };
+
   $('#im').onchange = e => {
     const f = e.target.files[0];
     if (!f) return;
+    haptic(14);
     f.text().then(t => {
       try {
         const o = JSON.parse(t);
@@ -2750,7 +2996,9 @@ V.dados = () => {
       }
     });
   };
+
   $('#rs').onclick = () => {
+    haptic(16);
     uiConfirm('Deseja realmente apagar todo o progresso salvo neste navegador?', () => {
       localStorage.removeItem(LS);
       location.reload();
@@ -2758,11 +3006,9 @@ V.dados = () => {
   };
 };
 
-// ---------- perfil & credencial
-const getCandidateName = () => localStorage.getItem('crivos_user_name') || 'CANDIDATO PPGHS';
-const getCandidateEmail = () => localStorage.getItem('crivos_user_email') || 'candidato@crivos.me';
-const getCandidateAvatar = () => localStorage.getItem('crivos_user_avatar') || '';
+V.suporte = V.dados;
 
+// ---------- perfil & credencial
 function syncUserIdentity() {
   const name = getCandidateName();
   const avatar = getCandidateAvatar();
