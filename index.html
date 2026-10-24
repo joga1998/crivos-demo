@@ -543,11 +543,11 @@ header.crivos-header,
 }
 
 .sidebar-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11.5px;
-  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   white-space: nowrap;
   opacity: 0;
   transform: translateX(-10px);
@@ -1827,8 +1827,9 @@ footer.bauhaus-footer {
   }
 
   .sheet-item-name {
-    font-size: 10px;
-    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -3114,26 +3115,26 @@ V.crono2 = () => {
 window.applySug = () => { suggestions().forEach(([l, d]) => S.moved[l.i] = d); save(); V.crono2(); };
 
 const ST = ['', 'lido', 'revisado', 'dominado'], STN = {'': 'não lido', lido: 'lido', revisado: 'revisado', dominado: 'dominado'};
-V.textos = () => {
-  let activePrio = '';
-  let activeSec = '';
+let activePrio = '';
+let activeSec = '';
 
+V.textos = () => {
   $('#app').innerHTML = `<div class="app-view-toolbar">
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--ink-muted);">PRIORIDADE:</span>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <span style="font-family:'Inter',sans-serif;font-size:11px;font-weight:800;color:var(--ink-muted);text-transform:uppercase;">PRIORIDADE:</span>
       <div class="filter-pills-row" id="prio-pills" style="margin:0;">
-        <button type="button" class="filter-pill active" data-prio="">TODAS</button>
-        <button type="button" class="filter-pill" data-prio="ESSENCIAL">ESSENCIAL</button>
-        <button type="button" class="filter-pill" data-prio="IMPORTANTE">IMPORTANTE</button>
-        <button type="button" class="filter-pill" data-prio="SECUNDÁRIO">SECUNDÁRIO</button>
+        <button type="button" class="filter-pill ${!activePrio ? 'active' : ''}" data-prio="">TODAS</button>
+        <button type="button" class="filter-pill ${activePrio === 'ESSENCIAL' ? 'active' : ''}" data-prio="ESSENCIAL">ESSENCIAL</button>
+        <button type="button" class="filter-pill ${activePrio === 'IMPORTANTE' ? 'active' : ''}" data-prio="IMPORTANTE">IMPORTANTE</button>
+        <button type="button" class="filter-pill ${activePrio === 'SECUNDÁRIO' ? 'active' : ''}" data-prio="SECUNDÁRIO">SECUNDÁRIO</button>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--ink-muted);">SEÇÃO:</span>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <span style="font-family:'Inter',sans-serif;font-size:11px;font-weight:800;color:var(--ink-muted);text-transform:uppercase;">SEÇÃO:</span>
       <div class="filter-pills-row" id="sec-pills" style="margin:0;">
-        <button type="button" class="filter-pill active" data-sec="">TODAS</button>
-        <button type="button" class="filter-pill" data-sec="area">ÁREA</button>
-        <button type="button" class="filter-pill" data-sec="linha">LINHA 1</button>
+        <button type="button" class="filter-pill ${!activeSec ? 'active' : ''}" data-sec="">TODAS</button>
+        <button type="button" class="filter-pill ${activeSec === 'area' ? 'active' : ''}" data-sec="area">ÁREA</button>
+        <button type="button" class="filter-pill ${activeSec === 'linha' ? 'active' : ''}" data-sec="linha">LINHA 1</button>
       </div>
     </div>
   </div><div id="tl"></div>`;
@@ -3203,7 +3204,13 @@ V.textos = () => {
   renderList();
   V._r = renderList;
 };
-V.t2 = () => { const y = scrollY; if (typeof V._r === 'function') V._r(); scrollTo(0, y); };
+V.t2 = () => {
+  const appEl = document.getElementById('app');
+  const y = appEl ? appEl.scrollTop : scrollY;
+  if (typeof V._r === 'function') V._r();
+  if (appEl) appEl.scrollTop = y;
+  else scrollTo(0, y);
+};
 
 let Q = [], qi = 0, show = false;
 V.cards = () => { Q = queue(); qi = 0; show = false; rc(); };
