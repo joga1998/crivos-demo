@@ -2766,7 +2766,7 @@ const TABS = [
   ['sim', '06 · Simulado'],
   ['arg', '07 · Arguição'],
   ['mapa', '08 · Conexões'],
-  ['links', '09 · Links'],
+  ['links', '09 · Arquivos'],
   ['dicas', '10 · Dicas'],
   ['dados', '11 · Suporte'],
   ['perfil', '12 · Perfil']
@@ -2792,7 +2792,7 @@ const SHEET_MODULES = [
   { id: 'sim', num: '06', label: 'Simulado' },
   { id: 'arg', num: '07', label: 'Arguição' },
   { id: 'mapa', num: '08', label: 'Conexões' },
-  { id: 'links', num: '09', label: 'Links' },
+  { id: 'links', num: '09', label: 'Arquivos' },
   { id: 'dicas', num: '10', label: 'Dicas' },
   { id: 'dados', num: '11', label: 'Suporte' },
   { id: 'perfil', num: '12', label: 'Perfil' }
@@ -3444,12 +3444,121 @@ V.mapa = () => {
   draw();
 };
 
-// ---------- links
+// ---------- 09 · arquivos (materiais crivos + materiais do candidato)
 V.links = () => {
-  $('#app').innerHTML = `<div class="card"><h3>Processo seletivo</h3><ul><li><a href="edital/Edital_PPGHS_Mestrado_2027_001-2027.pdf" target="_blank">Edital 001/2027 (PDF local)</a></li><li><a href="https://www.ppghsuerj.pro.br/programa-de-pos-graduacao-em-historia-social/processo-seletivo/" target="_blank">Página do processo seletivo PPGHS</a> (online)</li><li><a href="https://www.cepuerj.uerj.br/cursos2.php?tipo=cursos&curso=E02666M&ano=2027" target="_blank">CEPUERJ: boleto da inscrição</a> (online)</li><li>Dúvidas: <a href="mailto:inscricoesppghs@gmail.com">inscricoesppghs@gmail.com</a></li></ul></div>
-  <div class="card"><h3>Materiais do kit</h3><ul><li><a href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank">Guia de estudos</a></li><li><a href="Apostila_PPGHS_2027.pdf" target="_blank">Apostila</a></li><li><a href="Guia_Bibliografia_x_PreProjeto.pdf" target="_blank">Guia bibliografia × pré-projeto</a></li><li><a href="00_INDICE_checklist.pdf" target="_blank">Índice e checklist</a></li><li><a href="README.md" target="_blank">README</a></li></ul></div>
-  <div class="card"><h3>Textos da bibliografia</h3><ul>${TX.map(t => `<li style="margin-bottom:8px"><span class="prio ${t.prio}">${t.prio[0]}</span> <a href="textos/${t.arq}" target="_blank">${t.ref}</a></li>`).join('')}</ul><h3>Complementares</h3><ul><li><a href="textos/CHARTIER_Roger_1991_O-mundo-como-representacao_COMPLEMENTAR.pdf" target="_blank">CHARTIER_Roger_1991_O-mundo-como-representacao_COMPLEMENTAR.pdf</a></li><li><a href="textos/FERREIRA_Marieta-de-Moraes_2018_Historia-do-tempo-presente_COMPLEMENTAR.pdf" target="_blank">FERREIRA_Marieta-de-Moraes_2018_Historia-do-tempo-presente_COMPLEMENTAR.pdf</a></li><li><a href="textos/KOSELLECK_Reinhart_1992_Uma-historia-dos-conceitos_COMPLEMENTAR.pdf" target="_blank">KOSELLECK_Reinhart_1992_Uma-historia-dos-conceitos_COMPLEMENTAR.pdf</a></li></ul></div>
-  <div class="card"><h3>Provas e editais para comparação</h3><ul><li><a href="provas_anteriores/SIMILAR_UFES_PPGHIS_Mestrado_2025-1_chave_correcao_prova_escrita.pdf" target="_blank">SIMILAR_UFES_PPGHIS_Mestrado_2025-1_chave_correcao_prova_escrita.pdf</a></li><li><a href="provas_anteriores/SIMILAR_UNIRIO_PPGH_Mestrado_2021_questoes_prova_escrita.pdf" target="_blank">SIMILAR_UNIRIO_PPGH_Mestrado_2021_questoes_prova_escrita.pdf</a></li><li><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2023.pdf" target="_blank">Edital_PPGHS_Mestrado_selecao_2023.pdf</a></li><li><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2024.pdf" target="_blank">Edital_PPGHS_Mestrado_selecao_2024.pdf</a></li><li><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2025.pdf" target="_blank">Edital_PPGHS_Mestrado_selecao_2025.pdf</a></li><li><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2026.pdf" target="_blank">Edital_PPGHS_Mestrado_selecao_2026.pdf</a></li></ul></div><div class="card"><h3>Pré-projeto</h3><ul><li><a href="projeto/pre_projeto_final.pdf" target="_blank"><b>Pré-projeto Final (PDF)</b> — pre_projeto_final.pdf</a></li></ul></div>`;
+  $('#app').innerHTML = `
+    <div class="card" style="border-left: 8px solid var(--crivos-red); background: var(--bg-card); margin-bottom: 24px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span class="sq-red" style="width:12px;height:12px;background:var(--crivos-red);display:inline-block;"></span>
+        <h2 style="margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-0.02em;">CENTRAL DE ARQUIVOS // CRIVOS PRIME</h2>
+      </div>
+      <p class="mu" style="margin:0;">
+        Repositório oficial com duas divisões táticas: os <b>Materiais CRIVOS</b> gerados sob medida pela nossa engenharia e os <b>Materiais do Candidato</b> (bibliografia mapeada, pré-projeto e provas).
+      </p>
+    </div>
+
+    <!-- SEÇÃO 1: MATERIAIS CRIVOS (O QUE NÓS GERAMOS) -->
+    <div class="card" style="border-left: 6px solid var(--crivos-blue); margin-bottom: 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border-color);padding-bottom:10px;margin-bottom:16px;">
+        <div>
+          <span class="tag ar" style="margin-right:8px;">ENGENHARIA CRIVOS</span>
+          <b style="font-size:16px;text-transform:uppercase;">1. MATERIAIS CRIVOS // ENTREGÁVEIS OFICIAIS</b>
+        </div>
+        <span class="mu" style="font-size:11px;">PRODUTOS DIGITAIS GERADOS</span>
+      </div>
+      <p class="mu" style="margin-bottom:14px;">Guias estratégicos, apostilas editoriais, checklists e dossiês elaborados pela equipe CRIVOS para o seu certame:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:14px;">
+        <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">GUIA DE ESTUDOS CRIVOS (PÓS-EDITAL)</div>
+          <div class="mu" style="font-size:11px;margin-bottom:10px;">Planejamento estratégico de 78 páginas, 12 seções e cronograma diário.</div>
+          <a class="btn s p" href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank" rel="noopener">📥 ABRIR GUIA DE ESTUDOS (PDF)</a>
+        </div>
+        <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">APOSTILA TÁTICA COMPILADA</div>
+          <div class="mu" style="font-size:11px;margin-bottom:10px;">Compêndio com os resumos estruturados e quadros comparativos de autores.</div>
+          <a class="btn s p" href="Apostila_PPGHS_2027.pdf" target="_blank" rel="noopener">📥 ABRIR APOSTILA TÁTICA (PDF)</a>
+        </div>
+        <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">GUIA BIBLIOGRAFIA × PRÉ-PROJETO</div>
+          <div class="mu" style="font-size:11px;margin-bottom:10px;">Análise de amarração direta da banca examinadora com o projeto de pesquisa.</div>
+          <a class="btn s p" href="Guia_Bibliografia_x_PreProjeto.pdf" target="_blank" rel="noopener">📥 ABRIR GUIA DE AMARRAÇÃO (PDF)</a>
+        </div>
+        <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">ÍNDICE TÁTICO & CHECKLIST DE PROVA</div>
+          <div class="mu" style="font-size:11px;margin-bottom:10px;">Checklist operacional de execução, pontos de controle e roteiro D-7.</div>
+          <a class="btn s p" href="00_INDICE_checklist.pdf" target="_blank" rel="noopener">📥 ABRIR ÍNDICE & CHECKLIST (PDF)</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 2: MATERIAIS DO CANDIDATO (BIBLIOGRAFIA E TODO O RESTO) -->
+    <div class="card" style="border-left: 6px solid #111111;">
+      <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border-color);padding-bottom:10px;margin-bottom:16px;">
+        <div>
+          <span class="tag li" style="margin-right:8px;">ALERVO DO ALUNO</span>
+          <b style="font-size:16px;text-transform:uppercase;">2. MATERIAIS DO CANDIDATO // BIBLIOGRAFIA & ACERVO PESSOAL</b>
+        </div>
+        <span class="mu" style="font-size:11px;">ARQUIVOS ANCORADOS NO CRIVOS PRIME</span>
+      </div>
+      <p class="mu" style="margin-bottom:14px;">Documentos submetidos pelo candidato e mapeados pela engenharia no seu Sistema Operacional:</p>
+
+      <!-- Sub-bloco A: Edital e Links Oficiais -->
+      <details open style="margin-bottom:14px;">
+        <summary><b>Edital e Páginas Oficiais do Certame</b></summary>
+        <ul style="margin-top:10px;">
+          <li style="margin-bottom:6px;"><a href="edital/Edital_PPGHS_Mestrado_2027_001-2027.pdf" target="_blank"><b>Edital Oficial 001/2027 (PDF Anexado)</b></a></li>
+          <li style="margin-bottom:6px;"><a href="https://www.ppghsuerj.pro.br/programa-de-pos-graduacao-em-historia-social/processo-seletivo/" target="_blank" rel="noopener">Página Institucional do Processo Seletivo (PPGHS / UERJ) ↗</a></li>
+          <li style="margin-bottom:6px;"><a href="https://www.cepuerj.uerj.br/cursos2.php?tipo=cursos&curso=E02666M&ano=2027" target="_blank" rel="noopener">CEPUERJ: Emissão do boleto de inscrição ↗</a></li>
+        </ul>
+      </details>
+
+      <!-- Sub-bloco B: Pré-Projeto do Candidato -->
+      <details open style="margin-bottom:14px;">
+        <summary><b>Pré-Projeto do Candidato (Submetido para Calibração)</b></summary>
+        <div style="padding:10px 0;">
+          <a class="btn s" href="projeto/pre_projeto_final.pdf" target="_blank" rel="noopener">📄 ABRIR PRÉ-PROJETO FINAL (PDF)</a>
+          <span class="mu" style="font-size:11px;margin-left:8px;">pre_projeto_final.pdf — Ancorado nas fichas de arguição oral</span>
+        </div>
+      </details>
+
+      <!-- Sub-bloco C: Bibliografia Obrigatória Completa do Edital -->
+      <details open style="margin-bottom:14px;">
+        <summary><b>Bibliografia Obrigatória do Edital (${TX.length} Textos Mapeados)</b></summary>
+        <ul style="margin-top:10px;">
+          ${TX.map(t => `<li style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px dashed var(--border-subtle);padding-bottom:6px;">
+            <div>
+              <span class="prio ${t.prio}">${t.prio[0]}</span>
+              <span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span>
+              <span style="font-size:13px;font-weight:600;margin-left:4px;">${t.ref}</span>
+            </div>
+            <a class="btn s" href="textos/${t.arq}" target="_blank" rel="noopener">📖 ABRIR ARQUIVO</a>
+          </li>`).join('')}
+        </ul>
+      </details>
+
+      <!-- Sub-bloco D: Textos Complementares e Referências de Apoio -->
+      <details style="margin-bottom:14px;">
+        <summary><b>Textos Complementares & Leituras de Apoio</b></summary>
+        <ul style="margin-top:10px;">
+          <li style="margin-bottom:6px;"><a href="textos/CHARTIER_Roger_1991_O-mundo-como-representacao_COMPLEMENTAR.pdf" target="_blank">CHARTIER, Roger (1991) — O mundo como representação (PDF)</a></li>
+          <li style="margin-bottom:6px;"><a href="textos/FERREIRA_Marieta-de-Moraes_2018_Historia-do-tempo-presente_COMPLEMENTAR.pdf" target="_blank">FERREIRA, Marieta de Moraes (2018) — História do tempo presente (PDF)</a></li>
+          <li style="margin-bottom:6px;"><a href="textos/KOSELLECK_Reinhart_1992_Uma-historia-dos-conceitos_COMPLEMENTAR.pdf" target="_blank">KOSELLECK, Reinhart (1992) — Uma história dos conceitos (PDF)</a></li>
+        </ul>
+      </details>
+
+      <!-- Sub-bloco E: Provas e Editais Anteriores -->
+      <details>
+        <summary><b>Provas e Editais Anteriores (Histórico & Padrão de Resposta da Banca)</b></summary>
+        <ul style="margin-top:10px;">
+          <li style="margin-bottom:6px;"><a href="provas_anteriores/SIMILAR_UFES_PPGHIS_Mestrado_2025-1_chave_correcao_prova_escrita.pdf" target="_blank">UFES PPGHIS 2025-1 — Chave de Correção e Prova Escrita (PDF)</a></li>
+          <li style="margin-bottom:6px;"><a href="provas_anteriores/SIMILAR_UNIRIO_PPGH_Mestrado_2021_questoes_prova_escrita.pdf" target="_blank">UNIRIO PPGH 2021 — Questões da Prova Escrita (PDF)</a></li>
+          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2026.pdf" target="_blank">Edital PPGHS 2026 (PDF Histórico)</a></li>
+          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2025.pdf" target="_blank">Edital PPGHS 2025 (PDF Histórico)</a></li>
+          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2024.pdf" target="_blank">Edital PPGHS 2024 (PDF Histórico)</a></li>
+          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2023.pdf" target="_blank">Edital PPGHS 2023 (PDF Histórico)</a></li>
+        </ul>
+      </details>
+    </div>`;
 };
 
 // ---------- dicas
