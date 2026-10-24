@@ -2513,14 +2513,10 @@ main#app::-webkit-scrollbar-thumb {
     <main id="app"></main>
     <div class="crivos-status-bar" id="app-status-bar">
       <div class="status-bar-left">
-        <span class="status-bar-brand-sq" style="width:8px;height:8px;background:var(--crivos-red);display:inline-block;aspect-ratio:1/1;"></span>
-        <span class="status-bar-brand-name" style="font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.03em;color:var(--ink-primary);font-size:11px;">CRIVOS // </span>
-        <span class="status-bar-copy">INTELIGÊNCIA PARA CONCURSOS E EXAMES</span>
+        <span>INTELIGÊNCIA PARA CONCURSOS E EXAMES.</span>
       </div>
       <div class="status-bar-right">
-        <span class="status-bar-extra" style="display:inline-flex;align-items:center;gap:6px;"><span class="status-indicator-dot"></span><span>SISTEMA ATIVO</span></span>
-        <span class="status-bar-extra">MODO LOCAL // UTF-8</span>
-        <div class="status-bar-version">v26.2</div>
+        <span>v26.2</span>
       </div>
     </div>
   </div>
@@ -4186,27 +4182,37 @@ go(initialTab);
     unlocked = true;
     if (bootInterval) clearInterval(bootInterval);
 
-    if (window.gsap) {
-      gsap.to(['.boot-terminal', '.boot-top', '.boot-bottom'], {
-        opacity: 0,
-        y: -10,
-        duration: 0.22,
-        ease: 'power2.in'
-      });
-      gsap.to(bootShutters, {
-        scaleY: 0,
-        duration: 0.55,
-        stagger: 0.05,
-        ease: 'power4.inOut',
-        delay: 0.12,
-        onComplete: () => {
-          bootOverlay.style.display = 'none';
-        }
-      });
-    } else {
+    try {
+      if (window.gsap) {
+        gsap.to(['.boot-terminal', '.boot-top', '.boot-bottom'], {
+          opacity: 0,
+          y: -10,
+          duration: 0.2,
+          ease: 'power2.in'
+        });
+        gsap.to(bootShutters, {
+          scaleY: 0,
+          duration: 0.45,
+          stagger: 0.04,
+          ease: 'power4.inOut',
+          delay: 0.08,
+          onComplete: () => {
+            bootOverlay.style.display = 'none';
+          }
+        });
+      } else {
+        bootOverlay.style.opacity = '0';
+        setTimeout(() => { bootOverlay.style.display = 'none'; }, 200);
+      }
+    } catch (e) {
       bootOverlay.style.display = 'none';
     }
   }
+
+  // Permite clicar em qualquer lugar da tela para pular a animação imediatamente
+  bootOverlay.onclick = unlockInterface;
+  // Trava de segurança: garante o destravamento absoluto da interface em no máximo 1.8 segundos
+  setTimeout(unlockInterface, 1800);
 
   bootLines.forEach((line, idx) => {
     setTimeout(() => {
