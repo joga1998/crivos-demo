@@ -1669,10 +1669,10 @@ footer.bauhaus-footer {
   }
 
   .bottom-tab-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif !important;
     font-size: 9.5px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+    font-weight: 800;
+    letter-spacing: 0.03em;
     text-transform: uppercase;
     line-height: 1;
   }
@@ -1816,7 +1816,7 @@ footer.bauhaus-footer {
     color: var(--ink-primary);
     transition: all 0.12s ease;
     text-align: center;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif !important;
   }
 
   .sheet-grid-item:active {
@@ -2820,6 +2820,7 @@ main#app::-webkit-scrollbar-thumb {
 const D = JSON.parse(document.getElementById('data').textContent);
 const LS = 'ppghs_painel_v1';
 const FIXED_TITLE = 'CRIVOS // PPGHS UERJ 2027';
+let currentPlanTier = 'prime'; // Plano CRIVOS PRIME (integra arquivos do próprio usuário)
 document.title = FIXED_TITLE;
 
 let S = {};
@@ -3480,6 +3481,13 @@ V.textos = () => {
 
   renderList();
   V._r = renderList;
+};
+V.t2 = () => {
+  const appEl = document.getElementById('app');
+  const y = appEl ? appEl.scrollTop : scrollY;
+  if (typeof V._r === 'function') V._r();
+  if (appEl) appEl.scrollTop = y;
+  else scrollTo(0, y);
 };
 
 let Q = [], qi = 0, show = false;
