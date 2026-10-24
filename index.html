@@ -2398,8 +2398,17 @@ main#app::-webkit-scrollbar-thumb {
     height: 100% !important;
   }
   .crivos-status-bar,
-  #app-status-bar {
-    display: none !important; /* Oculta completamente a status bar em telas pequenas / mobile */
+  #app-status-bar,
+  div#app-status-bar,
+  footer.crivos-status-bar {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
   }
 }
 
@@ -4182,6 +4191,9 @@ go(initialTab);
     unlocked = true;
     if (bootInterval) clearInterval(bootInterval);
 
+    // Imediatamente remove o bloqueio de cliques
+    bootOverlay.style.pointerEvents = 'none';
+
     try {
       if (window.gsap) {
         gsap.to(['.boot-terminal', '.boot-top', '.boot-bottom'], {
@@ -4192,22 +4204,30 @@ go(initialTab);
         });
         gsap.to(bootShutters, {
           scaleY: 0,
-          duration: 0.45,
-          stagger: 0.04,
+          duration: 0.4,
+          stagger: 0.03,
           ease: 'power4.inOut',
-          delay: 0.08,
+          delay: 0.05,
           onComplete: () => {
             bootOverlay.style.display = 'none';
+            if (bootOverlay.parentNode) bootOverlay.parentNode.removeChild(bootOverlay);
           }
         });
       } else {
         bootOverlay.style.opacity = '0';
-        setTimeout(() => { bootOverlay.style.display = 'none'; }, 200);
+        setTimeout(() => {
+          bootOverlay.style.display = 'none';
+          if (bootOverlay.parentNode) bootOverlay.parentNode.removeChild(bootOverlay);
+        }, 150);
       }
     } catch (e) {
       bootOverlay.style.display = 'none';
+      if (bootOverlay.parentNode) bootOverlay.parentNode.removeChild(bootOverlay);
     }
   }
+
+  // Trava de segurança imediata: após 1.2s força o desbloqueio
+  setTimeout(unlockInterface, 1200);
 
   // Permite clicar em qualquer lugar da tela para pular a animação imediatamente
   bootOverlay.onclick = unlockInterface;
