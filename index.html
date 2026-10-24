@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <script>
+    // Fail-safe global de inicialização imediata: garante que a interface destrave independentemente de cache
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        var overlay = document.getElementById('boot-overlay');
+        if (overlay) {
+          overlay.style.pointerEvents = 'none';
+          overlay.style.display = 'none';
+          if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }
+      }, 1500);
+    });
+  </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CRIVOS // Sistemas de Estudo Sob Demanda</title>
@@ -18,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!-- GSAP for tactical micro-interactions and smooth reveals -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 (function() {
   try {
@@ -2815,9 +2831,15 @@ function haptic(pattern = 14) {
 
 // Registro do Service Worker PWA para suporte offline e tela cheia
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  });
+  // Desregistra qualquer Service Worker ativo e limpa caches para evitar retenção de versões antigas
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    for (const reg of registrations) {
+      reg.unregister();
+    }
+  }).catch(() => {});
+  if ('caches' in window) {
+    caches.keys().then(keys => keys.forEach(k => caches.delete(k))).catch(() => {});
+  }
 }
 
 function initBottomSheetGrid() {
