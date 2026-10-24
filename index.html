@@ -2649,7 +2649,7 @@ main#app::-webkit-scrollbar-thumb {
     </div>
     <div class="crivos-topbar-right">
       <button type="button" class="topbar-quick-search" id="cmd-palette-btn" title="Busca Rápida de Módulos e Disciplinas (Ctrl+K)">
-        <span>🔍 BUSCAR</span>
+        <span>BUSCAR</span>
         <kbd>Ctrl+K</kbd>
       </button>
 
@@ -3215,7 +3215,7 @@ V.home = () => {
       <h3><span>${tod.length ? 'TAREFA DE HOJE (' + br(t) + ', ' + wd(t) + ')' : 'PRÓXIMA TAREFA'}</span><span class="tag ar">FOCO ATIVO</span></h3>
       ${next.map(x => `<p class="mu">DATA: ${br(x.d)} · CARGA ESTIMADA: ${String(x.h).replace('.', ',')}H</p><p style="font-size:16px">${x.t}</p><div class="row"><button class="btn p" onclick="mark(${x.i},'done');go('home')">✔ MARCAR FEITO</button><button class="btn" onclick="mark(${x.i},'skip');go('home')">PULAR</button><button class="btn" onclick="go('pomo')">▶ INICIAR POMODORO</button></div>`).join('') || '<p>Cronograma concluído. Siga para a véspera (aba Dicas).</p>'}
     </div>
-    ${late.length ? `<div class="card" style="border-left: 8px solid var(--red); background: var(--s2)"><b>⚠ ${late.length} DIA(S) ATRASADO(S).</b> Veja as sugestões automáticas de reagendamento na aba <a href="#" onclick="go('crono');return false">Cronograma</a>.</div>` : ''}
+    ${late.length ? `<div class="card" style="border-left: 8px solid var(--red); background: var(--s2)"><b>[!] ${late.length} DIA(S) ATRASADO(S).</b> Veja as sugestões automáticas de reagendamento na aba <a href="#" onclick="go('crono');return false">Cronograma</a>.</div>` : ''}
     <div class="grid">
       <div class="card">
         <h3>Cronograma</h3>
@@ -3364,7 +3364,7 @@ V.textos = () => {
       </div>
 
       <button type="button" class="filter-trigger-btn" id="filter-trigger-btn" title="Filtrar por Prioridade e Seção">
-        <span>⚡ FILTRAR</span>
+        <span>FILTRAR</span>
         <span class="filter-trigger-badge" id="filter-count-badge">${(activePrio || activeSec) ? 'ATIVO' : 'TODOS'}</span>
       </button>
     </div>
@@ -3411,10 +3411,10 @@ V.textos = () => {
             ${ST.map(s => `<button class="btn s ${st === s ? 'p' : ''}" style="padding:5px 10px;font-size:10px;" onclick="S.texts['${t.id}']='${s}';save();toast('Status: ' + '${STN[s]}'.toUpperCase(), 'success');V.t2()">${STN[s]}</button>`).join('')}
           </div>
           <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            <button class="btn s p" style="padding:5px 12px;font-size:10px;" onclick="inspectTextDetails('${t.id}')">📑 FICHA LATERAL</button>
+            <button class="btn s p" style="padding:5px 12px;font-size:10px;" onclick="inspectTextDetails('${t.id}')">[FICHA LATERAL]</button>
             ${(currentPlanTier === 'prime') 
-              ? `<a class="btn s" style="padding:5px 12px;font-size:10px;" href="${pdfUrl}" target="_blank" rel="noopener">📖 ABRIR PDF</a>`
-              : `<a class="btn s" style="padding:5px 12px;font-size:10px;" href="${googleUrl}" target="_blank" rel="noopener">🔍 GOOGLE</a>`
+              ? `<a class="btn s" style="padding:5px 12px;font-size:10px;" href="${pdfUrl}" target="_blank" rel="noopener">[ABRIR PDF]</a>`
+              : `<a class="btn s" style="padding:5px 12px;font-size:10px;" href="${googleUrl}" target="_blank" rel="noopener">[GOOGLE]</a>`
             }
           </div>
         </div>
@@ -3675,7 +3675,7 @@ window.finishSim = () => {
 let AQ = null, AT = null;
 V.arg = () => {
   const weak = D.arg.map((q, i) => [q, i]).filter(([q, i]) => S.args[i] && S.args[i].c <= 2);
-  $('#app').innerHTML = `<div class="card"><h3>Treino de arguição (08–09/12)</h3><p class="mu">${D.arg.length} perguntas prováveis da banca. Sorteie, responda em voz alta em 2–3 minutos (de preferência gravando), depois compare com a linha de resposta e avalie sua confiança.</p><div class="row"><select id="ac"><option value="">TODAS AS CATEGORIAS</option>${[...new Set(D.arg.map(q => q.cat))].map(c => `<option>${c}</option>`).join('')}</select><label class="mu"><input type="checkbox" id="aw"> SÓ PONTOS FRACOS</label><select id="ad"><option value="120">2 MIN</option><option value="180" selected>3 MIN</option></select><button class="btn p" onclick="drawArg()">🎲 SORTEAR PERGUNTA</button></div></div><div id="aq"></div>
+  $('#app').innerHTML = `<div class="card"><h3>Treino de arguição (08–09/12)</h3><p class="mu">${D.arg.length} perguntas prováveis da banca. Sorteie, responda em voz alta em 2–3 minutos (de preferência gravando), depois compare com a linha de resposta e avalie sua confiança.</p><div class="row"><select id="ac"><option value="">TODAS AS CATEGORIAS</option>${[...new Set(D.arg.map(q => q.cat))].map(c => `<option>${c}</option>`).join('')}</select><label class="mu"><input type="checkbox" id="aw"> SÓ PONTOS FRACOS</label><select id="ad"><option value="120">2 MIN</option><option value="180" selected>3 MIN</option></select><button class="btn p" onclick="drawArg()">[SORTEAR PERGUNTA]</button></div></div><div id="aq"></div>
   <div class="card"><h3>Pontos fracos (confiança ≤ 2)</h3>${weak.length ? '<ul>' + weak.map(([q, i]) => `<li><a href="#" onclick="showArg(${i});return false">${strip(q.p)}</a> <span class="mu">(conf. ${S.args[i].c})</span></li>`).join('') + '</ul>' : '<p class="mu">Nenhum ainda.</p>'}<p class="mu">Respondidas: ${Object.keys(S.args).length}/${D.arg.length}</p></div>
   <div class="card"><details><summary>Pontos frágeis do projeto e como defendê-los (guia 8.4)</summary>${D.fracos}</details><details><summary>O projeto em uma página e roteiro de abertura (guia 8.1–8.2)</summary>${D.resumo}</details><details><summary>No dia da arguição</summary>${D.diaarg}</details></div>`;
 };
@@ -3761,12 +3761,12 @@ V.links = () => {
         <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
           <div style="font-weight:700;font-size:13px;margin-bottom:4px;">GUIA DE ESTUDOS CRIVOS (PÓS-EDITAL)</div>
           <div class="mu" style="font-size:11px;margin-bottom:10px;">Planejamento estratégico de 56 páginas, 12 seções táticas e cronograma diário.</div>
-          <a class="btn s p" href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank" rel="noopener">📥 ABRIR GUIA DE ESTUDOS (PDF)</a>
+          <a class="btn s p" href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank" rel="noopener">[ABRIR GUIA DE ESTUDOS (PDF)]</a>
         </div>
         <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
           <div style="font-weight:700;font-size:13px;margin-bottom:4px;">APOSTILA TÁTICA COMPILADA</div>
           <div class="mu" style="font-size:11px;margin-bottom:10px;">Compêndio de 54 páginas com resumos estruturados, 123 citações verificadas e quadros comparativos.</div>
-          <a class="btn s p" href="Apostila_PPGHS_2027.pdf" target="_blank" rel="noopener">📥 ABRIR APOSTILA TÁTICA (PDF)</a>
+          <a class="btn s p" href="Apostila_PPGHS_2027.pdf" target="_blank" rel="noopener">[ABRIR APOSTILA TÁTICA (PDF)]</a>
         </div>
       </div>
     </div>
@@ -3796,7 +3796,7 @@ V.links = () => {
       <details open style="margin-bottom:14px;">
         <summary><b>Pré-Projeto do Candidato (Submetido para Calibração)</b></summary>
         <div style="padding:10px 0;">
-          <a class="btn s" href="projeto/pre_projeto_final.pdf" target="_blank" rel="noopener">📄 ABRIR PRÉ-PROJETO FINAL (PDF)</a>
+          <a class="btn s" href="projeto/pre_projeto_final.pdf" target="_blank" rel="noopener">[ABRIR PRÉ-PROJETO FINAL (PDF)]</a>
           <span class="mu" style="font-size:11px;margin-left:8px;">pre_projeto_final.pdf — Ancorado nas fichas de arguição oral</span>
         </div>
       </details>
@@ -3811,7 +3811,7 @@ V.links = () => {
               <span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span>
               <span style="font-size:13px;font-weight:600;margin-left:4px;">${t.ref}</span>
             </div>
-            <a class="btn s" href="textos/${t.arq}" target="_blank" rel="noopener">📖 ABRIR ARQUIVO</a>
+            <a class="btn s" href="textos/${t.arq}" target="_blank" rel="noopener">[ABRIR ARQUIVO]</a>
           </li>`).join('')}
         </ul>
       </details>
@@ -3918,10 +3918,10 @@ V.dados = () => {
     const cat = SUPPORT_CATEGORIES.find(c => c.id === catId) || SUPPORT_CATEGORIES[0];
     let msg = `Olá, equipe CRIVOS!\n\n`;
     msg += `Sou aluno(a) ${candName} (E-mail: ${candEmail}), matriculado(a) no plano PPGHS / UERJ 2027 // ELITE.\n\n`;
-    msg += `📌 Categoria: ${cat.title}\n`;
-    msg += `📝 Motivo: ${cat.template}`;
+    msg += `[CATEGORIA]: ${cat.title}\n`;
+    msg += `[MOTIVO]: ${cat.template}`;
     if (extra && extra.trim()) {
-      msg += `\n\n💬 Detalhes adicionais:\n${extra.trim()}`;
+      msg += `\n\n[DETALHES ADICIONAIS]:\n${extra.trim()}`;
     }
     return msg;
   }
@@ -4150,7 +4150,7 @@ V.perfil = () => {
   $('#btn-save-name').onclick = () => {
     const newName = $('#input-candidato-name').value.trim();
     if (!newName) {
-      $('#feedback-name').innerHTML = '<div class="feedback-msg error">⚠ O NOME NÃO PODE FICAR EM BRANCO</div>';
+      $('#feedback-name').innerHTML = '<div class="feedback-msg error">[!] O NOME NÃO PODE FICAR EM BRANCO</div>';
       return;
     }
     localStorage.setItem('crivos_user_name', newName);
@@ -4165,7 +4165,7 @@ V.perfil = () => {
   $('#btn-save-email').onclick = () => {
     const newEmail = $('#input-candidato-email').value.trim();
     if (!newEmail || !newEmail.includes('@')) {
-      $('#feedback-email').innerHTML = '<div class="feedback-msg error">⚠ INFORME UM E-MAIL VÁLIDO</div>';
+      $('#feedback-email').innerHTML = '<div class="feedback-msg error">[!] INFORME UM E-MAIL VÁLIDO</div>';
       return;
     }
     handleEmailUpdate(newEmail);
@@ -4182,11 +4182,11 @@ V.perfil = () => {
     const fb = $('#feedback-pass');
 
     if (!p1 || p1.length < 6) {
-      fb.innerHTML = '<div class="feedback-msg error">⚠ A SENHA DEVE TER NO MÍNIMO 6 CARACTERES</div>';
+      fb.innerHTML = '<div class="feedback-msg error">[!] A SENHA DEVE TER NO MÍNIMO 6 CARACTERES</div>';
       return;
     }
     if (p1 !== p2) {
-      fb.innerHTML = '<div class="feedback-msg error">⚠ AS SENHAS NÃO COINCIDEM</div>';
+      fb.innerHTML = '<div class="feedback-msg error">[!] AS SENHAS NÃO COINCIDEM</div>';
       return;
     }
 
@@ -4722,8 +4722,8 @@ window.inspectTextDetails = function(textId) {
   '</div>' +
   '<div class="row" style="margin:12px 0;">' +
     ((currentPlanTier === 'prime')
-      ? ('<a class="btn s p" href="' + pdf(t) + '" target="_blank" rel="noopener">📖 ABRIR ARQUIVO PDF</a>')
-      : ('<a class="btn s p" href="' + googleUrl + '" target="_blank" rel="noopener">🔍 PESQUISAR NO GOOGLE</a>')) +
+      ? ('<a class="btn s p" href="' + pdf(t) + '" target="_blank" rel="noopener">[ABRIR ARQUIVO PDF]</a>')
+      : ('<a class="btn s p" href="' + googleUrl + '" target="_blank" rel="noopener">[PESQUISAR NO GOOGLE]</a>')) +
   '</div>' +
   '<div style="border-top:1px solid var(--border-color);padding-top:12px;margin-top:12px;">' +
     '<p><b>POR QUE IMPORTA:</b> ' + t.porque + '</p>' +
