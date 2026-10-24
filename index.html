@@ -2596,6 +2596,386 @@ main#app::-webkit-scrollbar-thumb {
   }
 }
 
+
+
+/* ==============================================================
+   CRIVOS NATIVE APP-SHELL ARCHITECTURE (DESKTOP & MOBILE)
+   ============================================================== */
+main#app {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden !important;
+  padding: 14px 18px !important;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.app-screen {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Segmented Control / Sub-Navigation Bar */
+.app-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 3px 3px 0 var(--border-color);
+  padding: 8px 12px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.app-subnav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
+}
+.app-subnav::-webkit-scrollbar {
+  display: none;
+}
+
+.seg-btn {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 7px 12px;
+  background: var(--bg-subtle);
+  color: var(--ink-primary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s, color 0.12s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.seg-btn:hover {
+  background: var(--bg-card);
+}
+.seg-btn.active {
+  background: var(--crivos-red);
+  color: #FFFFFF;
+  border-color: var(--border-color);
+  box-shadow: 2px 2px 0 var(--border-color);
+}
+
+/* Independent Scrollable Pane */
+.app-pane {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+  padding-right: 2px;
+}
+.app-pane::-webkit-scrollbar {
+  width: 5px;
+}
+.app-pane::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+}
+
+/* Master-Detail Split Layout */
+.app-split {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.app-master {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 3px 3px 0 var(--border-color);
+  overflow: hidden;
+}
+
+.app-master-header {
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--border-color);
+  background: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.app-master-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.master-item {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: background 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-left: 4px solid transparent;
+}
+.master-item:hover {
+  background: var(--bg-subtle);
+}
+.master-item.active {
+  background: var(--bg-subtle);
+  border-left-color: var(--crivos-red);
+}
+
+.app-detail {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 3px 3px 0 var(--border-color);
+  overflow: hidden;
+}
+
+.app-detail-header {
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--border-color);
+  background: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.app-detail-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 18px;
+}
+
+.app-detail-dock {
+  padding: 10px 16px;
+  border-top: 2px solid var(--border-color);
+  background: var(--bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.mobile-back-btn {
+  display: none;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  background: #111111;
+  color: #FFFFFF;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+
+/* Day Strip for Cronograma */
+.day-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 6px;
+  flex-shrink: 0;
+}
+.day-pill {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: transform 0.1s, background 0.1s;
+  position: relative;
+}
+.day-pill:hover {
+  background: var(--bg-subtle);
+}
+.day-pill.active {
+  background: #111111;
+  color: #FFFFFF;
+  border-color: #111111;
+  box-shadow: 3px 3px 0 var(--crivos-red);
+}
+.day-pill.active .mu {
+  color: #CCCCCC !important;
+}
+.day-dot {
+  width: 7px;
+  height: 7px;
+  display: inline-block;
+  border: 1px solid var(--border-color);
+}
+.day-dot.done { background: #16A34A; }
+.day-dot.late { background: #D92B2B; }
+.day-dot.today { background: #1D4ED8; }
+.day-dot.skip { background: #888888; }
+.day-dot.pending { background: transparent; }
+
+/* Flashcard Native Deck Stage */
+.fc-deck-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  overflow: hidden;
+}
+.fc-card-surface {
+  width: 100%;
+  max-width: 760px;
+  flex: 1;
+  max-height: 430px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 6px 6px 0 var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 28px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Dashboard Bento Grid */
+.bento-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 14px;
+  overflow: hidden;
+}
+.kpi-2x2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  height: 100%;
+  min-height: 0;
+}
+.kpi-app-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 3px 3px 0 var(--border-color);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.kpi-app-card:hover {
+  transform: translate(-1px, -1px);
+}
+
+/* Responsive Mobile App Adaptations */
+@media (max-width: 820px) {
+  main#app {
+    padding: 8px 10px !important;
+  }
+  .app-toolbar {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+  .seg-btn {
+    padding: 6px 10px;
+    font-size: 10.5px;
+  }
+  .desktop-only-pane {
+    display: none !important;
+  }
+  .app-split {
+    display: flex;
+    flex-direction: column;
+  }
+  .app-split.master-detail-flow .app-master {
+    width: 100%;
+    flex: 1;
+  }
+  .app-split.master-detail-flow .app-detail {
+    display: none;
+  }
+  .app-split.master-detail-flow.mobile-detail-open .app-master {
+    display: none;
+  }
+  .app-split.master-detail-flow.mobile-detail-open .app-detail {
+    display: flex;
+    width: 100%;
+    flex: 1;
+  }
+  .mobile-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .day-strip {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 6px;
+    padding-bottom: 2px;
+  }
+  .day-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .day-pill {
+    min-width: 84px;
+    flex-shrink: 0;
+  }
+  .bento-grid {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .kpi-2x2 {
+    grid-template-columns: 1fr 1fr;
+    height: auto;
+  }
+  .fc-card-surface {
+    padding: 18px 16px;
+    max-height: none;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3204,238 +3584,573 @@ function cd(t) {
   return `${d}D ${h}H`;
 }
 
+// ==============================================================
+// 01 · INÍCIO (COMMAND DASHBOARD BENTO APP)
+// ==============================================================
+let homeSubTab = 'missao';
 V.home = () => {
   const sc = sched(), t = today(), tod = sc.filter(x => x.d === t), done = sc.filter(x => S.days[x.i] === 'done').length;
   const next = tod.length ? tod : sc.filter(x => x.d > t && !S.days[x.i]).slice(0, 1);
+  const upcoming = sc.filter(x => x.d > t && !S.days[x.i]).slice(0, 4);
   const tx = TX.filter(x => (S.texts[x.id] || '')).length, dom = TX.filter(x => S.texts[x.id] === 'dominado').length;
   const mins = S.log.reduce((a, l) => a + l.m, 0), late = lateTasks();
+  const isMob = window.innerWidth <= 820;
+
   $('#app').innerHTML = `
-    <div class="grid">${DATES.map(([n, d]) => `<div class="card"><div class="mu">${n} · ${br(d.slice(0, 10))}/${d.slice(0, 4)}</div><div class="big">${cd(d)}</div></div>`).join('')}</div>
-    <div class="card" style="border-left: 8px solid var(--blue)">
-      <h3><span>${tod.length ? 'TAREFA DE HOJE (' + br(t) + ', ' + wd(t) + ')' : 'PRÓXIMA TAREFA'}</span><span class="tag ar">FOCO ATIVO</span></h3>
-      ${next.map(x => `<p class="mu">DATA: ${br(x.d)} · CARGA ESTIMADA: ${String(x.h).replace('.', ',')}H</p><p style="font-size:16px">${x.t}</p><div class="row"><button class="btn p" onclick="mark(${x.i},'done');go('home')">✔ MARCAR FEITO</button><button class="btn" onclick="mark(${x.i},'skip');go('home')">PULAR</button><button class="btn" onclick="go('pomo')">▶ INICIAR POMODORO</button></div>`).join('') || '<p>Cronograma concluído. Siga para a véspera (aba Dicas).</p>'}
+    <div class="app-screen">
+      <!-- Top Countdown Strip -->
+      <div class="app-subnav" style="gap:8px;padding-bottom:2px;">
+        ${DATES.map(([n, d]) => `
+          <div style="background:var(--bg-card);border:1.5px solid var(--border-color);padding:6px 12px;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:2px 2px 0 var(--border-color);">
+            <div>
+              <div class="mu" style="font-size:9px;text-transform:uppercase;">${n} · ${br(d.slice(0, 10))}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:13px;color:var(--ink-primary);">${cd(d)}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      ${isMob ? `
+      <div class="app-toolbar">
+        <div class="app-subnav" style="width:100%;">
+          <button type="button" class="seg-btn ${homeSubTab === 'missao' ? 'active' : ''}" onclick="homeSubTab='missao';V.home()">MISSÃO DO DIA</button>
+          <button type="button" class="seg-btn ${homeSubTab === 'kpis' ? 'active' : ''}" onclick="homeSubTab='kpis';V.home()"> INDICADORES & METAS</button>
+          <button type="button" class="seg-btn ${homeSubTab === 'proximos' ? 'active' : ''}" onclick="homeSubTab='proximos';V.home()">PRÓXIMOS DIAS</button>
+        </div>
+      </div>
+      ` : ''}
+
+      <div class="bento-grid">
+        <!-- Coluna 1: Missão Ativa + Próximos Passos -->
+        <div class="app-pane" style="display:${(!isMob || homeSubTab === 'missao' || homeSubTab === 'proximos') ? 'flex' : 'none'};flex-direction:column;gap:12px;">
+          ${(!isMob || homeSubTab === 'missao') ? `
+            ${late.length ? `
+              <div style="background:var(--bg-card);border:2px solid var(--border-color);border-left:6px solid var(--crivos-red);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;box-shadow:3px 3px 0 var(--border-color);">
+                <div style="font-size:12px;"><b>[!] ${late.length} DIA(S) PENDENTE(S) NO CRONOGRAMA.</b></div>
+                <button class="btn s p" onclick="go('crono')">[REAGENDAR AGORA]</button>
+              </div>
+            ` : ''}
+
+            <div class="card" style="margin:0;border-left:6px solid var(--crivos-blue);flex:1;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border-color);padding-bottom:8px;margin-bottom:12px;">
+                  <span style="font-family:'Inter',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;">${tod.length ? 'MISSÃO DE HOJE (' + br(t) + ' · ' + wd(t).toUpperCase() + ')' : 'PRÓXIMA MISSÃO PROGRAMADA'}</span>
+                  <span class="tag ar">FOCO ATIVO</span>
+                </div>
+                ${next.map(x => `
+                  <div class="mu" style="margin-bottom:8px;font-size:11px;">DATA: <b>${br(x.d)} (${wd(x.d)})</b> · CARGA HORÁRIA: <b>${String(x.h).replace('.', ',')}H</b></div>
+                  <div style="font-size:14.5px;line-height:1.6;padding:12px;background:var(--bg-subtle);border:1px solid var(--border-color);margin-bottom:14px;">${x.t}</div>
+                  <div class="row" style="gap:8px;">
+                    <button class="btn p" onclick="mark(${x.i},'done');go('home')">[CONCLUIR MISSÃO]</button>
+                    <button class="btn" onclick="mark(${x.i},'skip');go('home')">[PULAR]</button>
+                    <button class="btn" onclick="go('pomo')">[ABRIR POMODORO]</button>
+                  </div>
+                `).join('') || '<p>Cronograma concluído. Siga para a revisão final na aba Dicas.</p>'}
+              </div>
+
+              ${!isMob ? `
+                <div style="border-top:1px solid var(--border-color);padding-top:12px;margin-top:14px;">
+                  <div class="mu" style="font-size:10px;margin-bottom:8px;text-transform:uppercase;">PRÓXIMOS BLOCOS NA FILA:</div>
+                  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">
+                    ${upcoming.slice(0, 2).map(u => `
+                      <div style="padding:8px 10px;border:1px solid var(--border-color);background:var(--bg-subtle);font-size:11.5px;cursor:pointer;" onclick="go('crono')">
+                        <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:10px;color:var(--crivos-red);">${br(u.d)} (${wd(u.d)}) · ${u.h}h</div>
+                        <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;">${strip(u.t)}</div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+
+          ${(isMob && homeSubTab === 'proximos') ? `
+            <div class="card" style="margin:0;flex:1;">
+              <h3>PRÓXIMAS MISSÕES DO CRONOGRAMA</h3>
+              ${upcoming.map(u => `
+                <div style="padding:10px;border:1px solid var(--border-color);background:var(--bg-subtle);margin-bottom:8px;" onclick="go('crono')">
+                  <div style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:11px;color:var(--crivos-red);margin-bottom:4px;">${br(u.d)} (${wd(u.d).toUpperCase()}) · ${u.h}H</div>
+                  <div style="font-size:12.5px;">${u.t}</div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Coluna 2: Matriz 2x2 de Indicadores Táticos -->
+        <div style="display:${(!isMob || homeSubTab === 'kpis') ? 'block' : 'none'};min-height:0;height:100%;">
+          <div class="kpi-2x2">
+            <div class="kpi-app-card" onclick="go('crono')">
+              <div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">02 · CRONOGRAMA</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${Math.round(done / sc.length * 100)}%</div>
+                <div class="bar"><i style="width:${done / sc.length * 100}%"></i></div>
+              </div>
+              <div>
+                <div class="kpi-trend positive">▲ ${done}/${sc.length} DIAS FEITOS</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[ABRIR AGENDA →]</div>
+              </div>
+            </div>
+
+            <div class="kpi-app-card" onclick="go('textos')">
+              <div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">03 · BIBLIOGRAFIA</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${tx}/12</div>
+                <div class="bar"><i style="width:${tx / 12 * 100}%"></i></div>
+              </div>
+              <div>
+                <div class="kpi-trend neutral">■ ${dom} DOMINADOS</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[ABRIR FICHAS →]</div>
+              </div>
+            </div>
+
+            <div class="kpi-app-card" onclick="go('cards')">
+              <div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">04 · RETENÇÃO SM-2</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${queue().length}</div>
+              </div>
+              <div>
+                <div class="kpi-trend positive">■ SEQUÊNCIA: ${streak()} DIAS</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[REVISAR FILA →]</div>
+              </div>
+            </div>
+
+            <div class="kpi-app-card" onclick="go('pomo')">
+              <div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">05 · TEMPO LÍQUIDO</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${(mins / 60).toFixed(1)}h</div>
+              </div>
+              <div>
+                <div class="kpi-trend neutral">■ META TOTAL ~117H</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[CRONÔMETRO →]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    ${late.length ? `<div class="card" style="border-left: 8px solid var(--red); background: var(--s2)"><b>[!] ${late.length} DIA(S) ATRASADO(S).</b> Veja as sugestões automáticas de reagendamento na aba <a href="#" onclick="go('crono');return false">Cronograma</a>.</div>` : ''}
-    <div class="grid">
-      <div class="card">
-        <h3>Cronograma</h3>
-        <div class="big">${Math.round(done / sc.length * 100)}%</div>
-        <div class="bar"><i style="width:${done / sc.length * 100}%"></i></div>
-        <div class="kpi-trend positive">▲ ${done} CONCLUÍDOS · RITMO EM DIA</div>
-        <div class="kpi-sparkbar">
-          <div class="kpi-sparkbar-col ${done > 0 ? 'active' : ''}" style="height:6px"></div>
-          <div class="kpi-sparkbar-col ${done > 3 ? 'active' : ''}" style="height:8px"></div>
-          <div class="kpi-sparkbar-col ${done > 6 ? 'active' : ''}" style="height:11px"></div>
-          <div class="kpi-sparkbar-col ${done > 10 ? 'active' : ''}" style="height:14px"></div>
-          <div class="kpi-sparkbar-col ${done > 15 ? 'active' : ''}" style="height:10px"></div>
-          <div class="kpi-sparkbar-col ${done > 20 ? 'active' : ''}" style="height:13px"></div>
-        </div>
-        <p class="mu">${done} DE ${sc.length} DIAS EXECUTADOS</p>
-      </div>
-
-      <div class="card">
-        <h3>Textos Mapeados</h3>
-        <div class="big">${tx}/12</div>
-        <div class="bar"><i style="width:${tx / 12 * 100}%"></i></div>
-        <div class="kpi-trend neutral">■ ${dom} DOMINADOS · ${tx} LIDOS</div>
-        <div class="kpi-sparkbar">
-          <div class="kpi-sparkbar-col ${tx > 0 ? 'active' : ''}" style="height:7px"></div>
-          <div class="kpi-sparkbar-col ${tx > 2 ? 'active' : ''}" style="height:10px"></div>
-          <div class="kpi-sparkbar-col ${tx > 4 ? 'active' : ''}" style="height:12px"></div>
-          <div class="kpi-sparkbar-col ${tx > 7 ? 'active' : ''}" style="height:9px"></div>
-          <div class="kpi-sparkbar-col ${tx > 9 ? 'active' : ''}" style="height:14px"></div>
-        </div>
-        <p class="mu">BIBLIOGRAFIA CRÍTICA ATIVA</p>
-      </div>
-
-      <div class="card">
-        <h3>Sequência Ativa</h3>
-        <div class="big">■ ${streak()}</div>
-        <div class="kpi-trend positive">▲ CONSTÂNCIA EM ALTA</div>
-        <div class="kpi-sparkbar">
-          <div class="kpi-sparkbar-col active" style="height:9px"></div>
-          <div class="kpi-sparkbar-col active" style="height:12px"></div>
-          <div class="kpi-sparkbar-col active" style="height:14px"></div>
-        </div>
-        <p class="mu">DIAS CONSECUTIVOS DE RETENÇÃO</p>
-      </div>
-
-      <div class="card">
-        <h3>Tempo Estudado</h3>
-        <div class="big">${(mins / 60).toFixed(1)}h</div>
-        <div class="kpi-trend neutral">■ META TOTAL ~117H</div>
-        <div class="kpi-sparkbar">
-          <div class="kpi-sparkbar-col active" style="height:8px"></div>
-          <div class="kpi-sparkbar-col active" style="height:11px"></div>
-          <div class="kpi-sparkbar-col ${mins > 360 ? 'active' : ''}" style="height:14px"></div>
-        </div>
-        <p class="mu">${queue().length} CARTÕES SM-2 NA FILA HOJE</p>
-      </div>
-    </div>`;
+  `;
 };
 
 window.mark = (i, s) => {
   haptic(s === 'done' ? [12, 40, 18] : 14);
-  S.days[i] = S.days[i] === s ? '' : s; toast(S.days[i] === 'done' ? '✓ TAREFA CONCLUÍDA' : (S.days[i] === 'skip' ? '↷ TAREFA PULADA' : 'TAREFA REABERTA'), S.days[i] === 'done' ? 'success' : 'info');
+  S.days[i] = S.days[i] === s ? '' : s;
+  toast(S.days[i] === 'done' ? '✓ TAREFA CONCLUÍDA' : (S.days[i] === 'skip' ? '↷ TAREFA PULADA' : 'TAREFA REABERTA'), S.days[i] === 'done' ? 'success' : 'info');
   if (s === 'done') S.days[i + '_at'] = today();
   save();
 };
 
-V.crono = () => {
-  const sc = sched(), t = today(), sug = suggestions();
-  let h = `<div class="card"><h3>Cronograma dia a dia (11/10 a 21/11)</h3><p class="mu">Marque cada dia como feito ou pulado. Dias passados sem marcação contam como atrasados.</p>`;
-  if (sug.length) h += `<div class="card" style="border-left:6px solid var(--yellow)"><b>SUGESTÃO DE REAGENDAMENTO</b> (distribui o atrasado nos dias futuros de menor carga, até 19/11, preservando os 2 dias finais):<ul>${sug.map(([l, d]) => `<li>${br(l.d)} → <b>${br(d)} (${wd(d)})</b>: ${strip(l.t).slice(0, 90)}…</li>`).join('')}</ul><button class="btn p" onclick="applySug()">APLICAR SUGESTÕES</button></div>`;
-  h += `<div class="table-responsive"><table class="crono-table"><thead><tr><th class="crono-col-date">DATA</th><th class="crono-col-activity">ATIVIDADE PROGRAMADA</th><th class="crono-col-status">STATUS</th></tr></thead><tbody>`;
-  sc.slice().sort((a, b) => a.d.localeCompare(b.d) || a.i - b.i).forEach(x => {
-    const st = S.days[x.i] || '';
-    const cls = ['day', st, x.d === t ? 'today' : '', x.d < t && !st ? 'late' : ''].join(' ');
-    h += `<tr class="${cls}"><td class="crono-col-date"><b>${br(x.d)}</b><br><span class="mu">${wd(x.d)} · ${String(x.h).replace('.', ',')}h${S.moved[x.i] ? '<br>(movido de ' + br(x.d === D.sched[x.i].d ? x.d : D.sched[x.i].d) + ')' : ''}</span></td><td class="crono-col-activity">${x.t}</td><td class="crono-col-status"><div class="crono-actions"><button class="btn s ${st === 'done' ? 'p' : ''}" onclick="mark(${x.i},'done');V.crono2()">${st === 'done' ? '✔' : '○'} FEITO</button><button class="btn s" onclick="mark(${x.i},'skip');V.crono2()">${st === 'skip' ? '✖' : '○'} PULAR</button></div></td></tr>`;
-  });
-  h += `</tbody></table></div><p><button class="btn" onclick="S.moved={};save();V.crono2()">DESFAZER REAGENDAMENTOS</button></p></div><div class="card">${D.vespera}</div>`;
-  $('#app').innerHTML = h;
-};
-V.crono2 = () => {
-  const y = window.scrollY;
-  const app = $('#app');
-  if (app) app.style.minHeight = app.offsetHeight + 'px';
-  V.crono();
-  window.scrollTo(0, y);
-  if (app) setTimeout(() => { app.style.minHeight = ''; }, 50);
-};
-window.applySug = () => { suggestions().forEach(([l, d]) => S.moved[l.i] = d); save(); V.crono2(); };
+// ==============================================================
+// 02 · CRONOGRAMA (NATIVE CALENDAR & DAY-STRIP APP)
+// ==============================================================
+let cronoWeekIdx = 0;
+let cronoSelectedDayIdx = null;
+let cronoMode = 'week'; // 'week' | 'matrix' | 'posprova'
 
+const CRONO_WEEKS = [
+  { label: 'SEM 01', sub: '11/10–18/10 · Área (Fase 1)', from: '2026-10-11', to: '2026-10-18' },
+  { label: 'SEM 02', sub: '19/10–25/10 · Área & Inscrição', from: '2026-10-19', to: '2026-10-25' },
+  { label: 'SEM 03', sub: '26/10–01/11 · Linha 1 (Fase 2)', from: '2026-10-26', to: '2026-11-01' },
+  { label: 'SEM 04', sub: '02/11–08/11 · Linha 1 & Sim 1', from: '2026-11-02', to: '2026-11-08' },
+  { label: 'SEM 05', sub: '09/11–15/11 · Consolidação & Sim 2', from: '2026-11-09', to: '2026-11-15' },
+  { label: 'SEM 06', sub: '16/11–21/11 · Reta Final & Sim 3', from: '2026-11-16', to: '2026-11-21' }
+];
+
+V.crono = () => {
+  const sc = sched().slice().sort((a, b) => a.d.localeCompare(b.d) || a.i - b.i);
+  const t = today();
+  const sug = suggestions();
+
+  // Auto-select current week/day on first open
+  if (cronoSelectedDayIdx === null) {
+    const todayItem = sc.find(x => x.d >= t) || sc[0];
+    cronoSelectedDayIdx = todayItem ? todayItem.i : 0;
+    const wFound = CRONO_WEEKS.findIndex(w => todayItem && todayItem.d >= w.from && todayItem.d <= w.to);
+    if (wFound >= 0) cronoWeekIdx = wFound;
+  }
+
+  const curWeek = CRONO_WEEKS[cronoWeekIdx] || CRONO_WEEKS[0];
+  const weekDays = sc.filter(x => x.d >= curWeek.from && x.d <= curWeek.to);
+  if (!weekDays.some(x => x.i === cronoSelectedDayIdx) && weekDays.length) {
+    cronoSelectedDayIdx = weekDays[0].i;
+  }
+  const activeDay = sc.find(x => x.i === cronoSelectedDayIdx) || weekDays[0] || sc[0];
+  const activeSt = activeDay ? (S.days[activeDay.i] || '') : '';
+
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <!-- Top Segmented Navigation -->
+      <div class="app-toolbar">
+        <div class="app-subnav">
+          ${CRONO_WEEKS.map((w, idx) => `
+            <button type="button" class="seg-btn ${cronoMode === 'week' && cronoWeekIdx === idx ? 'active' : ''}" onclick="cronoMode='week';cronoWeekIdx=${idx};cronoSelectedDayIdx=null;V.crono()">${w.label}</button>
+          `).join('')}
+          <button type="button" class="seg-btn ${cronoMode === 'matrix' ? 'active' : ''}" onclick="cronoMode='matrix';V.crono()">MATRIZ COMPLETA</button>
+          <button type="button" class="seg-btn ${cronoMode === 'posprova' ? 'active' : ''}" onclick="cronoMode='posprova';V.crono()">VÉSPERA & PÓS-PROVA</button>
+        </div>
+        ${Object.keys(S.moved || {}).length ? `<button class="btn s" onclick="S.moved={};save();V.crono()">[DESFAZER REAGENDAMENTOS]</button>` : ''}
+      </div>
+
+      ${sug.length && cronoMode !== 'posprova' ? `
+        <div style="background:var(--bg-card);border:2px solid var(--border-color);border-left:6px solid var(--crivos-yellow);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;flex-shrink:0;">
+          <span style="font-size:11.5px;"><b>[!] ${sug.length} TAREFA(S) ATRASADA(S):</b> Redistribuição automática calculada até 19/11.</span>
+          <button class="btn s p" onclick="applySug()">[APLICAR REAGENDAMENTO]</button>
+        </div>
+      ` : ''}
+
+      ${cronoMode === 'week' ? `
+        <!-- Tira Horizontal de Dias da Semana -->
+        <div class="day-strip">
+          ${weekDays.map(x => {
+            const st = S.days[x.i] || '';
+            const dotCls = st === 'done' ? 'done' : (st === 'skip' ? 'skip' : (x.d === t ? 'today' : (x.d < t ? 'late' : 'pending')));
+            const isSel = activeDay && x.i === activeDay.i;
+            return `
+              <div class="day-pill ${isSel ? 'active' : ''}" onclick="cronoSelectedDayIdx=${x.i};V.crono()">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;text-transform:uppercase;">${wd(x.d)}</span>
+                  <span class="day-dot ${dotCls}"></span>
+                </div>
+                <div style="font-family:'Inter',sans-serif;font-size:14px;font-weight:900;">${br(x.d)}</div>
+                <div class="mu" style="font-size:10px;">${String(x.h).replace('.', ',')}h · ${st === 'done' ? 'FEITO' : (st === 'skip' ? 'PULADO' : (x.d < t ? 'ATRASO' : 'ATIVO'))}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <!-- Palco do Dia Selecionado + Resumo da Semana -->
+        <div class="app-split" style="grid-template-columns: 1fr 320px;">
+          <div class="app-detail">
+            ${activeDay ? `
+              <div class="app-detail-header">
+                <div>
+                  <span class="tag ar" style="margin-right:6px;">${curWeek.label}</span>
+                  <b style="font-size:15px;font-family:'Inter',sans-serif;text-transform:uppercase;">${br(activeDay.d)} (${wd(activeDay.d).toUpperCase()}) · META: ${String(activeDay.h).replace('.', ',')} HORAS</b>
+                  ${S.moved[activeDay.i] ? `<span class="mu" style="margin-left:8px;">(Movido de ${br(D.sched[activeDay.i].d)})</span>` : ''}
+                </div>
+                <span class="tag ${activeSt === 'done' ? 'sim' : (activeSt === 'skip' ? 'adm' : 'esc')}">
+                  ${activeSt === 'done' ? 'CONCLUÍDO' : (activeSt === 'skip' ? 'PULADO' : (activeDay.d < t ? 'PENDENTE / ATRASADO' : 'PROGRAMADO'))}
+                </span>
+              </div>
+              <div class="app-detail-body" style="display:flex;flex-direction:column;justify-content:space-between;gap:16px;">
+                <div>
+                  <div class="mu" style="font-size:10.5px;margin-bottom:8px;text-transform:uppercase;">DIRETRIZ OPERACIONAL DO DIA:</div>
+                  <div style="font-size:15.5px;line-height:1.65;padding:18px;background:var(--bg-subtle);border:2px solid var(--border-color);box-shadow:3px 3px 0 var(--border-color);">
+                    ${activeDay.t}
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">
+                  <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);">
+                    <div class="mu" style="font-size:10px;">FASE DA SEMANA</div>
+                    <div style="font-weight:800;font-size:12.5px;margin-top:3px;">${curWeek.sub}</div>
+                  </div>
+                  <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);">
+                    <div class="mu" style="font-size:10px;">PROTOCOLO DE RETENÇÃO</div>
+                    <div style="font-weight:800;font-size:12.5px;margin-top:3px;">Ciclo D+1 / D+7 + Flashcards SM-2</div>
+                  </div>
+                </div>
+              </div>
+              <div class="app-detail-dock">
+                <div class="row" style="gap:8px;">
+                  <button class="btn ${activeSt === 'done' ? 'p' : ''}" onclick="mark(${activeDay.i},'done');V.crono()">[${activeSt === 'done' ? '✓ CONCLUÍDO' : 'MARCAR FEITO'}]</button>
+                  <button class="btn ${activeSt === 'skip' ? 'p' : ''}" onclick="mark(${activeDay.i},'skip');V.crono()">[${activeSt === 'skip' ? '✖ PULADO' : 'PULAR DIA'}]</button>
+                </div>
+                <div class="row" style="gap:8px;">
+                  <button class="btn s" onclick="go('pomo')">[CRONOMETRAR BLOCO]</button>
+                  <button class="btn s" onclick="go('textos')">[ABRIR FICHAS]</button>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="app-master desktop-only-pane">
+            <div class="app-master-header">
+              <span style="font-family:'Inter',sans-serif;font-weight:800;font-size:11px;text-transform:uppercase;">VISÃO DA ${curWeek.label}</span>
+              <span class="mu" style="font-size:10px;">${weekDays.filter(x => S.days[x.i] === 'done').length}/${weekDays.length} FEITOS</span>
+            </div>
+            <div class="app-master-list">
+              ${weekDays.map(x => {
+                const st = S.days[x.i] || '';
+                return `
+                  <div class="master-item ${activeDay && x.i === activeDay.i ? 'active' : ''}" onclick="cronoSelectedDayIdx=${x.i};V.crono()">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <b style="font-family:'JetBrains Mono',monospace;font-size:11.5px;">${br(x.d)} · ${wd(x.d).toUpperCase()} (${x.h}h)</b>
+                      <span class="mu" style="font-size:10px;">${st === 'done' ? '✓ FEITO' : (st === 'skip' ? 'PULADO' : '')}</span>
+                    </div>
+                    <div style="font-size:11.5px;color:var(--ink-secondary);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${strip(x.t)}</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      ` : cronoMode === 'matrix' ? `
+        <div class="app-pane card" style="margin:0;padding:0;">
+          <table class="crono-table" style="margin:0;border:none;">
+            <thead style="position:sticky;top:0;z-index:5;">
+              <tr>
+                <th class="crono-col-date">DATA</th>
+                <th class="crono-col-activity">ATIVIDADE PROGRAMADA</th>
+                <th class="crono-col-status">AÇÃO</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${sc.map(x => {
+                const st = S.days[x.i] || '';
+                const cls = ['day', st, x.d === t ? 'today' : '', x.d < t && !st ? 'late' : ''].join(' ');
+                return `<tr class="${cls}">
+                  <td class="crono-col-date"><b>${br(x.d)}</b><br><span class="mu">${wd(x.d)} · ${String(x.h).replace('.', ',')}h</span></td>
+                  <td class="crono-col-activity">${x.t}</td>
+                  <td class="crono-col-status">
+                    <div class="crono-actions">
+                      <button class="btn s ${st === 'done' ? 'p' : ''}" onclick="mark(${x.i},'done');V.crono2()">[${st === 'done' ? '✓' : '○'} FEITO]</button>
+                      <button class="btn s" onclick="mark(${x.i},'skip');V.crono2()">[${st === 'skip' ? '✖' : '○'} PULAR]</button>
+                    </div>
+                  </td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      ` : `
+        <div class="app-pane card" style="margin:0;">
+          ${D.vespera}
+        </div>
+      `}
+    </div>
+  `;
+};
+V.crono2 = () => V.crono();
+window.applySug = () => { suggestions().forEach(([l, d]) => S.moved[l.i] = d); save(); V.crono(); };
+
+// ==============================================================
+// 03 · TEXTOS (MASTER-DETAIL WORKBENCH + FLOATING FILTER BOX)
+// ==============================================================
 const ST = ['', 'lido', 'revisado', 'dominado'], STN = {'': 'não lido', lido: 'lido', revisado: 'revisado', dominado: 'dominado'};
-// ---------- 03 · textos (com floating filter box on/off & visual app responsivo)
 let activePrio = '';
 let activeSec = '';
+let selectedTextId = 'haesbaert';
+let textSubTab = 'tese'; // 'tese' | 'citacoes' | 'projeto' | 'exercicios'
+let mobileTextDetailOpen = false;
 
 V.textos = () => {
   const texts = Array.isArray(TX) ? TX : (D && D.texts ? D.texts : []);
-  
+  const filtered = texts.filter(t => (!activePrio || t.prio === activePrio) && (!activeSec || t.sec === activeSec));
+
+  if (filtered.length && !filtered.some(t => t.id === selectedTextId)) {
+    selectedTextId = filtered[0].id;
+  }
+  const curT = filtered.find(t => t.id === selectedTextId) || filtered[0] || null;
+  const curSt = curT ? ((S.texts && S.texts[curT.id]) || '') : '';
+  const curMins = (curT && S.log) ? S.log.filter(l => l.t === curT.id).reduce((a, l) => a + l.m, 0) : 0;
+  const googleQ = curT ? encodeURIComponent(`${curT.titulo} ${curT.autor || ''}`.trim()) : '';
+  const googleUrl = `https://www.google.com/search?q=${googleQ}`;
+  const pdfUrl = curT ? ((typeof pdf === 'function') ? pdf(curT) : ('textos/' + (curT.arq || ''))) : '#';
+
   $('#app').innerHTML = `
-    <div id="tl" style="display:flex;flex-direction:column;gap:16px;"></div>
-
-    <!-- BOX FLUTUANTE ELEGANTE DE FILTROS // CANTO INFERIOR DIREITO -->
-    <div class="textos-floating-filter" id="textos-filter-widget">
-      <div class="filter-panel-box" id="filter-panel-box">
-        <div class="filter-panel-header">
-          <div class="filter-panel-title">
-            <span style="color:var(--crivos-red);">■</span>
-            <span>FILTROS // BIBLIOGRAFIA</span>
+    <div class="app-screen">
+      <div class="app-split master-detail-flow ${mobileTextDetailOpen ? 'mobile-detail-open' : ''}" id="textos-split-container">
+        <!-- COLUNA ESQUERDA: LISTA COMPACTA DE TEXTOS -->
+        <div class="app-master">
+          <div class="app-master-header">
+            <span style="font-family:'Inter',sans-serif;font-weight:900;font-size:11.5px;text-transform:uppercase;">BIBLIOGRAFIA (${filtered.length}/12)</span>
+            ${(activePrio || activeSec) ? `<button class="btn s" style="padding:2px 6px;font-size:9.5px;" onclick="activePrio='';activeSec='';V.textos()">[LIMPAR FILTRO]</button>` : `<span class="mu" style="font-size:10px;">SELECIONE PARA LER</span>`}
           </div>
-          <button type="button" class="filter-panel-close" id="filter-panel-close">✕</button>
+          <div class="app-master-list" id="tl">
+            ${filtered.length === 0 ? `
+              <div style="padding:24px;text-align:center;">
+                <p style="font-weight:700;font-size:12px;">NENHUM TEXTO PARA ESTE FILTRO.</p>
+                <button class="btn s p" onclick="activePrio='';activeSec='';V.textos()">[MOSTRAR TODOS]</button>
+              </div>
+            ` : filtered.map(t => {
+              const st = (S.texts && S.texts[t.id]) || '';
+              const isSel = curT && curT.id === t.id;
+              return `
+                <div class="master-item ${isSel ? 'active' : ''}" onclick="selectedTextId='${t.id}';mobileTextDetailOpen=true;V.textos()">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
+                    <div style="display:flex;align-items:center;gap:4px;">
+                      <span class="prio ${t.prio}" style="font-size:9px;padding:1px 5px;">${t.prio}</span>
+                      <span class="tag ${t.sec === 'area' ? 'ar' : 'li'}" style="font-size:9px;padding:1px 5px;">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span>
+                    </div>
+                    <span class="mu" style="font-size:9.5px;text-transform:uppercase;font-weight:700;">${STN[st]}</span>
+                  </div>
+                  <div style="font-family:'Inter',sans-serif;font-weight:800;font-size:13px;color:var(--ink-primary);margin-top:2px;">${t.autor}</div>
+                  <div class="mu" style="font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${t.titulo}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
         </div>
 
-        <div>
-          <div class="filter-group-label">PRIORIDADE ESTRATÉGICA:</div>
-          <div class="filter-switch-row ${!activePrio ? 'active' : ''}" data-prio="">
-            <span class="filter-switch-label">TODAS AS PRIORIDADES</span>
-            <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
-          </div>
-          <div class="filter-switch-row ${activePrio === 'ESSENCIAL' ? 'active' : ''}" data-prio="ESSENCIAL">
-            <span class="filter-switch-label">ESSENCIAL (PESO ALTO)</span>
-            <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
-          </div>
-          <div class="filter-switch-row ${activePrio === 'IMPORTANTE' ? 'active' : ''}" data-prio="IMPORTANTE">
-            <span class="filter-switch-label">IMPORTANTE</span>
-            <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
-          </div>
-          <div class="filter-switch-row ${activePrio === 'SECUNDÁRIO' ? 'active' : ''}" data-prio="SECUNDÁRIO">
-            <span class="filter-switch-label">SECUNDÁRIO</span>
-            <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
-          </div>
-        </div>
+        <!-- COLUNA DIREITA: FICHA INTERATIVA EM ABAS (ZERO LONG SCROLL) -->
+        <div class="app-detail">
+          ${curT ? `
+            <div class="app-detail-header">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <button type="button" class="mobile-back-btn" onclick="mobileTextDetailOpen=false;V.textos()">[ < LISTA ]</button>
+                <span class="prio ${curT.prio}">${curT.prio}</span>
+                <span class="tag ${curT.sec === 'area' ? 'ar' : 'li'}">${curT.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span>
+                <b style="font-family:'Inter',sans-serif;font-size:15px;">${curT.autor} — ${curT.titulo}</b>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span class="mu" style="font-size:10.5px;margin-right:4px;">${(curMins / 60).toFixed(1)}h</span>
+                ${(currentPlanTier === 'prime')
+                  ? `<a class="btn s p" href="${pdfUrl}" target="_blank" rel="noopener">[ABRIR PDF]</a>`
+                  : `<a class="btn s p" href="${googleUrl}" target="_blank" rel="noopener">[GOOGLE]</a>`
+                }
+              </div>
+            </div>
 
-        <div style="border-top:1px solid var(--border-color);padding-top:12px;">
-          <div class="filter-group-label">SEÇÃO DO EDITAL:</div>
-          <div class="filter-switch-row ${!activeSec ? 'active' : ''}" data-sec="">
-            <span class="filter-switch-label">TODAS AS SEÇÕES</span>
-            <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
-          </div>
-          <div class="filter-switch-row ${activeSec === 'area' ? 'active' : ''}" data-sec="area">
-            <span class="filter-switch-label">ÁREA (OBRIGATÓRIA)</span>
-            <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
-          </div>
-          <div class="filter-switch-row ${activeSec === 'linha' ? 'active' : ''}" data-sec="linha">
-            <span class="filter-switch-label">LINHA 1</span>
-            <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
-          </div>
+            <!-- Sub-navegação Interna da Ficha -->
+            <div style="padding:8px 14px;background:var(--bg-card);border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;flex-shrink:0;">
+              <div class="app-subnav">
+                <button type="button" class="seg-btn ${textSubTab === 'tese' ? 'active' : ''}" onclick="textSubTab='tese';V.textos()">01 · TESE & CONCEITOS</button>
+                <button type="button" class="seg-btn ${textSubTab === 'citacoes' ? 'active' : ''}" onclick="textSubTab='citacoes';V.textos()">02 · ESTRUTURA & CITAÇÕES (${curT.cit ? curT.cit.length : 0})</button>
+                <button type="button" class="seg-btn ${textSubTab === 'projeto' ? 'active' : ''}" onclick="textSubTab='projeto';V.textos()">03 · CONEXÕES & PROJETO</button>
+                <button type="button" class="seg-btn ${textSubTab === 'exercicios' ? 'active' : ''}" onclick="textSubTab='exercicios';V.textos()">04 · TREINO & NOTAS</button>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;">
+                ${ST.map(s => `<button class="btn s ${curSt === s ? 'p' : ''}" style="padding:4px 8px;font-size:9.5px;" onclick="S.texts['${curT.id}']='${s}';save();toast('Status: ' + '${STN[s]}'.toUpperCase(), 'success');V.textos()">${STN[s]}</button>`).join('')}
+              </div>
+            </div>
+
+            <!-- Corpo da Sub-Aba Selecionada -->
+            <div class="app-detail-body">
+              ${textSubTab === 'tese' ? `
+                <div class="mu" style="font-size:11px;margin-bottom:12px;">${curT.ref || ''} · ${curT.faixa || ''}</div>
+                <div style="padding:12px 14px;background:var(--bg-subtle);border:1px solid var(--border-color);border-left:5px solid var(--crivos-blue);margin-bottom:12px;">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;margin-bottom:4px;">POR QUE IMPORTA NA PROVA:</div>
+                  <div style="font-size:13px;line-height:1.55;">${curT.porque || ''}</div>
+                </div>
+                <div style="padding:12px 14px;background:var(--bg-subtle);border:1px solid var(--border-color);border-left:5px solid var(--crivos-red);margin-bottom:16px;">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;margin-bottom:4px;">ARGUMENTO CENTRAL (TESE):</div>
+                  <div style="font-size:13.5px;font-weight:600;line-height:1.55;">${curT.tese || ''}</div>
+                </div>
+                <h4 style="font-family:'Inter',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;margin:0 0 8px 0;">CONCEITOS-CHAVE VERIFICADOS (${curT.conceitos ? curT.conceitos.length : 0})</h4>
+                <div style="display:grid;grid-template-columns:1fr;gap:8px;">
+                  ${(curT.conceitos || []).map(k => `
+                    <div style="padding:10px 12px;border:1px solid var(--border-color);background:var(--bg-card);">
+                      <b style="color:var(--crivos-red);font-size:12.5px;">${k[0]}:</b> <span style="font-size:12.5px;">${k[1]}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : textSubTab === 'citacoes' ? `
+                <h4 style="font-family:'Inter',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;margin:0 0 8px 0;">ESTRUTURA DO ARGUMENTO (ROTEIRO DE PÁGINAS)</h4>
+                <ul style="margin-bottom:18px;">
+                  ${(curT.estrutura || []).map(s => `<li style="margin-bottom:6px;font-size:12.5px;">${s}</li>`).join('')}
+                </ul>
+                <h4 style="font-family:'Inter',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;margin:0 0 8px 0;">CITAÇÕES LITERAIS CONFERIDAS (${curT.cit ? curT.cit.length : 0})</h4>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  ${(curT.cit || []).map(k => `
+                    <div style="padding:10px 12px;border:1px solid var(--border-color);border-left:4px solid #111111;background:var(--bg-subtle);font-size:12.5px;">
+                      <i>«${k[1]}»</i>
+                      <a class="btn s" style="padding:1px 6px;font-size:9.5px;margin-left:6px;" href="${pdf(curT, k[0])}" target="_blank">${/PDF/.test(k[0]) ? k[0] : 'p. ' + k[0]}</a>
+                      ${k[2] ? `<div class="mu" style="margin-top:4px;font-size:11px;">— ${k[2]}</div>` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+              ` : textSubTab === 'projeto' ? `
+                <div style="padding:12px 14px;background:var(--bg-subtle);border:1px solid var(--border-color);margin-bottom:14px;">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;margin-bottom:4px;">ARTICULAÇÃO COM TERRITÓRIO:</div>
+                  <div style="font-size:13px;">${curT.territorio || ''}</div>
+                </div>
+                <h4 style="font-family:'Inter',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;margin:0 0 8px 0;">DIÁLOGO COM OUTROS AUTORES DO EDITAL</h4>
+                <div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:16px;">
+                  ${(curT.conexoes || []).map(k => `
+                    <div style="padding:9px 12px;border:1px solid var(--border-color);">
+                      <b>${k[0]}:</b> ${k[1]}
+                    </div>
+                  `).join('')}
+                </div>
+                <div style="padding:14px;background:var(--bg-subtle);border:2px solid var(--border-color);border-left:6px solid var(--crivos-red);">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:800;color:var(--crivos-red);margin-bottom:6px;">PONTE DIRETA COM O PRÉ-PROJETO (CRIVOS PRIME)</div>
+                  <p style="font-size:13px;margin:0 0 8px 0;">${(curT.projeto && curT.projeto.uso) || ''}</p>
+                  ${(curT.projeto && curT.projeto.prova) ? `<p style="font-size:12.5px;margin:0 0 6px 0;"><b>Na Prova Escrita:</b> ${curT.projeto.prova}</p>` : ''}
+                  ${(curT.projeto && curT.projeto.arg) ? `<p style="font-size:12.5px;margin:0;"><b>Na Arguição Oral:</b> ${curT.projeto.arg}</p>` : ''}
+                </div>
+              ` : `
+                <h4 style="font-family:'Inter',sans-serif;font-size:12px;font-weight:900;text-transform:uppercase;margin:0 0 8px 0;">EXERCÍCIOS DE FIXAÇÃO COM GABARITO</h4>
+                ${(curT.ex_comp || []).map((ex, i) => `
+                  <details style="margin-bottom:8px;border:1px solid var(--border-color);padding:8px 12px;background:var(--bg-subtle);">
+                    <summary style="font-weight:700;font-size:12.5px;cursor:pointer;">${i + 1}. ${ex[0]}</summary>
+                    <p style="margin:8px 0 0 0;font-size:12.5px;padding-top:6px;border-top:1px dashed var(--border-color);"><b>Gabarito:</b> ${ex[1]}</p>
+                  </details>
+                `).join('')}
+                ${curT.ex_diss ? `
+                  <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);margin:12px 0;">
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;margin-bottom:4px;">QUESTÃO DISSERTATIVA PROVÁVEL:</div>
+                    <div style="font-weight:700;font-size:12.5px;margin-bottom:8px;">${curT.ex_diss[0]}</div>
+                    <ol style="margin:0;padding-left:18px;font-size:12px;">
+                      ${(curT.ex_diss[1] || []).map(st => `<li>${st}</li>`).join('')}
+                    </ol>
+                  </div>
+                ` : ''}
+                <div style="margin-top:12px;">
+                  <div class="mu" style="font-size:10.5px;margin-bottom:6px;">MINHAS ANOTAÇÕES DE FICHAMENTO (${curT.autor.toUpperCase()}):</div>
+                  <textarea rows="5" style="width:100%;box-sizing:border-box;" placeholder="Digite suas sínteses, palavras-chave e conexões..." oninput="S.notes['${curT.id}']=this.value;save()">${esc((S.notes && S.notes[curT.id]) || '')}</textarea>
+                </div>
+              `}
+            </div>
+          ` : ''}
         </div>
       </div>
 
-      <button type="button" class="filter-trigger-btn" id="filter-trigger-btn" title="Filtrar por Prioridade e Seção">
-        <span>FILTRAR</span>
-        <span class="filter-trigger-badge" id="filter-count-badge">${(activePrio || activeSec) ? 'ATIVO' : 'TODOS'}</span>
-      </button>
+      <!-- BOX FLUTUANTE ELEGANTE DE FILTROS // CANTO INFERIOR DIREITO -->
+      <div class="textos-floating-filter" id="textos-filter-widget">
+        <div class="filter-panel-box" id="filter-panel-box">
+          <div class="filter-panel-header">
+            <div class="filter-panel-title">
+              <span style="color:var(--crivos-red);">■</span>
+              <span>FILTROS // BIBLIOGRAFIA</span>
+            </div>
+            <button type="button" class="filter-panel-close" id="filter-panel-close">✕</button>
+          </div>
+
+          <div>
+            <div class="filter-group-label">PRIORIDADE ESTRATÉGICA:</div>
+            <div class="filter-switch-row ${!activePrio ? 'active' : ''}" data-prio="">
+              <span class="filter-switch-label">TODAS AS PRIORIDADES</span>
+              <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
+            </div>
+            <div class="filter-switch-row ${activePrio === 'ESSENCIAL' ? 'active' : ''}" data-prio="ESSENCIAL">
+              <span class="filter-switch-label">ESSENCIAL (PESO ALTO)</span>
+              <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
+            </div>
+            <div class="filter-switch-row ${activePrio === 'IMPORTANTE' ? 'active' : ''}" data-prio="IMPORTANTE">
+              <span class="filter-switch-label">IMPORTANTE</span>
+              <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
+            </div>
+            <div class="filter-switch-row ${activePrio === 'SECUNDÁRIO' ? 'active' : ''}" data-prio="SECUNDÁRIO">
+              <span class="filter-switch-label">SECUNDÁRIO</span>
+              <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--border-color);padding-top:12px;">
+            <div class="filter-group-label">SEÇÃO DO EDITAL:</div>
+            <div class="filter-switch-row ${!activeSec ? 'active' : ''}" data-sec="">
+              <span class="filter-switch-label">TODAS AS SEÇÕES</span>
+              <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
+            </div>
+            <div class="filter-switch-row ${activeSec === 'area' ? 'active' : ''}" data-sec="area">
+              <span class="filter-switch-label">ÁREA (OBRIGATÓRIA)</span>
+              <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
+            </div>
+            <div class="filter-switch-row ${activeSec === 'linha' ? 'active' : ''}" data-sec="linha">
+              <span class="filter-switch-label">LINHA 1</span>
+              <div class="filter-switch-track"><div class="filter-switch-thumb"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="filter-trigger-btn" id="filter-trigger-btn" title="Filtrar por Prioridade e Seção">
+          <span>FILTRAR</span>
+          <span class="filter-trigger-badge" id="filter-count-badge">${(activePrio || activeSec) ? 'ATIVO' : 'TODOS'}</span>
+        </button>
+      </div>
     </div>
   `;
 
-  const renderList = () => {
-    const listEl = $('#tl');
-    if (!listEl) return;
-
-    const filtered = texts.filter(t => (!activePrio || t.prio === activePrio) && (!activeSec || t.sec === activeSec));
-
-    if (filtered.length === 0) {
-      listEl.innerHTML = `<div class="card" style="text-align:center;padding:32px;">
-        <p style="font-family:'Inter',sans-serif;font-weight:700;margin:0 0 8px 0;">NENHUM TEXTO ENCONTRADO PARA OS FILTROS SELECIONADOS.</p>
-        <button class="btn s p" onclick="activePrio='';activeSec='';V.textos();">LIMPAR FILTROS</button>
-      </div>`;
-      return;
-    }
-
-    listEl.innerHTML = filtered.map(t => {
-      const st = (S.texts && S.texts[t.id]) || '';
-      const m = S.log ? S.log.filter(l => l.t === t.id).reduce((a, l) => a + l.m, 0) : 0;
-      const googleQ = encodeURIComponent(`${t.titulo} ${t.autor || ''}`.trim());
-      const googleUrl = `https://www.google.com/search?q=${googleQ}`;
-      const pdfUrl = (typeof pdf === 'function') ? pdf(t) : ('textos/' + (t.arq || ''));
-
-      return `<div class="card" style="border-left: 6px solid ${t.prio === 'ESSENCIAL' ? 'var(--crivos-red)' : (t.prio === 'IMPORTANTE' ? 'var(--crivos-blue)' : 'var(--border-color)')};">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            <span class="prio ${t.prio}">${t.prio}</span>
-            <span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span>
-          </div>
-          <span class="mu" style="font-size:11px;font-family:'JetBrains Mono',monospace;">⏱ ${(m / 60).toFixed(1)}h estudadas</span>
-        </div>
-
-        <h3 style="margin:0 0 6px 0;font-size:17px;font-family:'Inter',sans-serif;font-weight:800;letter-spacing:-0.02em;">
-          ${t.autor} — <span style="font-weight:600;">${t.titulo}</span>
-        </h3>
-        <p class="mu" style="font-size:11.5px;margin-bottom:12px;">${t.ref || ''} · ${t.faixa || ''}</p>
-
-        <!-- Ações do Texto (Layout elegante com visual nativo de aplicativo) -->
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--bg-subtle);padding:10px 14px;border:1px solid var(--border-color);margin:14px 0;">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            ${ST.map(s => `<button class="btn s ${st === s ? 'p' : ''}" style="padding:5px 10px;font-size:10px;" onclick="S.texts['${t.id}']='${s}';save();toast('Status: ' + '${STN[s]}'.toUpperCase(), 'success');V.t2()">${STN[s]}</button>`).join('')}
-          </div>
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            <button class="btn s p" style="padding:5px 12px;font-size:10px;" onclick="inspectTextDetails('${t.id}')">[FICHA LATERAL]</button>
-            ${(currentPlanTier === 'prime') 
-              ? `<a class="btn s" style="padding:5px 12px;font-size:10px;" href="${pdfUrl}" target="_blank" rel="noopener">[ABRIR PDF]</a>`
-              : `<a class="btn s" style="padding:5px 12px;font-size:10px;" href="${googleUrl}" target="_blank" rel="noopener">[GOOGLE]</a>`
-            }
-          </div>
-        </div>
-
-        <p style="font-size:13px;line-height:1.55;margin:8px 0;"><b>POR QUE IMPORTA:</b> ${t.porque || ''}</p>
-        <p style="font-size:13px;line-height:1.55;margin:8px 0;"><b>TESE CENTRAL:</b> ${t.tese || ''}</p>
-
-        <details style="margin-top:10px;"><summary style="font-weight:700;font-size:12px;cursor:pointer;">Conceitos-chave (${t.conceitos ? t.conceitos.length : 0})</summary><ul style="margin-top:8px;">${t.conceitos ? t.conceitos.map(k => `<li><b>${k[0]}</b>: ${k[1]}</li>`).join('') : ''}</ul></details>
-        <details style="margin-top:6px;"><summary style="font-weight:700;font-size:12px;cursor:pointer;">Estrutura do texto</summary><ul style="margin-top:8px;">${t.estrutura ? t.estrutura.map(k => `<li>${k}</li>`).join('') : ''}</ul></details>
-        <details style="margin-top:6px;"><summary style="font-weight:700;font-size:12px;cursor:pointer;">Citações com página (${t.cit ? t.cit.length : 0})</summary><ul style="margin-top:8px;">${t.cit ? t.cit.map(k => `<li>«${k[1]}» <a href="${(typeof pdf === 'function') ? pdf(t, k[0]) : '#'}" target="_blank">${/PDF/.test(k[0]) ? k[0] : 'p. ' + k[0]}</a>${k[2] ? ' <span class="mu">— ' + k[2] + '</span>' : ''}</li>`).join('') : ''}</ul></details>
-        <details style="margin-top:6px;"><summary style="font-weight:700;font-size:12px;cursor:pointer;">Território e conexões</summary><p style="margin:8px 0;">${t.territorio || ''}</p><ul>${t.conexoes ? t.conexoes.map(k => `<li><b>${k[0]}</b>: ${k[1]}</li>`).join('') : ''}</ul></details>
-        <details style="margin-top:6px;"><summary style="font-weight:700;font-size:12px;cursor:pointer;">Ligação com o pré-projeto</summary><p style="margin:8px 0;">${(t.projeto && t.projeto.uso) || ''}</p>${(t.projeto && t.projeto.prova) ? '<p><b>Na prova:</b> ' + t.projeto.prova + '</p>' : ''}${(t.projeto && t.projeto.arg) ? '<p><b>Na arguição:</b> ' + t.projeto.arg + '</p>' : ''}</details>
-        <div style="margin-top:14px;padding-top:10px;border-top:1px dashed var(--border-subtle);">
-          <span class="mu" style="font-size:10.5px;font-family:'JetBrains Mono',monospace;display:block;margin-bottom:6px;">MINHAS NOTAS DE FICHAMENTO:</span>
-          <textarea rows="3" style="width:100%;box-sizing:border-box;" oninput="S.notes['${t.id}']=this.value;save()">${esc((S.notes && S.notes[t.id]) || '')}</textarea>
-        </div>
-      </div>`;
-    }).join('');
-  };
-
-  // Controller do Floating Widget On/Off
   const triggerBtn = document.getElementById('filter-trigger-btn');
   const panelBox = document.getElementById('filter-panel-box');
   const closeBtn = document.getElementById('filter-panel-close');
@@ -3448,57 +4163,112 @@ V.textos = () => {
     };
   }
   if (closeBtn && panelBox) {
-    closeBtn.onclick = () => {
-      panelBox.classList.remove('open');
-    };
+    closeBtn.onclick = () => panelBox.classList.remove('open');
   }
 
-  // Switches de Prioridade
   document.querySelectorAll('.filter-switch-row[data-prio]').forEach(el => {
     el.onclick = () => {
-      document.querySelectorAll('.filter-switch-row[data-prio]').forEach(r => r.classList.remove('active'));
-      el.classList.add('active');
       activePrio = el.dataset.prio || '';
       haptic(10);
-      const badge = document.getElementById('filter-count-badge');
-      if (badge) badge.textContent = (activePrio || activeSec) ? 'ATIVO' : 'TODOS';
-      renderList();
+      V.textos();
     };
   });
 
-  // Switches de Seção
   document.querySelectorAll('.filter-switch-row[data-sec]').forEach(el => {
     el.onclick = () => {
-      document.querySelectorAll('.filter-switch-row[data-sec]').forEach(r => r.classList.remove('active'));
-      el.classList.add('active');
       activeSec = el.dataset.sec || '';
       haptic(10);
-      const badge = document.getElementById('filter-count-badge');
-      if (badge) badge.textContent = (activePrio || activeSec) ? 'ATIVO' : 'TODOS';
-      renderList();
+      V.textos();
     };
   });
-
-  renderList();
-  V._r = renderList;
 };
-V.t2 = () => {
-  const appEl = document.getElementById('app');
-  const y = appEl ? appEl.scrollTop : scrollY;
-  if (typeof V._r === 'function') V._r();
-  if (appEl) appEl.scrollTop = y;
-  else scrollTo(0, y);
-};
+V.t2 = () => V.textos();
 
+// ==============================================================
+// 04 · FLASHCARDS SM-2 (NATIVE DECK APP)
+// ==============================================================
 let Q = [], qi = 0, show = false;
 V.cards = () => { Q = queue(); qi = 0; show = false; rc(); };
 function rc() {
   const tot = CARDS.length, seen = Object.keys(S.cards).length;
   const c = Q[qi];
-  let h = `<div class="card"><h3>Revisão espaçada (Algoritmo SM-2)</h3><p class="mu">${tot} cartões gerados das fichas (conceitos, citações com página e exercícios). Cartões novos entram só de textos marcados como lidos ou acima. ${seen} já vistos. Novos por dia: <input type="number" min="0" max="60" value="${S.newPerDay || 15}" style="width:70px" onchange="S.newPerDay=+this.value;save();V.cards()"></p><p><b>FILA DE HOJE: ${Q.length - qi} CARTÕES</b></p></div>`;
-  if (!c) h += `<div class="card"><p>${Object.values(S.texts).some(x => x) ? 'Nada para revisar agora. Volte amanhã.' : 'Marque um texto como "lido" na aba Textos para liberar os cartões dele.'}</p></div>`;
-  else h += `<div class="card fc"><div>${c.f}</div>${show ? `<hr><div>${c.b}</div>${c.p ? `<p><a href="${pdf(TXI[c.t], c.p)}" target="_blank">ABRIR NO PDF</a></p>` : ''}` : ''}</div><div class="row" style="justify-content:center;margin:20px 0">${show ? [[0, '1 · ERREI'], [3, '2 · DIFÍCIL'], [4, '3 · BOM'], [5, '4 · FÁCIL']].map(([q, n]) => `<button class="btn ${q >= 4 ? 'p' : ''}" onclick="ans(${q})">${n}</button>`).join('') : '<button class="btn p" onclick="haptic(10);show=true;rc()">MOSTRAR RESPOSTA (ESPAÇO)</button>'}</div><p class="mu" style="text-align:center">Tente responder em voz alta ou por escrito antes de virar.</p>`;
-  $('#app').innerHTML = h;
+  const rem = Math.max(0, Q.length - qi);
+  const pct = Q.length ? Math.round((qi / Q.length) * 100) : 100;
+
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <!-- Top Deck Status Bar -->
+      <div class="app-toolbar">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span class="tag ar">ALGORITMO SM-2</span>
+          <b style="font-family:'Inter',sans-serif;font-size:12.5px;text-transform:uppercase;">FILA DE HOJE: ${rem} CARTÕES RESTANTES</b>
+          <span class="mu" style="font-size:11px;">(${seen}/${tot} VISTOS NO ACERVO)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="mu" style="font-size:10.5px;">NOVOS/DIA:</span>
+          <input type="number" min="0" max="60" value="${S.newPerDay || 15}" style="width:58px;padding:4px 6px;" onchange="S.newPerDay=+this.value;save();V.cards()">
+        </div>
+      </div>
+
+      <!-- Thin Progress Line -->
+      <div class="bar" style="margin:0;height:6px;flex-shrink:0;"><i style="width:${pct}%"></i></div>
+
+      <!-- Center Card Stage -->
+      <div class="fc-deck-stage">
+        ${!c ? `
+          <div class="fc-card-surface" style="justify-content:center;align-items:center;text-align:center;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--crivos-red);font-weight:800;margin-bottom:8px;">[ SESSÃO DE RETENÇÃO FINALIZADA ]</div>
+            <h3 style="font-size:20px;margin:0 0 10px 0;">${Object.values(S.texts).some(x => x) ? 'FILA DE HOJE ZERADA COM SUCESSO.' : 'NENHUM TEXTO LIBERADO PARA REVISÃO.'}</h3>
+            <p class="mu" style="max-width:460px;margin:0 0 18px 0;">
+              ${Object.values(S.texts).some(x => x)
+                ? 'Todos os cartões agendados para hoje foram processados pelo algoritmo SM-2.'
+                : 'Marque pelo menos um texto como "LIDO" na aba 03 · Textos para ativar seus cartões inteligentes.'}
+            </p>
+            <button class="btn p" onclick="go('textos')">[IR PARA 03 · TEXTOS]</button>
+          </div>
+        ` : `
+          <div class="fc-card-surface">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:8px;margin-bottom:16px;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:var(--crivos-red);">[ FRENTE // PERGUNTA ${qi + 1} DE ${Q.length} ]</span>
+                <span class="tag">${short(TXI[c.t])}</span>
+              </div>
+              <div style="font-size:17px;line-height:1.55;">${c.f}</div>
+            </div>
+
+            ${show ? `
+              <div style="border-top:2px solid var(--border-color);padding-top:16px;margin-top:20px;background:var(--bg-subtle);padding:16px;border-left:5px solid var(--crivos-blue);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:var(--crivos-blue);">[ VERSO // GABARITO CONFERIDO ]</span>
+                  ${c.p ? `<a class="btn s" style="padding:2px 8px;font-size:9.5px;" href="${pdf(TXI[c.t], c.p)}" target="_blank">[ABRIR PÁGINA NO PDF]</a>` : ''}
+                </div>
+                <div style="font-size:15px;line-height:1.6;">${c.b}</div>
+              </div>
+            ` : `
+              <div class="mu" style="text-align:center;font-size:11px;padding-top:12px;border-top:1px dashed var(--border-subtle);">
+                Formule a resposta mentalmente ou em voz alta antes de revelar o verso.
+              </div>
+            `}
+          </div>
+        `}
+      </div>
+
+      <!-- Bottom Ergonomic Action Dock -->
+      ${c ? `
+        <div class="app-toolbar" style="justify-content:center;padding:10px 14px;">
+          ${show ? `
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;max-width:760px;">
+              ${[[0, '1 · ERREI'], [3, '2 · DIFÍCIL'], [4, '3 · BOM'], [5, '4 · FÁCIL']].map(([q, n]) => `
+                <button class="btn ${q >= 4 ? 'p' : ''}" style="width:100%;justify-content:center;padding:10px 6px;font-size:11px;" onclick="ans(${q})">${n}</button>
+              `).join('')}
+            </div>
+          ` : `
+            <button class="btn p" style="width:100%;max-width:760px;justify-content:center;padding:12px;" onclick="haptic(10);show=true;rc()">[REVELAR RESPOSTA · ESPAÇO]</button>
+          `}
+        </div>
+      ` : ''}
+    </div>
+  `;
 }
 window.ans = q => {
   haptic(q >= 4 ? [12, 30, 16] : 14);
@@ -3518,22 +4288,83 @@ document.addEventListener('keydown', e => {
   else if (show && '1234'.includes(e.key)) ans([0, 3, 4, 5][+e.key - 1]);
 });
 
+// ==============================================================
+// 05 · POMODORO (FOCUS CONSOLE & ANALYTICS TABS)
+// ==============================================================
 let P = {left: 0, run: false, mode: 'w', tid: null, start: 0, acc: 0, n: 0};
+let pomoSubTab = 'timer'; // 'timer' | 'dias' | 'textos'
+
 V.pomo = () => {
   if (!P.left) P.left = S.pomo.w * 60;
-  $('#app').innerHTML = `<div class="card"><h3>Cronômetro Pomodoro</h3><div class="row"><label class="mu">FOCO <input id="pw" type="number" value="${S.pomo.w}" style="width:65px"> MIN</label><label class="mu">PAUSA <input id="pb" type="number" value="${S.pomo.b}" style="width:65px"></label><label class="mu">PAUSA LONGA <input id="pl" type="number" value="${S.pomo.lb}" style="width:65px"></label>
-  <label class="mu">ESTUDANDO: <select id="pt"><option value="">(GERAL / ESCRITA / PROJETO)</option>${TX.map(t => `<option value="${t.id}" ${S.pomoT === t.id ? 'selected' : ''}>${short(t)}</option>`).join('')}</select></label></div>
-  <div class="timer" id="tm"></div><p class="mu" style="text-align:center" id="pm"></p><div class="row" style="justify-content:center;margin:16px 0"><button class="btn p" id="ps">${P.run ? 'PAUSAR' : 'INICIAR'}</button><button class="btn" id="pr">REINICIAR</button><button class="btn" id="pk">PULAR FASE</button></div>
-  <p class="mu" style="text-align:center">Os minutos de foco são registrados por dia e por texto ao fim de cada bloco (ou ao pausar/reiniciar).</p></div>
-  <div class="card"><h3>Horas por dia (últimos 21 dias)</h3><svg id="c1" width="100%" height="200"></svg></div><div class="card"><h3>Horas por texto</h3><svg id="c2" width="100%" height="${TX.length * 26 + 30}"></svg></div>
-  <div class="card"><h3>Registro manual</h3><div class="row"><input id="mm" type="number" placeholder="minutos" style="width:120px"><button class="btn" onclick="logm(+$('#mm').value);V.pomo()">ADICIONAR AO TEXTO SELECIONADO</button></div></div>`;
-  ['pw', 'pb', 'pl'].forEach((k, i) => $('#' + k).onchange = e => { S.pomo[['w', 'b', 'lb'][i]] = +e.target.value; save(); if (!P.run) { P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60; tick(); } });
-  $('#pt').onchange = e => { flush(); S.pomoT = e.target.value; save(); };
-  $('#ps').onclick = () => { P.run ? pause() : startP(); V.pomo(); };
-  $('#pr').onclick = () => { flush(); pause(); P.mode = 'w'; P.left = S.pomo.w * 60; V.pomo(); };
-  $('#pk').onclick = () => { flush(); nextPhase(); V.pomo(); };
-  tick();
-  charts();
+  const totalHours = (S.log.reduce((a, l) => a + l.m, 0) / 60).toFixed(1);
+
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <div class="app-toolbar">
+        <div class="app-subnav">
+          <button type="button" class="seg-btn ${pomoSubTab === 'timer' ? 'active' : ''}" onclick="pomoSubTab='timer';V.pomo()">CRONÔMETRO DE FOCO</button>
+          <button type="button" class="seg-btn ${pomoSubTab === 'dias' ? 'active' : ''}" onclick="pomoSubTab='dias';V.pomo()">HISTÓRICO (21 DIAS)</button>
+          <button type="button" class="seg-btn ${pomoSubTab === 'textos' ? 'active' : ''}" onclick="pomoSubTab='textos';V.pomo()">HORAS POR TEXTO</button>
+        </div>
+        <span class="mu" style="font-size:11px;font-weight:700;">ACUMULADO: ${totalHours}H</span>
+      </div>
+
+      ${pomoSubTab === 'timer' ? `
+        <div class="app-pane card" style="margin:0;display:flex;flex-direction:column;justify-content:space-between;align-items:center;text-align:center;padding:20px;">
+          <div style="width:100%;max-width:680px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--border-color);padding-bottom:12px;">
+            <div class="row" style="gap:6px;">
+              <label class="mu" style="font-size:10.5px;">FOCO <input id="pw" type="number" value="${S.pomo.w}" style="width:52px;padding:4px;">m</label>
+              <label class="mu" style="font-size:10.5px;">PAUSA <input id="pb" type="number" value="${S.pomo.b}" style="width:52px;padding:4px;">m</label>
+              <label class="mu" style="font-size:10.5px;">LONGA <input id="pl" type="number" value="${S.pomo.lb}" style="width:52px;padding:4px;">m</label>
+            </div>
+            <select id="pt" style="max-width:280px;padding:6px;">
+              <option value="">[ALVO: GERAL / ESCRITA / PROJETO]</option>
+              ${TX.map(t => `<option value="${t.id}" ${S.pomoT === t.id ? 'selected' : ''}>${short(t)}</option>`).join('')}
+            </select>
+          </div>
+
+          <div style="margin:auto 0;padding:16px 0;">
+            <div class="mu" id="pm" style="font-size:11.5px;font-weight:800;letter-spacing:0.06em;margin-bottom:6px;"></div>
+            <div class="timer" id="tm" style="font-size:clamp(54px, 11vw, 88px);line-height:1;margin:8px 0;"></div>
+            <div class="row" style="justify-content:center;gap:10px;margin-top:16px;">
+              <button class="btn p" id="ps" style="min-width:130px;justify-content:center;">[${P.run ? 'PAUSAR' : 'INICIAR FOCO'}]</button>
+              <button class="btn" id="pr">[REINICIAR]</button>
+              <button class="btn" id="pk">[PULAR FASE]</button>
+            </div>
+          </div>
+
+          <div style="width:100%;max-width:680px;border-top:1px solid var(--border-color);padding-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <span class="mu" style="font-size:11px;">REGISTRO MANUAL DE TEMPO:</span>
+            <div class="row" style="gap:6px;">
+              <input id="mm" type="number" placeholder="Minutos" style="width:95px;padding:5px 8px;">
+              <button class="btn s" onclick="logm(+$('#mm').value);toast('Tempo registrado','success');V.pomo()">[+ ADICIONAR AO TEXTO]</button>
+            </div>
+          </div>
+        </div>
+      ` : pomoSubTab === 'dias' ? `
+        <div class="app-pane card" style="margin:0;display:flex;flex-direction:column;justify-content:center;">
+          <h3>HORAS LÍQUIDAS POR DIA (ÚLTIMOS 21 DIAS)</h3>
+          <svg id="c1" width="100%" height="230"></svg>
+        </div>
+      ` : `
+        <div class="app-pane card" style="margin:0;">
+          <h3>DISTRIBUIÇÃO DE HORAS POR TEXTO DO EDITAL</h3>
+          <svg id="c2" width="100%" height="${TX.length * 26 + 30}"></svg>
+        </div>
+      `}
+    </div>
+  `;
+
+  if (pomoSubTab === 'timer') {
+    ['pw', 'pb', 'pl'].forEach((k, i) => $('#' + k).onchange = e => { S.pomo[['w', 'b', 'lb'][i]] = +e.target.value; save(); if (!P.run) { P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60; tick(); } });
+    $('#pt').onchange = e => { flush(); S.pomoT = e.target.value; save(); };
+    $('#ps').onclick = () => { P.run ? pause() : startP(); V.pomo(); };
+    $('#pr').onclick = () => { flush(); pause(); P.mode = 'w'; P.left = S.pomo.w * 60; V.pomo(); };
+    $('#pk').onclick = () => { flush(); nextPhase(); V.pomo(); };
+    tick();
+  } else {
+    charts();
+  }
 };
 function logm(m) { if (m > 0) { S.log.push({d: today(), t: S.pomoT || '', m: Math.round(m * 10) / 10}); save(); } }
 function flush() { if (P.mode === 'w' && P.run) { P.acc += (Date.now() - P.start) / 6e4; P.start = Date.now(); } if (P.acc >= 0.5) logm(P.acc); P.acc = 0; }
@@ -3546,7 +4377,7 @@ function updateTopbarPomodoro() {
   if (P.run) {
     shortcut.classList.add('pomo-running');
     shortcut.title = 'Pomodoro em Andamento: clique para abrir o cronômetro';
-    elMiniAvatar.textContent = '⏱';
+    elMiniAvatar.textContent = 'P';
     const min = String(Math.floor(P.left / 60)).padStart(2, '0');
     const sec = String(P.left % 60).padStart(2, '0');
     elTopbarName.textContent = `${min}:${sec} · ${P.mode === 'w' ? 'FOCO' : 'PAUSA'}`;
@@ -3556,7 +4387,6 @@ function updateTopbarPomodoro() {
     syncUserIdentity();
   }
 }
-
 function startP() {
   haptic(18);
   P.run = true;
@@ -3568,7 +4398,6 @@ function startP() {
     tick();
   }, 1000);
 }
-
 function pause() {
   haptic(14);
   if (P.run && P.mode === 'w') P.acc += (Date.now() - P.start) / 6e4;
@@ -3577,7 +4406,6 @@ function pause() {
   flush();
   updateTopbarPomodoro();
 }
-
 function nextPhase() {
   if (P.mode === 'w') { P.n++; P.mode = P.n % 4 ? 'b' : 'lb'; } else P.mode = 'w';
   P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60;
@@ -3585,16 +4413,15 @@ function nextPhase() {
   updateTopbarPomodoro();
   if (cur === 'pomo') V.pomo();
 }
-
 function tick() {
   const e = $('#tm');
   if (e) {
     e.textContent = String(Math.floor(P.left / 60)).padStart(2, '0') + ':' + String(P.left % 60).padStart(2, '0');
-    $('#pm').textContent = (P.mode === 'w' ? 'MODO FOCO' : 'MODO PAUSA') + ' · BLOCOS CONCLUÍDOS: ' + P.n;
+    const pm = $('#pm');
+    if (pm) pm.textContent = (P.mode === 'w' ? 'MODO FOCO ATIVO' : 'MODO PAUSA REPARADORA') + ' · CICLOS CONCLUÍDOS: ' + P.n;
   }
   updateTopbarPomodoro();
 }
-
 function beep() {
   haptic([80, 60, 80, 60, 140]);
   try {
@@ -3606,30 +4433,72 @@ function beep() {
   } catch (e) {}
 }
 function charts() {
-  const c1 = $('#c1'), W = c1.clientWidth || 700, days = [];
-  for (let i = 20; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); days.push(iso(d)); }
-  const v = days.map(d => S.log.filter(l => l.d === d).reduce((a, l) => a + l.m, 0) / 60), mx = Math.max(1, ...v), bw = W / days.length;
-  c1.innerHTML = v.map((x, i) => `<rect x="${i * bw + 3}" y="${170 - x / mx * 145}" width="${Math.max(4, bw - 6)}" height="${x / mx * 145}" fill="var(--red)" stroke="var(--bd)" stroke-width="1.5"><title>${br(days[i])}: ${x.toFixed(1)}h</title></rect>${x ? `<text x="${i * bw + bw / 2}" y="${164 - x / mx * 145}" text-anchor="middle">${x.toFixed(1)}</text>` : ''}<text x="${i * bw + bw / 2}" y="192" text-anchor="middle">${days[i].slice(8)}</text>`).join('');
-  const c2 = $('#c2'), W2 = c2.clientWidth || 700, v2 = TX.map(t => S.log.filter(l => l.t === t.id).reduce((a, l) => a + l.m, 0) / 60), m2 = Math.max(1, ...v2);
-  c2.innerHTML = TX.map((t, i) => `<text x="0" y="${i * 26 + 17}">${short(t)}</text><rect x="180" y="${i * 26 + 4}" width="${Math.max(0, (W2 - 240) * v2[i] / m2)}" height="18" fill="var(--blue)" stroke="var(--bd)" stroke-width="1.5"/><text x="${188 + (W2 - 240) * v2[i] / m2}" y="${i * 26 + 17}">${v2[i].toFixed(1)}h</text>`).join('');
+  const c1 = $('#c1');
+  if (c1) {
+    const W = c1.clientWidth || 700, days = [];
+    for (let i = 20; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); days.push(iso(d)); }
+    const v = days.map(d => S.log.filter(l => l.d === d).reduce((a, l) => a + l.m, 0) / 60), mx = Math.max(1, ...v), bw = W / days.length;
+    c1.innerHTML = v.map((x, i) => `<rect x="${i * bw + 3}" y="${170 - x / mx * 145}" width="${Math.max(4, bw - 6)}" height="${x / mx * 145}" fill="var(--red)" stroke="var(--bd)" stroke-width="1.5"><title>${br(days[i])}: ${x.toFixed(1)}h</title></rect>${x ? `<text x="${i * bw + bw / 2}" y="${164 - x / mx * 145}" text-anchor="middle">${x.toFixed(1)}</text>` : ''}<text x="${i * bw + bw / 2}" y="192" text-anchor="middle">${days[i].slice(8)}</text>`).join('');
+  }
+  const c2 = $('#c2');
+  if (c2) {
+    const W2 = c2.clientWidth || 700, v2 = TX.map(t => S.log.filter(l => l.t === t.id).reduce((a, l) => a + l.m, 0) / 60), m2 = Math.max(1, ...v2);
+    c2.innerHTML = TX.map((t, i) => `<text x="0" y="${i * 26 + 17}">${short(t)}</text><rect x="180" y="${i * 26 + 4}" width="${Math.max(0, (W2 - 240) * v2[i] / m2)}" height="18" fill="var(--blue)" stroke="var(--bd)" stroke-width="1.5"/><text x="${188 + (W2 - 240) * v2[i] / m2}" y="${i * 26 + 17}">${v2[i].toFixed(1)}h</text>`).join('');
+  }
 }
 
-// ---------- simulado
+// ==============================================================
+// 06 · SIMULADO (TEST RUNNER & QUESTION BANK WORKBENCH)
+// ==============================================================
 let E = {tid: null};
+let simSubTab = 'runner'; // 'runner' | 'banco' | 'historico'
+let activeSimQIdx = 0;
+let bankSelIdx = 0;
+let mobileBankDetailOpen = false;
+
 V.sim = () => {
   const a = S.simCur;
-  let h = '';
-  if (!a) {
-    h = `<div class="card"><h3>Simulado no estilo da prova</h3><p>Sorteia uma questão da <b>área</b> (obrigatória) e uma da <b>Linha 1</b>, do banco do guia e da apostila (${D.sim.length} questões). Sem consulta, à mão se possível; aqui você pode digitar ou só controlar o tempo.</p><div class="row"><button class="btn p" onclick="newSim(240)">PROVA COMPLETA (4H)</button><button class="btn" onclick="newSim(120,'area')">SÓ ÁREA (2H)</button><button class="btn" onclick="newSim(120,'linha')">SÓ LINHA 1 (2H)</button></div></div>`;
-  } else {
-    const qs = a.q.map(i => D.sim[i]);
-    h = `<div class="card"><div class="row" style="justify-content:space-between"><div class="timer" id="et" style="font-size:36px;margin:0"></div><div class="row"><button class="btn p" onclick="finishSim()">ENCERRAR E CORRIGIR</button><button class="btn" onclick="uiConfirm('Descartar este simulado em andamento?', ()=>{S.simCur=null;save();V.sim()})">DESCARTAR</button></div></div></div>` +
-      qs.map((q, k) => `<div class="card"><span class="tag ${q.sec === 'area' ? 'ar' : 'li'}">${q.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span><p style="font-size:16px">${q.q}</p><textarea rows="14" oninput="S.simCur.txt[${k}]=this.value;save();this.nextElementSibling.textContent=wc(this.value)+' PALAVRAS'">${esc(a.txt[k] || '')}</textarea><p class="mu">${wc(a.txt[k] || '')} PALAVRAS</p></div>`).join('');
-  }
-  h += `<div class="card"><h3>Histórico de Simulados</h3>${S.sims.length ? `<div class="table-responsive"><table><thead><tr><th>Data</th><th>Questões</th><th>Tempo</th><th>Palavras</th><th>Nota</th></tr></thead><tbody>${S.sims.slice().reverse().map(s => `<tr><td>${br(s.d)}</td><td>${s.q.map(i => strip(D.sim[i].q).slice(0, 50)).join('<br>')}</td><td>${s.min} min</td><td>${s.w.join(' / ')}</td><td><b>${s.nota}</b></td></tr>`).join('')}</tbody></table></div>` : '<p class="mu">Nenhum simulado ainda. Datas sugeridas: 07/11, 14/11 e 20/11, das 9h às 13h.</p>'}</div>`;
-  $('#app').innerHTML = h;
   clearInterval(E.tid);
+
   if (a) {
+    const qs = a.q.map(i => D.sim[i]);
+    if (activeSimQIdx >= qs.length) activeSimQIdx = 0;
+    const curQ = qs[activeSimQIdx];
+
+    $('#app').innerHTML = `
+      <div class="app-screen">
+        <div class="app-toolbar">
+          <div class="app-subnav">
+            ${qs.map((q, k) => `
+              <button type="button" class="seg-btn ${activeSimQIdx === k ? 'active' : ''}" onclick="activeSimQIdx=${k};V.sim()">
+                QUESTÃO 0${k + 1} · ${q.sec === 'area' ? 'ÁREA' : 'LINHA 1'} (${wc(a.txt[k] || '')} PAL.)
+              </button>
+            `).join('')}
+          </div>
+          <div class="row" style="gap:10px;">
+            <div class="timer" id="et" style="font-size:22px;margin:0;"></div>
+            <button class="btn s p" onclick="finishSim()">[ENCERRAR E CORRIGIR]</button>
+            <button class="btn s" onclick="uiConfirm('Descartar este simulado em andamento?', ()=>{S.simCur=null;save();V.sim()})">[DESCARTAR]</button>
+          </div>
+        </div>
+
+        <div class="app-detail" style="flex:1;">
+          <div class="app-detail-header">
+            <div style="font-size:14px;font-weight:700;line-height:1.45;">${curQ.q}</div>
+          </div>
+          <div class="app-detail-body" style="display:flex;flex-direction:column;padding:12px;">
+            <textarea style="flex:1;width:100%;resize:none;font-size:14px;line-height:1.65;padding:14px;" placeholder="Redija sua resposta dissertativa sem consulta..." oninput="S.simCur.txt[${activeSimQIdx}]=this.value;save();$('#sim-wc-live').textContent=wc(this.value)+' PALAVRAS'">${esc(a.txt[activeSimQIdx] || '')}</textarea>
+          </div>
+          <div class="app-detail-dock">
+            <span class="mu" id="sim-wc-live">${wc(a.txt[activeSimQIdx] || '')} PALAVRAS DIGITADAS</span>
+            <div class="row" style="gap:6px;">
+              ${qs.length > 1 ? `<button class="btn s" onclick="activeSimQIdx=${activeSimQIdx === 0 ? 1 : 0};V.sim()">[ALTERNAR PARA QUESTÃO 0${activeSimQIdx === 0 ? 2 : 1} →]</button>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
     const f = () => {
       const l = Math.max(0, a.end - Date.now()), e = $('#et');
       if (!e) { clearInterval(E.tid); return; }
@@ -3638,7 +4507,111 @@ V.sim = () => {
     };
     f();
     E.tid = setInterval(f, 1000);
+    return;
   }
+
+  const curBankQ = D.sim[bankSelIdx] || D.sim[0];
+
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <div class="app-toolbar">
+        <div class="app-subnav">
+          <button type="button" class="seg-btn ${simSubTab === 'runner' ? 'active' : ''}" onclick="simSubTab='runner';V.sim()">NOVO SIMULADO</button>
+          <button type="button" class="seg-btn ${simSubTab === 'banco' ? 'active' : ''}" onclick="simSubTab='banco';V.sim()">ESPELHOS & QUESTÕES (${D.sim.length})</button>
+          <button type="button" class="seg-btn ${simSubTab === 'historico' ? 'active' : ''}" onclick="simSubTab='historico';V.sim()">HISTÓRICO (${S.sims.length})</button>
+        </div>
+      </div>
+
+      ${simSubTab === 'runner' ? `
+        <div class="app-pane" style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;flex:1;">
+            <div class="card" style="margin:0;border-left:6px solid var(--crivos-red);display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <span class="tag esc">MODO OFICIAL</span>
+                <h3 style="margin:10px 0 6px 0;">PROVA COMPLETA (4 HORAS)</h3>
+                <p class="mu" style="font-size:12.5px;">Sorteia 1 questão obrigatória da Área de Concentração + 1 questão da Linha 1. Simula exatamente a janela de 9h às 13h na FFP/UERJ.</p>
+              </div>
+              <button class="btn p" style="width:100%;justify-content:center;" onclick="newSim(240)">[INICIAR PROVA COMPLETA · 4H]</button>
+            </div>
+
+            <div class="card" style="margin:0;border-left:6px solid var(--crivos-blue);display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <span class="tag ar">BLOCO 01</span>
+                <h3 style="margin:10px 0 6px 0;">TREINO ÁREA (2 HORAS)</h3>
+                <p class="mu" style="font-size:12.5px;">Sorteia 1 questão exclusiva da Área (História Social do Território — 7 autores obrigatórios) para treino focado de 120 minutos.</p>
+              </div>
+              <button class="btn" style="width:100%;justify-content:center;" onclick="newSim(120,'area')">[TREINAR QUESTÃO DA ÁREA · 2H]</button>
+            </div>
+
+            <div class="card" style="margin:0;border-left:6px solid #111111;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <span class="tag li">BLOCO 02</span>
+                <h3 style="margin:10px 0 6px 0;">TREINO LINHA 1 (2 HORAS)</h3>
+                <p class="mu" style="font-size:12.5px;">Sorteia 1 questão exclusiva da Linha 1 (Território, Relações de Poder e Movimentos Sociais — 5 autores) para treino de 120 minutos.</p>
+              </div>
+              <button class="btn" style="width:100%;justify-content:center;" onclick="newSim(120,'linha')">[TREINAR QUESTÃO DA LINHA 1 · 2H]</button>
+            </div>
+          </div>
+        </div>
+      ` : simSubTab === 'banco' ? `
+        <div class="app-split master-detail-flow ${mobileBankDetailOpen ? 'mobile-detail-open' : ''}">
+          <div class="app-master">
+            <div class="app-master-header">
+              <span style="font-family:'Inter',sans-serif;font-weight:900;font-size:11px;">BANCO DE QUESTÕES (${D.sim.length})</span>
+            </div>
+            <div class="app-master-list">
+              ${D.sim.map((q, idx) => `
+                <div class="master-item ${bankSelIdx === idx ? 'active' : ''}" onclick="bankSelIdx=${idx};mobileBankDetailOpen=true;V.sim()">
+                  <div style="display:flex;justify-content:space-between;">
+                    <span class="tag ${q.sec === 'area' ? 'ar' : 'li'}" style="font-size:9px;">${q.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span>
+                    <span class="mu" style="font-size:10px;">#${String(idx + 1).padStart(2, '0')}</span>
+                  </div>
+                  <div style="font-size:12px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${strip(q.q)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="app-detail">
+            <div class="app-detail-header">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button type="button" class="mobile-back-btn" onclick="mobileBankDetailOpen=false;V.sim()">[ < QUESTÕES ]</button>
+                <span class="tag ${curBankQ.sec === 'area' ? 'ar' : 'li'}">${curBankQ.sec === 'area' ? 'ÁREA OBRIGATÓRIA' : 'LINHA 1'}</span>
+                <b>QUESTÃO #${String(bankSelIdx + 1).padStart(2, '0')}</b>
+              </div>
+              <button class="btn s p" onclick="S.simCur={q:[${bankSelIdx}],start:Date.now(),end:Date.now()+120*6e4,txt:[]};save();V.sim()">[PRATICAR ESTA QUESTÃO]</button>
+            </div>
+            <div class="app-detail-body">
+              <div style="padding:14px;background:var(--bg-subtle);border:2px solid var(--border-color);font-size:14.5px;margin-bottom:16px;">${curBankQ.q}</div>
+              <div style="padding:14px;background:var(--bg-card);border:1px solid var(--border-color);border-left:5px solid var(--crivos-blue);">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:800;color:var(--crivos-blue);margin-bottom:6px;">ESPELHO DE RESPOSTA PADRÃO CRIVOS:</div>
+                <div style="font-size:13.5px;line-height:1.6;">${curBankQ.esq}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ` : `
+        <div class="app-pane card" style="margin:0;">
+          <h3>HISTÓRICO DE SIMULADOS REALIZADOS</h3>
+          ${S.sims.length ? `
+            <table>
+              <thead><tr><th>DATA</th><th>QUESTÕES</th><th>TEMPO</th><th>PALAVRAS</th><th>NOTA</th></tr></thead>
+              <tbody>
+                ${S.sims.slice().reverse().map(s => `
+                  <tr>
+                    <td class="mono">${br(s.d)}</td>
+                    <td>${s.q.map(i => strip(D.sim[i].q).slice(0, 60) + '…').join('<br>')}</td>
+                    <td class="mono">${s.min} min</td>
+                    <td class="mono">${s.w.join(' / ')}</td>
+                    <td class="mono"><b>${s.nota}</b></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          ` : '<p class="mu">Nenhum simulado finalizado ainda. Datas oficiais do cronograma: 07/11, 14/11 e 20/11 (9h–13h).</p>'}
+        </div>
+      `}
+    </div>
+  `;
 };
 const wc = s => (s.trim().match(/\S+/g) || []).length;
 const pick = sec => {
@@ -3647,7 +4620,7 @@ const pick = sec => {
   const pool = fresh.length ? fresh : p;
   return pool[Math.floor(Math.random() * pool.length)][1];
 };
-window.newSim = (min, only) => { S.simCur = {q: only ? [pick(only)] : [pick('area'), pick('linha')], start: Date.now(), end: Date.now() + min * 6e4, txt: []}; save(); V.sim(); };
+window.newSim = (min, only) => { activeSimQIdx = 0; S.simCur = {q: only ? [pick(only)] : [pick('area'), pick('linha')], start: Date.now(), end: Date.now() + min * 6e4, txt: []}; save(); V.sim(); };
 const RUB = [
   ['Tese clara respondendo ao enunciado', 2],
   ['Domínio dos conceitos dos autores', 2.5],
@@ -3660,204 +4633,471 @@ window.finishSim = () => {
   const a = S.simCur;
   clearInterval(E.tid);
   const qs = a.q.map(i => D.sim[i]);
-  $('#app').innerHTML = qs.map((q, k) => `<div class="card"><p>${q.q}</p><details><summary>Sua resposta (${wc(a.txt[k] || '')} palavras)</summary><p style="white-space:pre-wrap">${esc(a.txt[k] || '')}</p></details><div class="card" style="background:var(--s2);border-left:6px solid var(--blue)"><b>ESQUEMA DE RESPOSTA</b><br>${q.esq}</div></div>`).join('') +
-    `<div class="card"><h3>Autocorreção</h3><details><summary>Grade de autocorreção do guia</summary>${D.rubric}</details><div class="table-responsive"><table>${RUB.map(([n, p]) => `<tr><td>${n}</td><td>0 – ${p}</td><td><input type="number" step="0.5" min="0" max="${p}" class="rb" style="width:80px" value="0"></td></tr>`).join('')}<tr><td><b>Total (média se 2 questões: avalie o conjunto)</b></td><td>10</td><td><b id="tot">0</b></td></tr></table></div><p><button class="btn p" id="sv">SALVAR NO HISTÓRICO</button></p></div>`;
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <div class="app-toolbar">
+        <b style="font-family:'Inter',sans-serif;font-size:13px;">AUDITORIA E AUTOCORREÇÃO DO SIMULADO</b>
+        <button class="btn s" onclick="V.sim()">[VOLTAR AO SIMULADO]</button>
+      </div>
+      <div class="app-split" style="grid-template-columns: 1.2fr 1fr;">
+        <div class="app-pane card" style="margin:0;">
+          <h3>COMPARATIVO: SUA RESPOSTA × ESPELHO</h3>
+          ${qs.map((q, k) => `
+            <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border-color);">
+              <p style="font-weight:700;">${q.q}</p>
+              <div style="padding:10px;background:var(--bg-subtle);border:1px solid var(--border-color);margin-bottom:8px;white-space:pre-wrap;font-size:12.5px;"><b>Sua Resposta (${wc(a.txt[k] || '')} palavras):</b><br>${esc(a.txt[k] || '(Em branco)')}</div>
+              <div style="padding:10px;background:var(--bg-card);border:1px solid var(--border-color);border-left:4px solid var(--crivos-blue);font-size:12.5px;"><b>Esquema de Resposta Padrão:</b><br>${q.esq}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="app-pane card" style="margin:0;">
+          <h3>GRADE DE AUTOCORREÇÃO (0 A 10)</h3>
+          <table>
+            ${RUB.map(([n, p]) => `<tr><td>${n}</td><td class="mono">0–${p}</td><td><input type="number" step="0.5" min="0" max="${p}" class="rb" style="width:70px" value="0"></td></tr>`).join('')}
+            <tr><td><b>NOTA FINAL CONSOLIDADA</b></td><td class="mono">10,0</td><td><b id="tot" style="font-size:16px;color:var(--crivos-red);">0.0</b></td></tr>
+          </table>
+          <button class="btn p" id="sv" style="width:100%;justify-content:center;margin-top:12px;">[SALVAR NOTA NO HISTÓRICO]</button>
+        </div>
+      </div>
+    </div>
+  `;
   const up = () => $('#tot').textContent = [...document.querySelectorAll('.rb')].reduce((s, e) => s + (+e.value || 0), 0).toFixed(1);
   document.querySelectorAll('.rb').forEach(e => e.oninput = up);
   $('#sv').onclick = () => {
     S.sims.push({d: today(), q: a.q, min: Math.round((Math.min(Date.now(), a.end) - a.start) / 6e4), w: a.q.map((_, k) => wc(a.txt[k] || '')), nota: +$('#tot').textContent});
     S.simCur = null;
+    simSubTab = 'historico';
     save();
     V.sim();
   };
 };
 
-let AQ = null, AT = null;
+// ==============================================================
+// 07 · ARGUIÇÃO ORAL (SIMULADOR DE BANCADA SPLIT-VIEW)
+// ==============================================================
+let AQ = 0, AT = null;
+let argSubTab = 'bancada'; // 'bancada' | 'vulneraveis' | 'matriz' | 'protocolo'
+let argCatFilter = '';
+let argOnlyWeak = false;
+let mobileArgDetailOpen = false;
+
 V.arg = () => {
-  const weak = D.arg.map((q, i) => [q, i]).filter(([q, i]) => S.args[i] && S.args[i].c <= 2);
-  $('#app').innerHTML = `<div class="card"><h3>Treino de arguição (08–09/12)</h3><p class="mu">${D.arg.length} perguntas prováveis da banca. Sorteie, responda em voz alta em 2–3 minutos (de preferência gravando), depois compare com a linha de resposta e avalie sua confiança.</p><div class="row"><select id="ac"><option value="">TODAS AS CATEGORIAS</option>${[...new Set(D.arg.map(q => q.cat))].map(c => `<option>${c}</option>`).join('')}</select><label class="mu"><input type="checkbox" id="aw"> SÓ PONTOS FRACOS</label><select id="ad"><option value="120">2 MIN</option><option value="180" selected>3 MIN</option></select><button class="btn p" onclick="drawArg()">[SORTEAR PERGUNTA]</button></div></div><div id="aq"></div>
-  <div class="card"><h3>Pontos fracos (confiança ≤ 2)</h3>${weak.length ? '<ul>' + weak.map(([q, i]) => `<li><a href="#" onclick="showArg(${i});return false">${strip(q.p)}</a> <span class="mu">(conf. ${S.args[i].c})</span></li>`).join('') + '</ul>' : '<p class="mu">Nenhum ainda.</p>'}<p class="mu">Respondidas: ${Object.keys(S.args).length}/${D.arg.length}</p></div>
-  <div class="card"><details><summary>Pontos frágeis do projeto e como defendê-los (guia 8.4)</summary>${D.fracos}</details><details><summary>O projeto em uma página e roteiro de abertura (guia 8.1–8.2)</summary>${D.resumo}</details><details><summary>No dia da arguição</summary>${D.diaarg}</details></div>`;
-};
-window.drawArg = () => {
-  const c = $('#ac').value, w = $('#aw').checked;
-  let p = D.arg.map((q, i) => [q, i]).filter(([q, i]) => (!c || q.cat === c) && (!w || (S.args[i] && S.args[i].c <= 2)));
-  if (!p.length) { uiAlert('Nenhuma pergunta encontrada neste filtro.'); return; }
-  p.sort((a, b) => ((S.args[a[1]] || {n: 0}).n - (S.args[b[1]] || {n: 0}).n));
-  const lo = (S.args[p[0][1]] || {n: 0}).n;
-  p = p.filter(x => (S.args[x[1]] || {n: 0}).n === lo);
-  showArg(p[Math.floor(Math.random() * p.length)][1], +$('#ad').value);
-};
-window.showArg = (i, sec = 180) => {
-  AQ = i;
   clearInterval(AT);
-  const q = D.arg[i];
+  const cats = [...new Set(D.arg.map(q => q.cat))];
+  const filtered = D.arg.map((q, i) => ({...q, i})).filter(x => (!argCatFilter || x.cat === argCatFilter) && (!argOnlyWeak || (S.args[x.i] && S.args[x.i].c <= 2)));
+  if (AQ === null || !D.arg[AQ]) AQ = filtered.length ? filtered[0].i : 0;
+  const curQ = D.arg[AQ];
+  const curMeta = S.args[AQ] || null;
+
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <div class="app-toolbar">
+        <div class="app-subnav">
+          <button type="button" class="seg-btn ${argSubTab === 'bancada' ? 'active' : ''}" onclick="argSubTab='bancada';V.arg()">BANCADA (31 PERGUNTAS)</button>
+          <button type="button" class="seg-btn ${argSubTab === 'vulneraveis' ? 'active' : ''}" onclick="argSubTab='vulneraveis';V.arg()">BLINDAGEM DE VULNERABILIDADES (8.4)</button>
+          <button type="button" class="seg-btn ${argSubTab === 'matriz' ? 'active' : ''}" onclick="argSubTab='matriz';V.arg()">MATRIZ 1 PÁGINA & ROTEIRO 5 MIN</button>
+          <button type="button" class="seg-btn ${argSubTab === 'protocolo' ? 'active' : ''}" onclick="argSubTab='protocolo';V.arg()">PROTOCOLO DO DIA (8.6)</button>
+        </div>
+        <span class="mu" style="font-size:10.5px;">TREINADAS: ${Object.keys(S.args).length}/${D.arg.length}</span>
+      </div>
+
+      ${argSubTab === 'bancada' ? `
+        <div class="app-split master-detail-flow ${mobileArgDetailOpen ? 'mobile-detail-open' : ''}">
+          <div class="app-master">
+            <div class="app-master-header" style="flex-direction:column;align-items:stretch;gap:6px;">
+              <div style="display:flex;gap:6px;">
+                <select id="ac" style="flex:1;padding:5px;font-size:10.5px;">
+                  <option value="">TODAS AS CATEGORIAS</option>
+                  ${cats.map(c => `<option value="${esc(c)}" ${argCatFilter === c ? 'selected' : ''}>${c}</option>`).join('')}
+                </select>
+                <button class="btn s p" onclick="drawArg()">[SORTEAR]</button>
+              </div>
+              <label class="mu" style="font-size:10px;display:flex;align-items:center;gap:6px;cursor:pointer;">
+                <input type="checkbox" id="aw" ${argOnlyWeak ? 'checked' : ''}> FILTRAR SÓ CONFIANÇA BAIXA (≤ 2)
+              </label>
+            </div>
+            <div class="app-master-list">
+              ${filtered.map(x => {
+                const st = S.args[x.i];
+                return `
+                  <div class="master-item ${AQ === x.i ? 'active' : ''}" onclick="showArg(${x.i})">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <span class="mu" style="font-size:9.5px;">${x.cat.split('.')[0]}</span>
+                      <span class="tag ${st ? (st.c >= 4 ? 'sim' : (st.c <= 2 ? 'esc' : 'rev')) : ''}" style="font-size:8.5px;padding:1px 5px;">
+                        ${st ? 'CONF. ' + st.c + '/5' : 'NÃO TREINADA'}
+                      </span>
+                    </div>
+                    <div style="font-size:12px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${x.p}</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="app-detail">
+            <div class="app-detail-header">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <button type="button" class="mobile-back-btn" onclick="mobileArgDetailOpen=false;V.arg()">[ < PERGUNTAS ]</button>
+                <span class="tag">${curQ.cat}</span>
+              </div>
+              <div class="row" style="gap:6px;">
+                <button class="btn s" onclick="startArgTimer(120)">[CRONÔMETRO 2M]</button>
+                <button class="btn s" onclick="startArgTimer(180)">[CRONÔMETRO 3M]</button>
+              </div>
+            </div>
+
+            <div class="app-detail-body" style="display:flex;flex-direction:column;justify-content:space-between;gap:16px;">
+              <div>
+                <div style="font-size:18px;font-weight:800;line-height:1.4;color:var(--ink-primary);padding:16px;background:var(--bg-subtle);border:2px solid var(--border-color);border-left:6px solid var(--crivos-red);margin-bottom:14px;">
+                  ${curQ.p}
+                </div>
+                <div class="timer" id="at" style="font-size:38px;margin:8px 0;text-align:center;">03:00</div>
+                <div style="text-align:center;margin:12px 0;">
+                  <button class="btn p" id="ar" onclick="$('#ra').classList.toggle('hide')">[REVELAR / OCULTAR LINHA DE DEFESA CRIVOS]</button>
+                </div>
+                <div id="ra" class="hide" style="padding:16px;background:var(--bg-subtle);border:1px solid var(--border-color);border-left:5px solid var(--crivos-blue);font-size:14px;line-height:1.65;">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:var(--crivos-blue);margin-bottom:6px;">DIRETRIZ DE RESPOSTA ORAL:</div>
+                  ${curQ.r}
+                </div>
+              </div>
+            </div>
+
+            <div class="app-detail-dock">
+              <span class="mu" style="font-size:10.5px;">AUTOAVALIAÇÃO DE CONFIANÇA:</span>
+              <div class="row" style="gap:6px;">
+                ${[1, 2, 3, 4, 5].map(n => `
+                  <button class="btn s ${curMeta && curMeta.c === n ? 'p' : ''}" onclick="rateArg(${AQ},${n})">[${n}]</button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      ` : argSubTab === 'vulneraveis' ? `
+        <div class="app-pane card" style="margin:0;">${D.fracos}</div>
+      ` : argSubTab === 'matriz' ? `
+        <div class="app-pane card" style="margin:0;">${D.resumo}</div>
+      ` : `
+        <div class="app-pane card" style="margin:0;">${D.diaarg}</div>
+      `}
+    </div>
+  `;
+
+  const acEl = $('#ac');
+  if (acEl) acEl.onchange = e => { argCatFilter = e.target.value; V.arg(); };
+  const awEl = $('#aw');
+  if (awEl) awEl.onchange = e => { argOnlyWeak = e.target.checked; V.arg(); };
+};
+
+window.startArgTimer = (sec = 180) => {
+  clearInterval(AT);
   let l = sec;
-  $('#aq').innerHTML = `<div class="card" style="border-left: 8px solid var(--red)"><span class="tag">${q.cat}</span><p style="font-size:19px;font-weight:700">${q.p}</p><div class="timer" id="at" style="font-size:44px"></div><div class="row" style="justify-content:center"><button class="btn p" id="ar">MOSTRAR LINHA DE RESPOSTA</button></div><div id="ra" class="hide"><div class="card" style="background:var(--s2);border-left:5px solid var(--blue)">${q.r}</div><p class="mu">AVALIE SUA CONFIANÇA (1 A 5): ${[1, 2, 3, 4, 5].map(n => `<button class="btn s" onclick="rateArg(${i},${n})">${n}</button>`).join(' ')}</p></div></div>`;
   const f = () => {
     const e = $('#at');
     if (!e) { clearInterval(AT); return; }
-    e.textContent = Math.floor(l / 60) + ':' + String(l % 60).padStart(2, '0');
+    e.textContent = String(Math.floor(l / 60)).padStart(2, '0') + ':' + String(l % 60).padStart(2, '0');
     if (l <= 0) { clearInterval(AT); e.style.color = 'var(--er)'; beep(); }
     l--;
   };
   f();
   AT = setInterval(f, 1000);
-  $('#ar').onclick = () => { clearInterval(AT); $('#ra').classList.remove('hide'); };
-  $('#aq').scrollIntoView({behavior: 'smooth'});
 };
-window.rateArg = (i, c) => { const a = S.args[i] || {n: 0}; a.n++; a.c = c; a.d = today(); S.args[i] = a; save(); V.arg(); };
+window.drawArg = () => {
+  let p = D.arg.map((q, i) => [q, i]).filter(([q, i]) => (!argCatFilter || q.cat === argCatFilter) && (!argOnlyWeak || (S.args[i] && S.args[i].c <= 2)));
+  if (!p.length) { uiAlert('Nenhuma pergunta encontrada neste filtro.'); return; }
+  p.sort((a, b) => ((S.args[a[1]] || {n: 0}).n - (S.args[b[1]] || {n: 0}).n));
+  const lo = (S.args[p[0][1]] || {n: 0}).n;
+  p = p.filter(x => (S.args[x[1]] || {n: 0}).n === lo);
+  showArg(p[Math.floor(Math.random() * p.length)][1]);
+};
+window.showArg = (i) => {
+  AQ = i;
+  mobileArgDetailOpen = true;
+  V.arg();
+  startArgTimer(180);
+};
+window.rateArg = (i, c) => {
+  const a = S.args[i] || {n: 0};
+  a.n++;
+  a.c = c;
+  a.d = today();
+  S.args[i] = a;
+  save();
+  toast('Confiança registrada: ' + c + '/5', 'success');
+  V.arg();
+};
 
-// ---------- mapa
+// ==============================================================
+// 08 · CONEXÕES TRANSVERSAIS (INTERACTIVE GRAPH & AXIS TABS)
+// ==============================================================
+let mapaSubTab = 'grafo'; // 'grafo' | 'quadros'
+let selectedAxisIdx = 0;
+let selectedNodeId = 'haesbaert';
+
 V.mapa = () => {
-  const W = Math.min(1100, innerWidth - 80), H = 540, cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 75;
-  const pos = TX.map((t, i) => { const a = i / TX.length * 2 * Math.PI - Math.PI / 2; return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; });
   const find = n => TX.filter(t => n.split(/\s*[\/,]\s*|\s+e\s+/).some(p => { p = p.toLowerCase(); return p.length > 3 && (short(t).toLowerCase().includes(p) || t.autor.toLowerCase().includes(p.replace('&', '').trim())) || (p.includes('mendon') && t.id === 'mendonca'); })).map(t => t.id);
   const E2 = [];
   TX.forEach(t => t.conexoes.forEach(k => find(k[0]).forEach(o => { if (o !== t.id) E2.push([t.id, o, k[0], k[1]]); })));
   const ix = Object.fromEntries(TX.map((t, i) => [t.id, i]));
-  $('#app').innerHTML = `<div class="card"><h3>Mapa de Conexões</h3><p class="mu">Arestas tiradas das "conexões" de cada ficha. Clique num autor para destacar as ligações teóricas e ler as justificativas.</p><div style="overflow-x:auto"><svg id="g" width="${W}" height="${H}"></svg></div><div id="gi"></div></div>` + D.tabs.map(t => `<div class="card"><details><summary>Quadro Comparativo: ${t.t}</summary><p>${t.intro}</p><div class="table-responsive"><table>${t.rows.map(r => `<tr><td style="width:28%"><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join('')}</table></div></details></div>`).join('');
-  const draw = sel => {
-    $('#g').innerHTML = E2.map(([a, b]) => {
-      const on = sel && (a === sel || b === sel);
-      return `<line x1="${pos[ix[a]][0]}" y1="${pos[ix[a]][1]}" x2="${pos[ix[b]][0]}" y2="${pos[ix[b]][1]}" stroke="${on ? 'var(--red)' : 'var(--mu)'}" stroke-opacity="${on ? '1' : '0.35'}" stroke-width="${on ? 3.5 : 1.5}"/>`;
-    }).join('') + TX.map((t, i) => {
-      const fill = t.prio === 'ESSENCIAL' ? 'var(--red)' : t.prio === 'IMPORTANTE' ? 'var(--yellow)' : 'var(--blue)';
-      return `<g style="cursor:pointer" data-id="${t.id}"><circle cx="${pos[i][0]}" cy="${pos[i][1]}" r="${sel === t.id ? 16 : 12}" fill="${fill}" stroke="var(--bd)" stroke-width="3"/><text x="${pos[i][0]}" y="${pos[i][1] + (pos[i][1] < cy ? -22 : 30)}" text-anchor="middle">${short(t)}</text></g>`;
-    }).join('');
-    document.querySelectorAll('#g g').forEach(g => g.onclick = () => {
-      const id = g.dataset.id;
-      draw(id);
-      $('#gi').innerHTML = `<div class="card" style="background:var(--s2)"><h3>${short(TXI[id])}</h3><ul>${E2.filter(e => e[0] === id || e[1] === id).map(e => `<li><b>${short(TXI[e[0]])} → ${short(TXI[e[1]])}</b>: ${e[3]}</li>`).join('')}</ul></div>`;
-    });
-  };
-  draw();
+  const curAxis = D.tabs[selectedAxisIdx] || D.tabs[0];
+
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <div class="app-toolbar">
+        <div class="app-subnav">
+          <button type="button" class="seg-btn ${mapaSubTab === 'grafo' ? 'active' : ''}" onclick="mapaSubTab='grafo';V.mapa()">GRAFO DE CONEXÕES TEÓRICAS</button>
+          <button type="button" class="seg-btn ${mapaSubTab === 'quadros' ? 'active' : ''}" onclick="mapaSubTab='quadros';V.mapa()">QUADROS POR EIXO (${D.tabs.length})</button>
+        </div>
+      </div>
+
+      ${mapaSubTab === 'grafo' ? `
+        <div class="app-split" style="grid-template-columns: 1.15fr 1fr;">
+          <div class="app-detail" style="display:flex;align-items:center;justify-content:center;padding:8px;flex:1;min-height:210px;">
+            <svg id="g" viewBox="0 0 620 440" style="width:100%;height:100%;max-height:400px;"></svg>
+          </div>
+          <div class="app-master">
+            <div class="app-master-header">
+              <span style="font-family:'Inter',sans-serif;font-weight:900;font-size:11.5px;">INSPETOR DE ARTICULAÇÕES</span>
+              <span class="tag ar" id="gi-title">${short(TXI[selectedNodeId])}</span>
+            </div>
+            <div class="app-master-list" id="gi" style="padding:12px 14px;"></div>
+          </div>
+        </div>
+      ` : `
+        <div class="app-subnav" style="padding-bottom:2px;">
+          ${D.tabs.map((tb, idx) => `
+            <button type="button" class="seg-btn ${selectedAxisIdx === idx ? 'active' : ''}" onclick="selectedAxisIdx=${idx};V.mapa()">${idx + 1}. ${tb.t}</button>
+          `).join('')}
+        </div>
+        <div class="app-pane card" style="margin:0;">
+          <h3 style="margin-top:0;">EIXO TRANSVERSAL: ${curAxis.t.toUpperCase()}</h3>
+          <p class="mu">${curAxis.intro}</p>
+          <table>
+            <thead><tr><th style="width:26%;">AUTOR / TEXTO</th><th>POSIÇÃO TEÓRICA E ARTICULAÇÃO</th></tr></thead>
+            <tbody>
+              ${curAxis.rows.map(r => `<tr><td><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      `}
+    </div>
+  `;
+
+  if (mapaSubTab === 'grafo') {
+    const W = 620, H = 440, cx = W / 2, cy = H / 2, R = 165;
+    const pos = TX.map((t, i) => { const a = i / TX.length * 2 * Math.PI - Math.PI / 2; return [cx + R * Math.cos(a), cy + R * Math.sin(a)]; });
+    const draw = sel => {
+      selectedNodeId = sel;
+      const gEl = $('#g');
+      if (!gEl) return;
+      gEl.innerHTML = E2.map(([a, b]) => {
+        const on = sel && (a === sel || b === sel);
+        return `<line x1="${pos[ix[a]][0]}" y1="${pos[ix[a]][1]}" x2="${pos[ix[b]][0]}" y2="${pos[ix[b]][1]}" stroke="${on ? 'var(--red)' : 'var(--mu)'}" stroke-opacity="${on ? '1' : '0.32'}" stroke-width="${on ? 3 : 1.2}"/>`;
+      }).join('') + TX.map((t, i) => {
+        const fill = t.prio === 'ESSENCIAL' ? 'var(--red)' : t.prio === 'IMPORTANTE' ? 'var(--yellow)' : 'var(--blue)';
+        return `<g style="cursor:pointer" data-id="${t.id}"><circle cx="${pos[i][0]}" cy="${pos[i][1]}" r="${sel === t.id ? 15 : 11}" fill="${fill}" stroke="var(--bd)" stroke-width="2.5"/><text x="${pos[i][0]}" y="${pos[i][1] + (pos[i][1] < cy ? -20 : 26)}" text-anchor="middle" style="font-size:10px;font-weight:700;">${short(t)}</text></g>`;
+      }).join('');
+      const giTitle = $('#gi-title');
+      if (giTitle && TXI[sel]) giTitle.textContent = short(TXI[sel]);
+      const giEl = $('#gi');
+      if (giEl && TXI[sel]) {
+        giEl.innerHTML = `
+          <div style="padding:10px;background:var(--bg-subtle);border:1px solid var(--border-color);margin-bottom:10px;font-size:12px;">
+            <b>Território em ${short(TXI[sel])}:</b> ${TXI[sel].territorio}
+          </div>
+          <div class="mu" style="font-size:10px;margin-bottom:6px;text-transform:uppercase;">CONEXÕES DIRETAS MAPEADAS:</div>
+          ${E2.filter(e => e[0] === sel || e[1] === sel).map(e => `
+            <div style="padding:8px 10px;border:1px solid var(--border-color);margin-bottom:6px;font-size:12px;">
+              <b style="color:var(--crivos-red);">${short(TXI[e[0]])} ↔ ${short(TXI[e[1]])}:</b> ${e[3]}
+            </div>
+          `).join('')}
+        `;
+      }
+      document.querySelectorAll('#g g').forEach(g => g.onclick = () => {
+        haptic(10);
+        draw(g.dataset.id);
+      });
+    };
+    draw(selectedNodeId || 'haesbaert');
+  }
 };
 
-// ---------- 09 · arquivos (materiais crivos + materiais do candidato)
+// ==============================================================
+// 09 · ARQUIVOS (DIGITAL REPOSITORY FILE MANAGER APP)
+// ==============================================================
+let filesSubTab = 'crivos'; // 'crivos' | 'bibliografia' | 'projeto' | 'provas'
+
 V.links = () => {
   $('#app').innerHTML = `
-    <div class="card" style="border-left: 8px solid var(--crivos-red); background: var(--bg-card); margin-bottom: 24px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-        <span class="sq-red" style="width:12px;height:12px;background:var(--crivos-red);display:inline-block;"></span>
-        <h2 style="margin:0;font-size:18px;text-transform:uppercase;letter-spacing:-0.02em;">CENTRAL DE ARQUIVOS // CRIVOS PRIME</h2>
+    <div class="app-screen">
+      <div class="app-toolbar">
+        <div class="app-subnav">
+          <button type="button" class="seg-btn ${filesSubTab === 'crivos' ? 'active' : ''}" onclick="filesSubTab='crivos';V.links()">01 · MATERIAIS CRIVOS (2)</button>
+          <button type="button" class="seg-btn ${filesSubTab === 'bibliografia' ? 'active' : ''}" onclick="filesSubTab='bibliografia';V.links()">02 · BIBLIOGRAFIA DO CANDIDATO (${TX.length})</button>
+          <button type="button" class="seg-btn ${filesSubTab === 'projeto' ? 'active' : ''}" onclick="filesSubTab='projeto';V.links()">03 · PRÉ-PROJETO & EDITAL</button>
+          <button type="button" class="seg-btn ${filesSubTab === 'provas' ? 'active' : ''}" onclick="filesSubTab='provas';V.links()">04 · COMPLEMENTARES & PROVAS</button>
+        </div>
+        <span class="tag ar">CRIVOS PRIME</span>
       </div>
-      <p class="mu" style="margin:0;">
-        Repositório oficial com duas divisões táticas: os <b>Materiais CRIVOS</b> gerados sob medida pela nossa engenharia e os <b>Materiais do Candidato</b> (bibliografia mapeada, pré-projeto e provas).
-      </p>
-    </div>
 
-    <!-- SEÇÃO 1: MATERIAIS CRIVOS (O QUE NÓS GERAMOS) -->
-    <div class="card" style="border-left: 6px solid var(--crivos-blue); margin-bottom: 24px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border-color);padding-bottom:10px;margin-bottom:16px;">
-        <div>
-          <span class="tag ar" style="margin-right:8px;">ENGENHARIA CRIVOS</span>
-          <b style="font-size:16px;text-transform:uppercase;">1. MATERIAIS CRIVOS // ENTREGÁVEIS OFICIAIS</b>
-        </div>
-        <span class="mu" style="font-size:11px;">PRODUTOS DIGITAIS GERADOS</span>
-      </div>
-      <p class="mu" style="margin-bottom:14px;">Guias estratégicos e apostilas editoriais elaborados pela equipe CRIVOS para o seu certame:</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:14px;">
-        <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
-          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">GUIA DE ESTUDOS CRIVOS (PÓS-EDITAL)</div>
-          <div class="mu" style="font-size:11px;margin-bottom:10px;">Planejamento estratégico de 56 páginas, 12 seções táticas e cronograma diário.</div>
-          <a class="btn s p" href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank" rel="noopener">[ABRIR GUIA DE ESTUDOS (PDF)]</a>
-        </div>
-        <div style="border:1px solid var(--border-color);padding:14px;background:var(--bg-subtle);">
-          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">APOSTILA TÁTICA COMPILADA</div>
-          <div class="mu" style="font-size:11px;margin-bottom:10px;">Compêndio de 54 páginas com resumos estruturados, 123 citações verificadas e quadros comparativos.</div>
-          <a class="btn s p" href="Apostila_PPGHS_2027.pdf" target="_blank" rel="noopener">[ABRIR APOSTILA TÁTICA (PDF)]</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEÇÃO 2: MATERIAIS DO CANDIDATO (BIBLIOGRAFIA E TODO O RESTO) -->
-    <div class="card" style="border-left: 6px solid #111111;">
-      <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border-color);padding-bottom:10px;margin-bottom:16px;">
-        <div>
-          <span class="tag li" style="margin-right:8px;">ALERVO DO ALUNO</span>
-          <b style="font-size:16px;text-transform:uppercase;">2. MATERIAIS DO CANDIDATO // BIBLIOGRAFIA & ACERVO PESSOAL</b>
-        </div>
-        <span class="mu" style="font-size:11px;">ARQUIVOS ANCORADOS NO CRIVOS PRIME</span>
-      </div>
-      <p class="mu" style="margin-bottom:14px;">Documentos submetidos pelo candidato e mapeados pela engenharia no seu Sistema Operacional:</p>
-
-      <!-- Sub-bloco A: Edital e Links Oficiais -->
-      <details open style="margin-bottom:14px;">
-        <summary><b>Edital e Páginas Oficiais do Certame</b></summary>
-        <ul style="margin-top:10px;">
-          <li style="margin-bottom:6px;"><a href="edital/Edital_PPGHS_Mestrado_2027_001-2027.pdf" target="_blank"><b>Edital Oficial 001/2027 (PDF Anexado)</b></a></li>
-          <li style="margin-bottom:6px;"><a href="https://www.ppghsuerj.pro.br/programa-de-pos-graduacao-em-historia-social/processo-seletivo/" target="_blank" rel="noopener">Página Institucional do Processo Seletivo (PPGHS / UERJ) ↗</a></li>
-          <li style="margin-bottom:6px;"><a href="https://www.cepuerj.uerj.br/cursos2.php?tipo=cursos&curso=E02666M&ano=2027" target="_blank" rel="noopener">CEPUERJ: Emissão do boleto de inscrição ↗</a></li>
-        </ul>
-      </details>
-
-      <!-- Sub-bloco B: Pré-Projeto do Candidato -->
-      <details open style="margin-bottom:14px;">
-        <summary><b>Pré-Projeto do Candidato (Submetido para Calibração)</b></summary>
-        <div style="padding:10px 0;">
-          <a class="btn s" href="projeto/pre_projeto_final.pdf" target="_blank" rel="noopener">[ABRIR PRÉ-PROJETO FINAL (PDF)]</a>
-          <span class="mu" style="font-size:11px;margin-left:8px;">pre_projeto_final.pdf — Ancorado nas fichas de arguição oral</span>
-        </div>
-      </details>
-
-      <!-- Sub-bloco C: Bibliografia Obrigatória Completa do Edital -->
-      <details open style="margin-bottom:14px;">
-        <summary><b>Bibliografia Obrigatória do Edital (${TX.length} Textos Mapeados)</b></summary>
-        <ul style="margin-top:10px;">
-          ${TX.map(t => `<li style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px dashed var(--border-subtle);padding-bottom:6px;">
-            <div>
-              <span class="prio ${t.prio}">${t.prio[0]}</span>
-              <span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span>
-              <span style="font-size:13px;font-weight:600;margin-left:4px;">${t.ref}</span>
+      <div class="app-pane">
+        ${filesSubTab === 'crivos' ? `
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
+            <div class="card" style="margin:0;border-left:6px solid var(--crivos-red);display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                  <span class="tag esc">ENTREGÁVEL OFICIAL #01</span>
+                  <span class="mono mu">56 PÁGINAS · A4</span>
+                </div>
+                <h3 style="margin:0 0 6px 0;">GUIA DE ESTUDOS CRIVOS (PÓS-EDITAL)</h3>
+                <p class="mu" style="font-size:12.5px;">Planejamento estratégico integral em 12 seções táticas, cronograma executivo dia a dia, fichas profundas dos 12 textos, simulados e blindagem de arguição oral.</p>
+              </div>
+              <a class="btn p" style="justify-content:center;margin-top:12px;" href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank" rel="noopener">[ABRIR GUIA DE ESTUDOS (PDF)]</a>
             </div>
-            <a class="btn s" href="textos/${t.arq}" target="_blank" rel="noopener">[ABRIR ARQUIVO]</a>
-          </li>`).join('')}
-        </ul>
-      </details>
 
-      <!-- Sub-bloco D: Textos Complementares e Referências de Apoio -->
-      <details style="margin-bottom:14px;">
-        <summary><b>Textos Complementares & Leituras de Apoio</b></summary>
-        <ul style="margin-top:10px;">
-          <li style="margin-bottom:6px;"><a href="textos/CHARTIER_Roger_1991_O-mundo-como-representacao_COMPLEMENTAR.pdf" target="_blank">CHARTIER, Roger (1991) — O mundo como representação (PDF)</a></li>
-          <li style="margin-bottom:6px;"><a href="textos/FERREIRA_Marieta-de-Moraes_2018_Historia-do-tempo-presente_COMPLEMENTAR.pdf" target="_blank">FERREIRA, Marieta de Moraes (2018) — História do tempo presente (PDF)</a></li>
-          <li style="margin-bottom:6px;"><a href="textos/KOSELLECK_Reinhart_1992_Uma-historia-dos-conceitos_COMPLEMENTAR.pdf" target="_blank">KOSELLECK, Reinhart (1992) — Uma história dos conceitos (PDF)</a></li>
-        </ul>
-      </details>
-
-      <!-- Sub-bloco E: Provas e Editais Anteriores -->
-      <details>
-        <summary><b>Provas e Editais Anteriores (Histórico & Padrão de Resposta da Banca)</b></summary>
-        <ul style="margin-top:10px;">
-          <li style="margin-bottom:6px;"><a href="provas_anteriores/SIMILAR_UFES_PPGHIS_Mestrado_2025-1_chave_correcao_prova_escrita.pdf" target="_blank">UFES PPGHIS 2025-1 — Chave de Correção e Prova Escrita (PDF)</a></li>
-          <li style="margin-bottom:6px;"><a href="provas_anteriores/SIMILAR_UNIRIO_PPGH_Mestrado_2021_questoes_prova_escrita.pdf" target="_blank">UNIRIO PPGH 2021 — Questões da Prova Escrita (PDF)</a></li>
-          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2026.pdf" target="_blank">Edital PPGHS 2026 (PDF Histórico)</a></li>
-          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2025.pdf" target="_blank">Edital PPGHS 2025 (PDF Histórico)</a></li>
-          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2024.pdf" target="_blank">Edital PPGHS 2024 (PDF Histórico)</a></li>
-          <li style="margin-bottom:6px;"><a href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2023.pdf" target="_blank">Edital PPGHS 2023 (PDF Histórico)</a></li>
-        </ul>
-      </details>
-    </div>`;
+            <div class="card" style="margin:0;border-left:6px solid var(--crivos-blue);display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                  <span class="tag ar">ENTREGÁVEL OFICIAL #02</span>
+                  <span class="mono mu">54 PÁGINAS · A4</span>
+                </div>
+                <h3 style="margin:0 0 6px 0;">APOSTILA TÁTICA COMPILADA</h3>
+                <p class="mu" style="font-size:12.5px;">Compêndio denso com os resumos estruturados dos 12 autores, 123 citações literais verificadas com página, 10 quadros transversais e bateria de exercícios.</p>
+              </div>
+              <a class="btn p" style="justify-content:center;margin-top:12px;" href="Apostila_PPGHS_2027.pdf" target="_blank" rel="noopener">[ABRIR APOSTILA TÁTICA (PDF)]</a>
+            </div>
+          </div>
+        ` : filesSubTab === 'bibliografia' ? `
+          <div class="card" style="margin:0;padding:0;">
+            <table>
+              <thead style="position:sticky;top:0;z-index:4;">
+                <tr>
+                  <th style="width:14%;">PRIORIDADE</th>
+                  <th style="width:10%;">BLOCO</th>
+                  <th>REFERÊNCIA DO CANDIDATO ANCORADA</th>
+                  <th style="width:16%;">ARQUIVO</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${TX.map(t => `
+                  <tr>
+                    <td><span class="prio ${t.prio}">${t.prio}</span></td>
+                    <td><span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span></td>
+                    <td style="font-size:12px;">${t.ref}</td>
+                    <td><a class="btn s" href="textos/${t.arq}" target="_blank" rel="noopener">[ABRIR PDF]</a></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        ` : filesSubTab === 'projeto' ? `
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">
+            <div class="card" style="margin:0;border-left:6px solid #111111;">
+              <span class="tag li">ACERVO DO ALUNO</span>
+              <h3 style="margin:8px 0 6px 0;">PRÉ-PROJETO DE PESQUISA SUBMETIDO</h3>
+              <p class="mu" style="font-size:12px;">Documento original ancorado nas fichas de leitura e na matriz de defesa da arguição oral.</p>
+              <a class="btn p" href="projeto/pre_projeto_final.pdf" target="_blank" rel="noopener">[ABRIR PRÉ-PROJETO FINAL (PDF)]</a>
+            </div>
+            <div class="card" style="margin:0;border-left:6px solid var(--crivos-blue);">
+              <span class="tag ar">NORMATIVO OFICIAL</span>
+              <h3 style="margin:8px 0 6px 0;">EDITAL PPGHS/UERJ 001/2027</h3>
+              <p class="mu" style="font-size:12px;">Edital completo com calendário, pesos, etapas e bibliografia oficial.</p>
+              <div class="row" style="gap:8px;">
+                <a class="btn p" href="edital/Edital_PPGHS_Mestrado_2027_001-2027.pdf" target="_blank" rel="noopener">[ABRIR EDITAL (PDF)]</a>
+                <a class="btn" href="https://www.ppghsuerj.pro.br/programa-de-pos-graduacao-em-historia-social/processo-seletivo/" target="_blank" rel="noopener">[SITE PPGHS ↗]</a>
+              </div>
+            </div>
+          </div>
+        ` : `
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
+            <div class="card" style="margin:0;">
+              <h3>TEXTOS COMPLEMENTARES DE APOIO</h3>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <a class="btn" href="textos/CHARTIER_Roger_1991_O-mundo-como-representacao_COMPLEMENTAR.pdf" target="_blank">[CHARTIER (1991) — O MUNDO COMO REPRESENTAÇÃO]</a>
+                <a class="btn" href="textos/FERREIRA_Marieta-de-Moraes_2018_Historia-do-tempo-presente_COMPLEMENTAR.pdf" target="_blank">[FERREIRA (2018) — HISTÓRIA DO TEMPO PRESENTE]</a>
+                <a class="btn" href="textos/KOSELLECK_Reinhart_1992_Uma-historia-dos-conceitos_COMPLEMENTAR.pdf" target="_blank">[KOSELLECK (1992) — UMA HISTÓRIA DOS CONCEITOS]</a>
+              </div>
+            </div>
+            <div class="card" style="margin:0;">
+              <h3>PROVAS E EDITAIS ANTERIORES</h3>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <a class="btn s" href="provas_anteriores/SIMILAR_UFES_PPGHIS_Mestrado_2025-1_chave_correcao_prova_escrita.pdf" target="_blank">[PROVA UFES 2025]</a>
+                <a class="btn s" href="provas_anteriores/SIMILAR_UNIRIO_PPGH_Mestrado_2021_questoes_prova_escrita.pdf" target="_blank">[PROVA UNIRIO 2021]</a>
+                <a class="btn s" href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2026.pdf" target="_blank">[EDITAL 2026]</a>
+                <a class="btn s" href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2025.pdf" target="_blank">[EDITAL 2025]</a>
+                <a class="btn s" href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2024.pdf" target="_blank">[EDITAL 2024]</a>
+                <a class="btn s" href="provas_anteriores/editais_PPGHS_anteriores/Edital_PPGHS_Mestrado_selecao_2023.pdf" target="_blank">[EDITAL 2023]</a>
+              </div>
+            </div>
+          </div>
+        `}
+      </div>
+    </div>
+  `;
 };
 
-// ---------- dicas
+// ==============================================================
+// 10 · DICAS (TACTICAL PROTOCOL & CHECKLIST APP)
+// ==============================================================
+let dicasSubTab = 'checklist'; // 'checklist' | 'escrita' | 'ciencia'
+const CHECKLIST_ITEMS = [
+  'Documento oficial original com foto separado',
+  'Canetas esferográficas azul e preta (tubo transparente)',
+  'Relógio analógico de pulso (celular desligado e lacrado)',
+  'Água e lanche leve para as 4 horas de prova',
+  'Trajeto até a FFP/UERJ (São Gonçalo) revisado com margem de segurança',
+  'Dormir cedo no domingo (22/11); máximo de 30 min de cartões SM-2',
+  'Ler atentamente as 3 questões de linha antes de escolher a da Linha 1',
+  'Estruturar o rascunho em 4 blocos (Tese, Autores, Diálogo, Conclusão) antes de redigir'
+];
+
 V.dicas = () => {
-  $('#app').innerHTML = `<div class="card"><h3>Estratégias de estudo com respaldo em pesquisa</h3><ul>
-  <li><b>Recuperação ativa (testing effect):</b> fechar o texto e escrever de memória o que lembra rende mais do que reler. Use os flashcards e, depois de cada leitura, 5 min de "folha em branco".</li>
-  <li><b>Espaçamento:</b> revisar em intervalos crescentes (D+1, D+7, D+21) fixa mais que revisar tudo de uma vez. O cronograma e a fila de cartões já fazem isso; não pule as revisões curtas.</li>
-  <li><b>Intercalação:</b> alternar autores e comparar (Haesbaert × Thompson, Certeau × Ginzburg) ajuda a discriminar conceitos, que é o que a prova cobra. Use o mapa de conexões e os quadros.</li>
-  <li><b>Elaboração:</b> pergunte "por quê?" e "como isso se aplica ao meu projeto?" a cada conceito. A aba Textos traz a ligação com o pré-projeto.</li>
-  <li><b>Escrever à mão, cronometrado:</b> a prova é sem consulta e manuscrita. Treine a mão (4h escrevendo cansa) e a gestão do tempo nos 3 simulados (07/11, 14/11, 20/11).</li>
-  <li><b>Sono:</b> a consolidação da memória depende do sono. Durma 7–9h, sobretudo na semana da prova. Virar a noite antes rende menos que dormir.</li>
-  <li><b>Blocos de foco curtos e sem celular:</b> Pomodoro de 25–50 min, com pausas de verdade (levantar, água). Celular em outro cômodo.</li>
-  <li><b>Exercício físico leve</b> (caminhada de 20–30 min) melhora atenção e humor em períodos de estudo intenso.</li>
-  <li><b>Ilusão de fluência:</b> grifar e reler dão sensação de domínio sem garantir lembrança. Só marque "dominado" se consegue explicar o texto sem olhar.</li></ul></div>
-  <div class="card"><h3>Checklist do dia da prova (23/11)</h3>${['Documento com foto', 'Canetas azul e preta (várias)', 'Relógio analógico (sem celular)', 'Água e lanche', 'Trajeto até a FFP (São Gonçalo) testado; sair com folga', 'Dormir cedo no dia 22; no máximo 30 min de cartões', 'Ler as questões de linha antes de escolher', 'Planejar a resposta (esquema) antes de escrever'].map((x, i) => `<label style="display:block;margin-bottom:8px;cursor:pointer"><input type="checkbox" ${S['ck' + i] ? 'checked' : ''} onchange="S['ck${i}']=this.checked;save()"> ${x}</label>`).join('')}</div>
-  <div class="card">${D.vespera.split('<h2>2.3')[0]}</div><div class="card"><details><summary>Como escrever a resposta numa prova sem consulta (guia, seção 6)</summary>${D.escrita}</details></div>`;
+  const ckDone = CHECKLIST_ITEMS.filter((_, i) => S['ck' + i]).length;
+  $('#app').innerHTML = `
+    <div class="app-screen">
+      <div class="app-toolbar">
+        <div class="app-subnav">
+          <button type="button" class="seg-btn ${dicasSubTab === 'checklist' ? 'active' : ''}" onclick="dicasSubTab='checklist';V.dicas()">CHECKLIST DIA DA PROVA (${ckDone}/8)</button>
+          <button type="button" class="seg-btn ${dicasSubTab === 'escrita' ? 'active' : ''}" onclick="dicasSubTab='escrita';V.dicas()">TÉCNICA DISSERTATIVA (SEÇÃO 6)</button>
+          <button type="button" class="seg-btn ${dicasSubTab === 'ciencia' ? 'active' : ''}" onclick="dicasSubTab='ciencia';V.dicas()">PROTOCOLOS DE RETENÇÃO</button>
+        </div>
+      </div>
+
+      <div class="app-pane card" style="margin:0;">
+        ${dicasSubTab === 'checklist' ? `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <h3 style="margin:0;">CHECKLIST OPERACIONAL DO DIA DA PROVA (23/11/2026)</h3>
+            <span class="tag ar">${Math.round(ckDone / CHECKLIST_ITEMS.length * 100)}% PRONTO</span>
+          </div>
+          <div class="bar" style="margin-bottom:16px;"><i style="width:${ckDone / CHECKLIST_ITEMS.length * 100}%"></i></div>
+          <div style="display:grid;grid-template-columns:1fr;gap:8px;">
+            ${CHECKLIST_ITEMS.map((x, i) => `
+              <label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border-color);background:${S['ck' + i] ? 'var(--bg-subtle)' : 'var(--bg-card)'};cursor:pointer;font-weight:600;">
+                <input type="checkbox" ${S['ck' + i] ? 'checked' : ''} onchange="S['ck${i}']=this.checked;save();V.dicas()">
+                <span>${x}</span>
+              </label>
+            `).join('')}
+          </div>
+        ` : dicasSubTab === 'escrita' ? `
+          ${D.escrita}
+        ` : `
+          <h3>PROTOCOLOS DE ALTA RETENÇÃO (EVIDÊNCIA COGNITIVA)</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;">
+            <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);"><b>1. Recuperação Ativa:</b> Fechar o texto e redigir de memória em folha em branco fixa 3x mais que reler passivamente.</div>
+            <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);"><b>2. Espaçamento (D+1 / D+7 / D+14):</b> Revisar em intervalos crescentes consolida o traço mnemônico de longo prazo.</div>
+            <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);"><b>3. Intercalação de Autores:</b> Confrontar pares (Haesbaert × Thompson, Certeau × Ginzburg) treina a costura exigida pela banca.</div>
+            <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);"><b>4. Escrita Manuscrita Cronometrada:</b> A prova dura 4h à mão e sem consulta. Faça todos os simulados no papel.</div>
+            <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);"><b>5. Blindagem contra Ilusão de Fluência:</b> Grifar não é dominar. Só marque "Dominado" se souber explicar a tese sem olhar.</div>
+            <div style="padding:12px;border:1px solid var(--border-color);background:var(--bg-subtle);"><b>6. Higiene de Sono Pré-Prova:</b> A consolidação sináptica ocorre no sono REM. Jamais vire a noite na véspera (22/11).</div>
+          </div>
+        `}
+      </div>
+    </div>
+  `;
 };
 
-// ---------- suporte tático & whatsapp
+// ==============================================================
+// 11 · SUPORTE (SPLIT TICKET COMPOSER APP)
+// ==============================================================
 const getCandidateName = () => localStorage.getItem('crivos_user_name') || 'CANDIDATO PPGHS';
 const getCandidateEmail = () => localStorage.getItem('crivos_user_email') || 'candidato@crivos.me';
 const getCandidateAvatar = () => localStorage.getItem('crivos_user_avatar') || '';
@@ -3888,15 +5128,15 @@ const SUPPORT_CATEGORIES = [
     id: 'bibliografia_personalizada',
     tag: 'ORÇAMENTO',
     title: 'Bibliografia Personalizada & Arquivos',
-    desc: 'Inclusão de leituras específicas do seu processo seletivo, fichamentos sob medida e integração completa dos arquivos ao painel.',
-    template: 'Gostaria de solicitar um orçamento para inclusão de bibliografia personalizada e específica, com inserção direta dos arquivos no meu sistema.'
+    desc: 'Inclusão de leituras específicas do seu processo seletivo, fichamentos sob medida e integração ao painel.',
+    template: 'Gostaria de solicitar um orçamento para inclusão de bibliografia personalizada no meu sistema.'
   },
   {
     id: 'upgrade_plano',
     tag: 'UPGRADE',
     title: 'Upgrade de Plano',
-    desc: 'Migração para categorias superiores com liberação de novos módulos táticos, recursos avançados e atendimento prioritário.',
-    template: 'Gostaria de consultar as condições e etapas para realizar o upgrade do meu plano de estudos na CRIVOS.'
+    desc: 'Migração para categorias superiores com liberação de novos módulos táticos e atendimento prioritário.',
+    template: 'Gostaria de consultar as condições e etapas para realizar o upgrade do meu plano na CRIVOS.'
   },
   {
     id: 'outro',
@@ -3909,15 +5149,17 @@ const SUPPORT_CATEGORIES = [
 
 let selectedSupportCat = 'duvida_edital';
 let supportDetailText = '';
+let supportSubTab = 'topico'; // 'topico' | 'protocolo'
 
 V.dados = () => {
+  const isMob = window.innerWidth <= 820;
   const candName = getCandidateName();
   const candEmail = getCandidateEmail();
 
   function getMsg(catId, extra) {
     const cat = SUPPORT_CATEGORIES.find(c => c.id === catId) || SUPPORT_CATEGORIES[0];
     let msg = `Olá, equipe CRIVOS!\n\n`;
-    msg += `Sou aluno(a) ${candName} (E-mail: ${candEmail}), matriculado(a) no plano PPGHS / UERJ 2027 // ELITE.\n\n`;
+    msg += `Sou aluno(a) ${candName} (E-mail: ${candEmail}), matriculado(a) no plano PPGHS / UERJ 2027 // PRIME.\n\n`;
     msg += `[CATEGORIA]: ${cat.title}\n`;
     msg += `[MOTIVO]: ${cat.template}`;
     if (extra && extra.trim()) {
@@ -3930,38 +5172,46 @@ V.dados = () => {
   const waUrl = `https://wa.me/5521970821736?text=${encodeURIComponent(initialMsg)}`;
 
   $('#app').innerHTML = `
-    <div class="card" style="border-left: 8px solid #25D366;">
-      <h3><span>CENTRAL DE SUPORTE</span><span class="tag" style="background:#25D366;color:#FFFFFF;border-color:var(--border-color);">WHATSAPP OFICIAL</span></h3>
-      
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;">
-        1. SELECIONE O TÓPICO DO ATENDIMENTO:
-      </div>
-      <div class="support-category-grid" id="support-cats">
-        ${SUPPORT_CATEGORIES.map(c => `
-          <div class="support-cat-card ${c.id === selectedSupportCat ? 'active' : ''}" data-cat="${c.id}">
-            <div class="support-cat-top">
-              <span class="support-cat-title">${c.title}</span>
-              <span class="tag" style="font-size:9px;padding:2px 4px;">${c.tag}</span>
-            </div>
-            <div class="support-cat-desc">${c.desc}</div>
+    <div class="app-screen">
+      ${isMob ? `
+        <div class="app-toolbar">
+          <div class="app-subnav">
+            <button type="button" class="seg-btn ${supportSubTab === 'topico' ? 'active' : ''}" onclick="supportSubTab='topico';V.dados()">1. ESCOLHER TÓPICO</button>
+            <button type="button" class="seg-btn ${supportSubTab === 'protocolo' ? 'active' : ''}" onclick="supportSubTab='protocolo';V.dados()">2. PROTOCOLO & WHATSAPP</button>
           </div>
-        `).join('')}
-      </div>
+        </div>
+      ` : ''}
+      <div class="app-split" style="grid-template-columns: 1fr 1fr;">
+        <div class="app-pane card" style="margin:0;display:${(!isMob || supportSubTab === 'topico') ? 'block' : 'none'};">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <h3 style="margin:0;">1. TÓPICO DO ATENDIMENTO</h3>
+            <span class="tag" style="background:#25D366;color:#FFFFFF;">WHATSAPP DIRETO</span>
+          </div>
+          <div class="support-category-grid" id="support-cats" style="grid-template-columns:1fr;">
+            ${SUPPORT_CATEGORIES.map(c => `
+              <div class="support-cat-card ${c.id === selectedSupportCat ? 'active' : ''}" data-cat="${c.id}" style="padding:10px 12px;">
+                <div class="support-cat-top">
+                  <span class="support-cat-title">${c.title}</span>
+                  <span class="tag" style="font-size:9px;padding:1px 4px;">${c.tag}</span>
+                </div>
+                <div class="support-cat-desc">${c.desc}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
 
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin:14px 0 6px;text-transform:uppercase;">
-        2. DETALHAMENTO ADICIONAL (OPCIONAL):
+        <div class="app-pane card" style="margin:0;display:${(!isMob || supportSubTab === 'protocolo') ? 'flex' : 'none'};flex-direction:column;justify-content:space-between;">
+          <div>
+            <h3 style="margin-top:0;">2. DETALHAMENTO & PROTOCOLO</h3>
+            <textarea id="support-extra-text" rows="3" style="width:100%;margin-bottom:12px;" placeholder="Descreva sua dúvida específica (opcional)...">${esc(supportDetailText)}</textarea>
+            <div class="mu" style="font-size:10px;margin-bottom:6px;">PRÉVIA DO PROTOCOLO:</div>
+            <div class="support-preview-box" id="support-preview">${esc(initialMsg)}</div>
+          </div>
+          <a id="support-wa-btn" href="${waUrl}" target="_blank" rel="noopener" class="whatsapp-support-btn" style="margin-top:12px;justify-content:center;" onclick="haptic(16)">
+            <span>[ENVIAR PROTOCOLO NO WHATSAPP]</span>
+          </a>
+        </div>
       </div>
-      <textarea id="support-extra-text" rows="3" placeholder="Descreva o que ocorreu ou sua dúvida específica para acelerar a resposta...">${esc(supportDetailText)}</textarea>
-
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin:16px 0 6px;text-transform:uppercase;">
-        3. PRÉVIA DO PROTOCOLO GERADO PARA WHATSAPP:
-      </div>
-      <div class="support-preview-box" id="support-preview">${esc(initialMsg)}</div>
-
-      <a id="support-wa-btn" href="${waUrl}" target="_blank" rel="noopener" class="whatsapp-support-btn" onclick="haptic(16)">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-        <span>Falar no WhatsApp</span>
-      </a>
     </div>
   `;
 
@@ -3970,30 +5220,24 @@ V.dados = () => {
     if (!card || !card.dataset.cat) return;
     haptic(12);
     selectedSupportCat = card.dataset.cat;
-    document.querySelectorAll('.support-cat-card').forEach(el => {
-      el.classList.toggle('active', el.dataset.cat === selectedSupportCat);
-    });
-    updateSupportUI();
+    if (window.innerWidth <= 820) supportSubTab = 'protocolo';
+    V.dados();
   };
 
   $('#support-extra-text').oninput = e => {
     supportDetailText = e.target.value;
-    updateSupportUI();
-  };
-
-  function updateSupportUI() {
     const newMsg = getMsg(selectedSupportCat, supportDetailText);
-    const newUrl = `https://wa.me/5521970821736?text=${encodeURIComponent(newMsg)}`;
     const preview = $('#support-preview');
     if (preview) preview.textContent = newMsg;
     const btn = $('#support-wa-btn');
-    if (btn) btn.href = newUrl;
-  }
+    if (btn) btn.href = `https://wa.me/5521970821736?text=${encodeURIComponent(newMsg)}`;
+  };
 };
-
 V.suporte = V.dados;
 
-// ---------- perfil & credencial
+// ==============================================================
+// 12 · PERFIL & CREDENCIAIS (SETTINGS APP)
+// ==============================================================
 function syncUserIdentity() {
   const name = getCandidateName();
   const avatar = getCandidateAvatar();
@@ -4029,14 +5273,9 @@ function syncUserIdentity() {
 }
 
 function handleEmailUpdate(newEmail) {
-  // TODO: Conectar ao supabase.auth.updateUser({ email })
   localStorage.setItem('crivos_user_email', newEmail);
 }
-
-function handlePasswordUpdate(newPassword) {
-  // TODO: Conectar ao supabase.auth.updateUser({ password })
-}
-
+function handlePasswordUpdate(newPassword) {}
 function processProfileAvatar(file, callback) {
   const reader = new FileReader();
   reader.onload = function(e) {
@@ -4046,13 +5285,10 @@ function processProfileAvatar(file, callback) {
       canvas.width = 160;
       canvas.height = 160;
       const ctx = canvas.getContext('2d');
-
       const side = Math.min(img.width, img.height);
       const sx = (img.width - side) / 2;
       const sy = (img.height - side) / 2;
-
       ctx.drawImage(img, sx, sy, side, side, 0, 0, 160, 160);
-
       let dataUrl = canvas.toDataURL('image/webp', 0.8);
       if (!dataUrl.startsWith('data:image/webp')) {
         dataUrl = canvas.toDataURL('image/jpeg', 0.8);
@@ -4066,88 +5302,89 @@ function processProfileAvatar(file, callback) {
   reader.readAsDataURL(file);
 }
 
+let perfilSubTab = 'identidade';
 V.perfil = () => {
   const curName = getCandidateName();
   const curEmail = getCandidateEmail();
   const curAvatar = getCandidateAvatar();
   const initials = (curName.trim().split(/\s+/).map(w => w[0]).filter(Boolean).slice(0, 2).join('') || 'C').toUpperCase();
+  const isMob = window.innerWidth <= 820;
 
   $('#app').innerHTML = `
-      <div class="profile-grid">
-      <div class="card">
-        <h3>IDENTIFICAÇÃO DO CANDIDATO</h3>
-
-        <div style="margin-bottom: 20px;">
-          <label class="mu" style="display:block;margin-bottom:8px">FOTO DE IDENTIFICAÇÃO (160×160 PREVIEW)</label>
-          <div class="avatar-preview-box" id="profile-avatar-preview">
-            ${curAvatar ? `<img src="${curAvatar}" alt="Foto Perfil">` : initials}
-          </div>
-          <div class="row">
-            <label class="btn s" style="cursor:pointer">
-              [ALTERAR FOTO]
-              <input type="file" id="avatar-input" accept="image/*" class="hide">
-            </label>
-            <button class="btn s" id="btn-remove-avatar">[REMOVER]</button>
+    <div class="app-screen">
+      ${isMob ? `
+        <div class="app-toolbar">
+          <div class="app-subnav">
+            <button type="button" class="seg-btn ${perfilSubTab === 'identidade' ? 'active' : ''}" onclick="perfilSubTab='identidade';V.perfil()">IDENTIFICAÇÃO</button>
+            <button type="button" class="seg-btn ${perfilSubTab === 'seguranca' ? 'active' : ''}" onclick="perfilSubTab='seguranca';V.perfil()">CREDENCIAIS & SENHA</button>
           </div>
         </div>
-
-        <hr style="margin: 20px 0;">
-
-        <div style="margin-bottom: 16px;">
+      ` : ''}
+      <div class="bento-grid">
+        <div class="app-pane card" style="margin:0;display:${(!isMob || perfilSubTab === 'identidade') ? 'block' : 'none'};">
+          <h3>IDENTIFICAÇÃO DO CANDIDATO</h3>
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+            <div class="avatar-preview-box" id="profile-avatar-preview" style="margin:0;">
+              ${curAvatar ? `<img src="${curAvatar}" alt="Foto Perfil">` : initials}
+            </div>
+            <div>
+              <div class="mu" style="font-size:10.5px;margin-bottom:8px;">AVATAR DO PAINEL (160×160)</div>
+              <div class="row" style="gap:6px;">
+                <label class="btn s" style="cursor:pointer">
+                  [ALTERAR FOTO]
+                  <input type="file" id="avatar-input" accept="image/*" class="hide">
+                </label>
+                <button class="btn s" id="btn-remove-avatar">[REMOVER]</button>
+              </div>
+            </div>
+          </div>
           <label class="mu" style="display:block;margin-bottom:6px">NOME DE EXIBIÇÃO DO CANDIDATO</label>
-          <input type="text" id="input-candidato-name" value="${esc(curName)}" style="width:100%;margin-bottom:12px;" placeholder="Ex: SEU NOME COMPLETO">
+          <input type="text" id="input-candidato-name" value="${esc(curName)}" style="width:100%;margin-bottom:12px;" placeholder="Ex: JOÃO GABRIEL">
           <button class="btn p" id="btn-save-name">[SALVAR IDENTIFICAÇÃO]</button>
           <div id="feedback-name"></div>
         </div>
-      </div>
 
-      <div class="card">
-        <h3>CREDENCIAIS & SEGURANÇA</h3>
-
-        <div style="margin-bottom: 24px;">
-          <label class="mu" style="display:block;margin-bottom:6px">E-MAIL ATUAL / NOVO E-MAIL DE ACESSO</label>
-          <input type="email" id="input-candidato-email" value="${esc(curEmail)}" style="width:100%;margin-bottom:12px;" placeholder="candidato@crivos.me">
-          <button class="btn" id="btn-save-email">[ATUALIZAR E-MAIL]</button>
-          <div id="feedback-email"></div>
-        </div>
-
-        <hr style="margin: 20px 0;">
-
-        <div>
-          <label class="mu" style="display:block;margin-bottom:6px">NOVA SENHA DE ACESSO (MÍN. 6 CARACTERES)</label>
-          <input type="password" id="input-pass-1" style="width:100%;margin-bottom:10px;" placeholder="••••••••">
-
-          <label class="mu" style="display:block;margin-bottom:6px">CONFIRMAR NOVA SENHA</label>
-          <input type="password" id="input-pass-2" style="width:100%;margin-bottom:12px;" placeholder="••••••••">
-
-          <button class="btn" id="btn-save-pass">[REDEFINIR CREDENCIAL]</button>
-          <div id="feedback-pass"></div>
+        <div class="app-pane card" style="margin:0;display:${(!isMob || perfilSubTab === 'seguranca') ? 'block' : 'none'};">
+          <h3>CREDENCIAIS & SEGURANÇA</h3>
+          <div style="margin-bottom:18px;">
+            <label class="mu" style="display:block;margin-bottom:6px">E-MAIL DE ACESSO</label>
+            <input type="email" id="input-candidato-email" value="${esc(curEmail)}" style="width:100%;margin-bottom:10px;" placeholder="candidato@crivos.me">
+            <button class="btn s" id="btn-save-email">[ATUALIZAR E-MAIL]</button>
+            <div id="feedback-email"></div>
+          </div>
+          <hr style="margin:14px 0;">
+          <div>
+            <label class="mu" style="display:block;margin-bottom:6px">NOVA SENHA (MÍN. 6 CARACTERES)</label>
+            <input type="password" id="input-pass-1" style="width:100%;margin-bottom:8px;" placeholder="••••••••">
+            <label class="mu" style="display:block;margin-bottom:6px">CONFIRMAR NOVA SENHA</label>
+            <input type="password" id="input-pass-2" style="width:100%;margin-bottom:10px;" placeholder="••••••••">
+            <button class="btn s" id="btn-save-pass">[REDEFINIR CREDENCIAL]</button>
+            <div id="feedback-pass"></div>
+          </div>
         </div>
       </div>
     </div>
   `;
 
-  $('#avatar-input').onchange = (e) => {
+  const avIn = $('#avatar-input');
+  if (avIn) avIn.onchange = (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
     processProfileAvatar(file, (err, base64) => {
-      if (err) {
-        uiAlert('Falha ao processar imagem: ' + err.message);
-        return;
-      }
+      if (err) { uiAlert('Falha ao processar imagem: ' + err.message); return; }
       localStorage.setItem('crivos_user_avatar', base64);
       syncUserIdentity();
       V.perfil();
     });
   };
-
-  $('#btn-remove-avatar').onclick = () => {
+  const rmAv = $('#btn-remove-avatar');
+  if (rmAv) rmAv.onclick = () => {
     localStorage.removeItem('crivos_user_avatar');
     syncUserIdentity();
     V.perfil();
   };
-
-  $('#btn-save-name').onclick = () => {
+  const svNm = $('#btn-save-name');
+  if (svNm) svNm.onclick = () => {
     const newName = $('#input-candidato-name').value.trim();
     if (!newName) {
       $('#feedback-name').innerHTML = '<div class="feedback-msg error">[!] O NOME NÃO PODE FICAR EM BRANCO</div>';
@@ -4156,31 +5393,22 @@ V.perfil = () => {
     localStorage.setItem('crivos_user_name', newName);
     syncUserIdentity();
     $('#feedback-name').innerHTML = '<div class="feedback-msg success">✓ DADOS ATUALIZADOS COM SUCESSO</div>';
-    setTimeout(() => {
-      const fb = $('#feedback-name');
-      if (fb) fb.innerHTML = '';
-    }, 4000);
   };
-
-  $('#btn-save-email').onclick = () => {
+  const svEm = $('#btn-save-email');
+  if (svEm) svEm.onclick = () => {
     const newEmail = $('#input-candidato-email').value.trim();
     if (!newEmail || !newEmail.includes('@')) {
       $('#feedback-email').innerHTML = '<div class="feedback-msg error">[!] INFORME UM E-MAIL VÁLIDO</div>';
       return;
     }
     handleEmailUpdate(newEmail);
-    $('#feedback-email').innerHTML = '<div class="feedback-msg success">✓ E-MAIL DE ACESSO ATUALIZADO (LOCAL)</div>';
-    setTimeout(() => {
-      const fb = $('#feedback-email');
-      if (fb) fb.innerHTML = '';
-    }, 4000);
+    $('#feedback-email').innerHTML = '<div class="feedback-msg success">✓ E-MAIL DE ACESSO ATUALIZADO</div>';
   };
-
-  $('#btn-save-pass').onclick = () => {
+  const svPs = $('#btn-save-pass');
+  if (svPs) svPs.onclick = () => {
     const p1 = $('#input-pass-1').value;
     const p2 = $('#input-pass-2').value;
     const fb = $('#feedback-pass');
-
     if (!p1 || p1.length < 6) {
       fb.innerHTML = '<div class="feedback-msg error">[!] A SENHA DEVE TER NO MÍNIMO 6 CARACTERES</div>';
       return;
@@ -4189,14 +5417,10 @@ V.perfil = () => {
       fb.innerHTML = '<div class="feedback-msg error">[!] AS SENHAS NÃO COINCIDEM</div>';
       return;
     }
-
     handlePasswordUpdate(p1);
     $('#input-pass-1').value = '';
     $('#input-pass-2').value = '';
     fb.innerHTML = '<div class="feedback-msg success">✓ CREDENCIAL REDEFINIDA COM SUCESSO</div>';
-    setTimeout(() => {
-      if (fb) fb.innerHTML = '';
-    }, 4000);
   };
 };
 
@@ -4672,9 +5896,7 @@ if (drawerBackdrop) drawerBackdrop.onclick = window.closeDrawer;
               go('textos');
               closePalette();
               setTimeout(() => {
-                if (typeof window.inspectTextDetails === 'function') {
-                  window.inspectTextDetails(t.id);
-                }
+                selectedTextId = t.id; mobileTextDetailOpen = true; V.textos();
               }, 120);
             }
           });
