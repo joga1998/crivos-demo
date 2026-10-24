@@ -2386,18 +2386,41 @@ main#app::-webkit-scrollbar-thumb {
 }
 
 
-/* REFINAMENTO DE APP RESPONSIVO */
+/* REFINAMENTO DE APP RESPONSIVO & STATUS BAR COMPACTA */
 @media (max-width: 820px) {
   .crivos-layout-container {
     margin-top: 56px;
-    height: calc(100vh - 56px - 60px); /* desconta topbar e bottom-nav */
-    max-height: calc(100vh - 56px - 60px);
+    height: calc(100vh - 56px - 60px - 26px); /* desconta topbar, bottom-nav e status-bar compacta */
+    max-height: calc(100vh - 56px - 60px - 26px);
   }
   .crivos-main-stage {
     width: 100% !important;
   }
   .crivos-status-bar {
-    display: none; /* Em mobile, a bottom-nav substitui a status bar */
+    display: flex !important;
+    height: 26px;
+    min-height: 26px;
+    padding: 0 12px;
+    font-size: 9.5px;
+    justify-content: space-between;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+  }
+  /* Remove elementos extras da status bar em telas pequenas */
+  .status-bar-brand-sq,
+  .status-bar-brand-name,
+  .status-bar-extra {
+    display: none !important;
+  }
+  .status-bar-copy {
+    font-size: 9px;
+    letter-spacing: 0.02em;
+    color: var(--ink-muted);
+  }
+  .status-bar-version {
+    font-size: 9.5px;
+    color: var(--ink-muted);
+    font-weight: 700;
   }
 }
 
@@ -2511,14 +2534,14 @@ main#app::-webkit-scrollbar-thumb {
     <main id="app"></main>
     <div class="crivos-status-bar" id="app-status-bar">
       <div class="status-bar-left">
-        <span style="width:8px;height:8px;background:var(--crivos-red);display:inline-block;aspect-ratio:1/1;"></span>
-        <span style="font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.03em;color:var(--ink-primary);font-size:11px;">CRIVOS</span>
-        <span>// INTELIGÊNCIA PARA CONCURSOS E EXAMES</span>
+        <span class="status-bar-brand-sq" style="width:8px;height:8px;background:var(--crivos-red);display:inline-block;aspect-ratio:1/1;"></span>
+        <span class="status-bar-brand-name" style="font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.03em;color:var(--ink-primary);font-size:11px;">CRIVOS // </span>
+        <span class="status-bar-copy">INTELIGÊNCIA PARA CONCURSOS E EXAMES</span>
       </div>
       <div class="status-bar-right">
-        <span style="display:inline-flex;align-items:center;gap:6px;"><span class="status-indicator-dot"></span><span>SISTEMA ATIVO</span></span>
-        <span>MODO LOCAL // UTF-8</span>
-        <div>v26.2</div>
+        <span class="status-bar-extra" style="display:inline-flex;align-items:center;gap:6px;"><span class="status-indicator-dot"></span><span>SISTEMA ATIVO</span></span>
+        <span class="status-bar-extra">MODO LOCAL // UTF-8</span>
+        <div class="status-bar-version">v26.2</div>
       </div>
     </div>
   </div>
