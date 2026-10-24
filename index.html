@@ -2386,41 +2386,20 @@ main#app::-webkit-scrollbar-thumb {
 }
 
 
-/* REFINAMENTO DE APP RESPONSIVO & STATUS BAR COMPACTA */
+/* REFINAMENTO DE APP RESPONSIVO // REMOVE STATUS BAR EM TELAS PEQUENAS */
 @media (max-width: 820px) {
   .crivos-layout-container {
     margin-top: 56px;
-    height: calc(100vh - 56px - 60px - 26px); /* desconta topbar, bottom-nav e status-bar compacta */
-    max-height: calc(100vh - 56px - 60px - 26px);
+    height: calc(100vh - 56px - 60px) !important; /* desconta apenas a topbar e a barra inferior nativa mobile */
+    max-height: calc(100vh - 56px - 60px) !important;
   }
   .crivos-main-stage {
     width: 100% !important;
+    height: 100% !important;
   }
-  .crivos-status-bar {
-    display: flex !important;
-    height: 26px;
-    min-height: 26px;
-    padding: 0 12px;
-    font-size: 9.5px;
-    justify-content: space-between;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border-color);
-  }
-  /* Remove elementos extras da status bar em telas pequenas */
-  .status-bar-brand-sq,
-  .status-bar-brand-name,
-  .status-bar-extra {
-    display: none !important;
-  }
-  .status-bar-copy {
-    font-size: 9px;
-    letter-spacing: 0.02em;
-    color: var(--ink-muted);
-  }
-  .status-bar-version {
-    font-size: 9.5px;
-    color: var(--ink-muted);
-    font-weight: 700;
+  .crivos-status-bar,
+  #app-status-bar {
+    display: none !important; /* Oculta completamente a status bar em telas pequenas / mobile */
   }
 }
 
