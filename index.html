@@ -2473,7 +2473,7 @@ main#app::-webkit-scrollbar-thumb {
       <div class="crivos-plan-info">
         <div class="crivos-brand-row">
           <span class="crivos-brand-title">PPGHS / UERJ 2027</span>
-          <span class="nav-brand-badge">// ELITE</span>
+          <span class="nav-brand-badge">// PRIME</span>
         </div>
         <div class="crivos-plan-meta">
           HISTÓRIA SOCIAL DO TERRITÓRIO · LINHA 1
@@ -3151,7 +3151,10 @@ V.textos = () => {
         <div class="row" style="margin:14px 0">
           ${ST.map(s => `<button class="btn s ${st === s ? 'p' : ''}" onclick="S.texts['${t.id}']='${s}';save();toast('Status: ' + '${STN[s]}'.toUpperCase(), 'success');V.t2()">${STN[s]}</button>`).join('')}
           <button class="btn s p" onclick="inspectTextDetails('${t.id}')">📑 ABRIR FICHA LATERAL</button>
-          <a class="btn s" href="${googleUrl}" target="_blank" rel="noopener">🔍 GOOGLE</a>
+          ${(currentPlanTier === 'prime') 
+            ? `<a class="btn s" href="${pdf(t)}" target="_blank" rel="noopener">📖 ABRIR PDF</a>`
+            : `<a class="btn s" href="${googleUrl}" target="_blank" rel="noopener">🔍 GOOGLE</a>`
+          }
         </div>
         <p><b>POR QUE IMPORTA:</b> ${t.porque}</p>
         <p><b>TESE CENTRAL:</b> ${t.tese}</p>
@@ -4308,7 +4311,9 @@ window.inspectTextDetails = function(textId) {
     '<div class="mu" style="font-size:11px;">' + t.ref + ' · ⏱ ' + (m / 60).toFixed(1) + 'h estudadas</div>' +
   '</div>' +
   '<div class="row" style="margin:12px 0;">' +
-    '<a class="btn s p" href="' + googleUrl + '" target="_blank" rel="noopener">🔍 PESQUISAR NO GOOGLE</a>' +
+    ((currentPlanTier === 'prime')
+      ? ('<a class="btn s p" href="' + pdf(t) + '" target="_blank" rel="noopener">📖 ABRIR ARQUIVO PDF</a>')
+      : ('<a class="btn s p" href="' + googleUrl + '" target="_blank" rel="noopener">🔍 PESQUISAR NO GOOGLE</a>')) +
   '</div>' +
   '<div style="border-top:1px solid var(--border-color);padding-top:12px;margin-top:12px;">' +
     '<p><b>POR QUE IMPORTA:</b> ' + t.porque + '</p>' +
