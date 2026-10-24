@@ -1967,6 +1967,313 @@ footer.bauhaus-footer {
     font-size: 9.5px;
   }
 }
+
+/* ==============================================================
+   SWISS HOSPITAL REFINEMENTS (COMMAND PALETTE, DRAWER, TOASTS, PILLS)
+   ============================================================== */
+
+/* Command Palette Overlay */
+.cmd-palette-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.75);
+  backdrop-filter: blur(2px);
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.cmd-palette-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.cmd-palette-box {
+  width: 90%;
+  max-width: 640px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 8px 8px 0 var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.cmd-palette-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-subtle);
+  border-bottom: 2px solid var(--border-color);
+}
+.cmd-palette-input {
+  flex: 1;
+  background: transparent;
+  border: none !important;
+  color: var(--ink-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  outline: none;
+}
+.cmd-palette-esc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--ink-muted);
+}
+.cmd-palette-results {
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.cmd-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.1s, border-left-color 0.1s;
+}
+.cmd-item:hover, .cmd-item.selected {
+  background: var(--bg-subtle);
+  border-left-color: var(--crivos-red);
+}
+.cmd-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.cmd-item-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--border-color);
+  color: var(--bg-paper);
+  font-weight: 700;
+}
+.cmd-item-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+.cmd-item-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+/* Quick Search Trigger Button in Header */
+.topbar-quick-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-primary);
+  margin-right: 8px;
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.topbar-quick-search:hover {
+  background: var(--bg-paper);
+  border-color: var(--crivos-red);
+}
+.topbar-quick-search kbd {
+  background: var(--border-color);
+  color: var(--bg-paper);
+  padding: 2px 5px;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+/* Off-canvas Contextual Drawer */
+.crivos-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(1.5px);
+  z-index: 9990;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.crivos-drawer-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.crivos-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 90%;
+  max-width: 520px;
+  background: var(--bg-card);
+  border-left: 3px solid var(--border-color);
+  box-shadow: -8px 0 0 rgba(17, 17, 17, 0.2);
+  z-index: 9995;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(105%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.crivos-drawer.active {
+  transform: translateX(0);
+}
+.crivos-drawer-header {
+  padding: 16px 20px;
+  background: var(--bg-subtle);
+  border-bottom: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.crivos-drawer-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  text-transform: uppercase;
+}
+.crivos-drawer-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.crivos-drawer-close {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--ink-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.crivos-drawer-close:hover {
+  background: var(--crivos-red);
+  color: #FFFFFF;
+}
+
+/* Brutalist Toast Container */
+.crivos-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.crivos-toast {
+  pointer-events: auto;
+  min-width: 280px;
+  max-width: 400px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 4px 4px 0 var(--border-color);
+  padding: 12px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: toastIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.crivos-toast.toast-out {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.crivos-toast-indicator {
+  width: 10px;
+  height: 10px;
+  background: var(--crivos-red);
+  flex-shrink: 0;
+}
+.crivos-toast.success .crivos-toast-indicator {
+  background: #22C55E;
+}
+.crivos-toast.info .crivos-toast-indicator {
+  background: var(--crivos-blue);
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Brutalist Filter Pills (Tabular Filters) */
+.filter-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 10px 0;
+}
+.filter-pill {
+  background: var(--bg-paper);
+  border: 1px solid var(--border-color);
+  color: var(--ink-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.filter-pill:hover {
+  border-color: var(--crivos-red);
+}
+.filter-pill.active {
+  background: var(--border-color);
+  color: var(--bg-paper);
+  box-shadow: 2px 2px 0 var(--crivos-red);
+}
+
+/* KPI Trend & Sparklines */
+.kpi-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  margin-top: 4px;
+  font-weight: 700;
+}
+.kpi-trend.positive { color: #16A34A; }
+.kpi-trend.neutral { color: var(--ink-muted); }
+.kpi-sparkbar {
+  display: flex;
+  gap: 2px;
+  margin-top: 6px;
+  align-items: flex-end;
+  height: 14px;
+}
+.kpi-sparkbar-col {
+  width: 4px;
+  background: var(--border-color);
+  opacity: 0.35;
+}
+.kpi-sparkbar-col.active {
+  opacity: 1;
+  background: var(--crivos-red);
+}
+
 </style>
 </head>
 <body>
@@ -2019,6 +2326,11 @@ footer.bauhaus-footer {
       <span style="font-family:'Inter',sans-serif;font-weight:900;letter-spacing:-0.03em;color:#FFFFFF;font-size:12px;">CRIVOS</span>
     </div>
     <div class="crivos-topbar-right">
+      <button type="button" class="topbar-quick-search" id="cmd-palette-btn" title="Busca Rápida de Módulos e Disciplinas (Ctrl+K)">
+        <span>🔍 BUSCAR</span>
+        <kbd>Ctrl+K</kbd>
+      </button>
+
       <button type="button" class="crivos-topbar-user" id="topbar-user-shortcut" title="Abrir Perfil e Credenciais">
         <span class="crivos-mini-avatar" id="topbar-mini-avatar">C</span>
         <span id="topbar-user-name">CANDIDATO</span>
@@ -2550,16 +2862,66 @@ V.home = () => {
     </div>
     ${late.length ? `<div class="card" style="border-left: 8px solid var(--red); background: var(--s2)"><b>⚠ ${late.length} DIA(S) ATRASADO(S).</b> Veja as sugestões automáticas de reagendamento na aba <a href="#" onclick="go('crono');return false">Cronograma</a>.</div>` : ''}
     <div class="grid">
-      <div class="card"><h3>Cronograma</h3><div class="big">${Math.round(done / sc.length * 100)}%</div><div class="bar"><i style="width:${done / sc.length * 100}%"></i></div><p class="mu">${done} DE ${sc.length} DIAS CONCLUÍDOS</p></div>
-      <div class="card"><h3>Textos</h3><div class="big">${tx}/12</div><div class="bar"><i style="width:${tx / 12 * 100}%"></i></div><p class="mu">LIDOS OU MAIS · ${dom} DOMINADOS</p></div>
-      <div class="card"><h3>Sequência</h3><div class="big">■ ${streak()}</div><p class="mu">DIAS SEGUIDOS ESTUDANDO</p></div>
-      <div class="card"><h3>Tempo estudado</h3><div class="big">${(mins / 60).toFixed(1)}h</div><p class="mu">DE ~117H PLANEJADAS · ${queue().length} CARTÕES HOJE</p></div>
+      <div class="card">
+        <h3>Cronograma</h3>
+        <div class="big">${Math.round(done / sc.length * 100)}%</div>
+        <div class="bar"><i style="width:${done / sc.length * 100}%"></i></div>
+        <div class="kpi-trend positive">▲ ${done} CONCLUÍDOS · RITMO EM DIA</div>
+        <div class="kpi-sparkbar">
+          <div class="kpi-sparkbar-col ${done > 0 ? 'active' : ''}" style="height:6px"></div>
+          <div class="kpi-sparkbar-col ${done > 3 ? 'active' : ''}" style="height:8px"></div>
+          <div class="kpi-sparkbar-col ${done > 6 ? 'active' : ''}" style="height:11px"></div>
+          <div class="kpi-sparkbar-col ${done > 10 ? 'active' : ''}" style="height:14px"></div>
+          <div class="kpi-sparkbar-col ${done > 15 ? 'active' : ''}" style="height:10px"></div>
+          <div class="kpi-sparkbar-col ${done > 20 ? 'active' : ''}" style="height:13px"></div>
+        </div>
+        <p class="mu">${done} DE ${sc.length} DIAS EXECUTADOS</p>
+      </div>
+
+      <div class="card">
+        <h3>Textos Mapeados</h3>
+        <div class="big">${tx}/12</div>
+        <div class="bar"><i style="width:${tx / 12 * 100}%"></i></div>
+        <div class="kpi-trend neutral">■ ${dom} DOMINADOS · ${tx} LIDOS</div>
+        <div class="kpi-sparkbar">
+          <div class="kpi-sparkbar-col ${tx > 0 ? 'active' : ''}" style="height:7px"></div>
+          <div class="kpi-sparkbar-col ${tx > 2 ? 'active' : ''}" style="height:10px"></div>
+          <div class="kpi-sparkbar-col ${tx > 4 ? 'active' : ''}" style="height:12px"></div>
+          <div class="kpi-sparkbar-col ${tx > 7 ? 'active' : ''}" style="height:9px"></div>
+          <div class="kpi-sparkbar-col ${tx > 9 ? 'active' : ''}" style="height:14px"></div>
+        </div>
+        <p class="mu">BIBLIOGRAFIA CRÍTICA ATIVA</p>
+      </div>
+
+      <div class="card">
+        <h3>Sequência Ativa</h3>
+        <div class="big">■ ${streak()}</div>
+        <div class="kpi-trend positive">▲ CONSTÂNCIA EM ALTA</div>
+        <div class="kpi-sparkbar">
+          <div class="kpi-sparkbar-col active" style="height:9px"></div>
+          <div class="kpi-sparkbar-col active" style="height:12px"></div>
+          <div class="kpi-sparkbar-col active" style="height:14px"></div>
+        </div>
+        <p class="mu">DIAS CONSECUTIVOS DE RETENÇÃO</p>
+      </div>
+
+      <div class="card">
+        <h3>Tempo Estudado</h3>
+        <div class="big">${(mins / 60).toFixed(1)}h</div>
+        <div class="kpi-trend neutral">■ META TOTAL ~117H</div>
+        <div class="kpi-sparkbar">
+          <div class="kpi-sparkbar-col active" style="height:8px"></div>
+          <div class="kpi-sparkbar-col active" style="height:11px"></div>
+          <div class="kpi-sparkbar-col ${mins > 360 ? 'active' : ''}" style="height:14px"></div>
+        </div>
+        <p class="mu">${queue().length} CARTÕES SM-2 NA FILA HOJE</p>
+      </div>
     </div>`;
 };
 
 window.mark = (i, s) => {
   haptic(s === 'done' ? [12, 40, 18] : 14);
-  S.days[i] = S.days[i] === s ? '' : s;
+  S.days[i] = S.days[i] === s ? '' : s; toast(S.days[i] === 'done' ? '✓ TAREFA CONCLUÍDA' : (S.days[i] === 'skip' ? '↷ TAREFA PULADA' : 'TAREFA REABERTA'), S.days[i] === 'done' ? 'success' : 'info');
   if (s === 'done') S.days[i + '_at'] = today();
   save();
 };
@@ -2589,7 +2951,24 @@ window.applySug = () => { suggestions().forEach(([l, d]) => S.moved[l.i] = d); s
 
 const ST = ['', 'lido', 'revisado', 'dominado'], STN = {'': 'não lido', lido: 'lido', revisado: 'revisado', dominado: 'dominado'};
 V.textos = () => {
-  $('#app').innerHTML = `<div class="card" style="padding:16px 24px"><div class="row"><span class="mu">FILTRAR BIBLIOGRAFIA:</span><select id="fp"><option value="">TODAS AS PRIORIDADES</option><option>ESSENCIAL</option><option>IMPORTANTE</option><option>SECUNDÁRIO</option></select><select id="fs"><option value="">TODAS AS SEÇÕES</option><option value="area">ÁREA (OBRIGATÓRIA)</option><option value="linha">LINHA 1</option></select></div></div><div id="tl"></div>`;
+  let activePrio = '';
+  let activeSec = '';
+
+  $('#app').innerHTML = `<div class="card" style="padding:16px 24px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin-bottom:8px;color:var(--ink-muted);">FILTROS RÁPIDOS POR PRIORIDADE:</div>
+    <div class="filter-pills-row" id="prio-pills">
+      <button type="button" class="filter-pill active" data-prio="">TODAS</button>
+      <button type="button" class="filter-pill" data-prio="ESSENCIAL">ESSENCIAL (PESO ALTO)</button>
+      <button type="button" class="filter-pill" data-prio="IMPORTANTE">IMPORTANTE</button>
+      <button type="button" class="filter-pill" data-prio="SECUNDÁRIO">SECUNDÁRIO</button>
+    </div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;margin:12px 0 8px 0;color:var(--ink-muted);">FILTROS POR SEÇÃO / ÁREA:</div>
+    <div class="filter-pills-row" id="sec-pills">
+      <button type="button" class="filter-pill active" data-sec="">TODAS AS SEÇÕES</button>
+      <button type="button" class="filter-pill" data-sec="area">ÁREA (OBRIGATÓRIA)</button>
+      <button type="button" class="filter-pill" data-sec="linha">LINHA 1</button>
+    </div>
+  </div><div id="tl"></div>`;
   const r = () => {
     const fp = $('#fp').value, fs = $('#fs').value;
     $('#tl').innerHTML = TX.filter(t => (!fp || t.prio === fp) && (!fs || t.sec === fs)).map(t => {
@@ -2598,7 +2977,7 @@ V.textos = () => {
       const googleQ = encodeURIComponent(`${t.titulo} ${t.autor || ''}`.trim());
       const googleUrl = `https://www.google.com/search?q=${googleQ}`;
       return `<div class="card"><div class="row" style="margin-bottom:10px"><span class="prio ${t.prio}">${t.prio}</span><span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span><b style="font-size:18px">${t.autor}</b> — ${t.titulo}</div>
-      <p class="mu">${t.ref} · ${t.faixa} · ⏱ ${(m / 60).toFixed(1)}h estudadas</p><div class="row" style="margin:14px 0">${ST.map(s => `<button class="btn s ${st === s ? 'p' : ''}" onclick="S.texts['${t.id}']='${s}';save();V.t2()">${STN[s]}</button>`).join('')}<a class="btn s" href="${googleUrl}" target="_blank" rel="noopener">🔍 PESQUISAR NO GOOGLE</a></div>
+      <p class="mu">${t.ref} · ${t.faixa} · ⏱ ${(m / 60).toFixed(1)}h estudadas</p><div class="row" style="margin:14px 0">${ST.map(s => `<button class="btn s ${st === s ? 'p' : ''}" onclick="S.texts['${t.id}']='${s}';save();V.t2()">${STN[s]}</button>`).join('')}<button class="btn s" onclick="inspectTextDetails('${t.id}')">📑 ABRIR FICHA LATERAL</button><a class="btn s" href="${googleUrl}" target="_blank" rel="noopener">🔍 GOOGLE</a></div>
       <p><b>POR QUE IMPORTA:</b> ${t.porque}</p><p><b>TESE CENTRAL:</b> ${t.tese}</p>
       <details><summary>Conceitos-chave (${t.conceitos.length})</summary><ul>${t.conceitos.map(k => `<li><b>${k[0]}</b>: ${k[1]}</li>`).join('')}</ul></details>
       <details><summary>Estrutura do texto</summary><ul>${t.estrutura.map(k => `<li>${k}</li>`).join('')}</ul></details>
@@ -2608,7 +2987,51 @@ V.textos = () => {
       <p class="mu" style="margin-top:14px"><b>MINHAS NOTAS DE FICHAMENTO:</b></p><textarea rows="3" oninput="S.notes['${t.id}']=this.value;save()">${esc(S.notes[t.id] || '')}</textarea></div>`;
     }).join('');
   };
-  $('#fp').onchange = $('#fs').onchange = r;
+  const prioContainer = $('#prio-pills');
+  if (prioContainer) {
+    prioContainer.onclick = (e) => {
+      const btn = e.target.closest('.filter-pill');
+      if (!btn) return;
+      prioContainer.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activePrio = btn.dataset.prio || '';
+      haptic(10);
+      r();
+    };
+  }
+
+  const secContainer = $('#sec-pills');
+  if (secContainer) {
+    secContainer.onclick = (e) => {
+      const btn = e.target.closest('.filter-pill');
+      if (!btn) return;
+      secContainer.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeSec = btn.dataset.sec || '';
+      haptic(10);
+      r();
+    };
+  }
+
+  // Update r filter condition
+  const oldR = r;
+  r = () => {
+    $('#tl').innerHTML = TX.filter(t => (!activePrio || t.prio === activePrio) && (!activeSec || t.sec === activeSec)).map(t => {
+      const st = S.texts[t.id] || '';
+      const m = S.log.filter(l => l.t === t.id).reduce((a, l) => a + l.m, 0);
+      const googleQ = encodeURIComponent(`${t.titulo} ${t.autor || ''}`.trim());
+      const googleUrl = `https://www.google.com/search?q=${googleQ}`;
+      return `<div class="card"><div class="row" style="margin-bottom:10px"><span class="prio ${t.prio}">${t.prio}</span><span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span><b style="font-size:18px">${t.autor}</b> — ${t.titulo}</div>
+      <p class="mu">${t.ref} · ${t.faixa} · ⏱ ${(m / 60).toFixed(1)}h estudadas</p><div class="row" style="margin:14px 0">${ST.map(s => `<button class="btn s ${st === s ? 'p' : ''}" onclick="S.texts['${t.id}']='${s}';save();toast('Status atualizado: ' + '${STN[s]}'.toUpperCase(), 'success');V.t2()">${STN[s]}</button>`).join('')}<button class="btn s" onclick="inspectTextDetails('${t.id}')">📑 ABRIR FICHA LATERAL</button><a class="btn s" href="${googleUrl}" target="_blank" rel="noopener">🔍 GOOGLE</a></div>
+      <p><b>POR QUE IMPORTA:</b> ${t.porque}</p><p><b>TESE CENTRAL:</b> ${t.tese}</p>
+      <details><summary>Conceitos-chave (${t.conceitos.length})</summary><ul>${t.conceitos.map(k => `<li><b>${k[0]}</b>: ${k[1]}</li>`).join('')}</ul></details>
+      <details><summary>Estrutura do texto</summary><ul>${t.estrutura.map(k => `<li>${k}</li>`).join('')}</ul></details>
+      <details><summary>Citações com página (${t.cit.length})</summary><ul>${t.cit.map(k => `<li>«${k[1]}» <a href="${pdf(t, k[0])}" target="_blank">${/PDF/.test(k[0]) ? k[0] : 'p. ' + k[0]}</a>${k[2] ? ' <span class="mu">— ' + k[2] + '</span>' : ''}</li>`).join('')}</ul>${t.off === null || t.off === undefined ? '<p class="mu">Neste arquivo a página impressa não coincide de forma regular com a página do PDF; o link abre o início do arquivo.</p>' : ''}</details>
+      <details><summary>Território e conexões</summary><p>${t.territorio}</p><ul>${t.conexoes.map(k => `<li><b>${k[0]}</b>: ${k[1]}</li>`).join('')}</ul></details>
+      <details><summary>Ligação com o pré-projeto</summary><p>${t.projeto.uso || ''}</p>${t.projeto.prova ? '<p><b>Na prova:</b> ' + t.projeto.prova + '</p>' : ''}${t.projeto.arg ? '<p><b>Na arguição:</b> ' + t.projeto.arg + '</p>' : ''}</details>
+      <p class="mu" style="margin-top:14px"><b>MINHAS NOTAS DE FICHAMENTO:</b></p><textarea rows="3" oninput="S.notes['${t.id}']=this.value;save()">${esc(S.notes[t.id] || '')}</textarea></div>`;
+    }).join('');
+  };
   r();
   V._r = r;
 };
@@ -3552,6 +3975,222 @@ go(initialTab);
     }
   }, 35);
 })();
+
+
+// ==============================================================
+// SWISS HOSPITAL REFINEMENTS JS CONTROLLERS
+// ==============================================================
+
+// 1. Toast System (Substitui alerts invasivos com feedback brutalista não-intrusivo)
+window.toast = function(message, type = 'default', duration = 3500) {
+  const container = document.getElementById('crivos-toast-container');
+  if (!container) return;
+  const el = document.createElement('div');
+  el.className = 'crivos-toast ' + type;
+  el.innerHTML = '<span class="crivos-toast-indicator"></span><span>' + message + '</span>';
+  container.appendChild(el);
+  haptic(10);
+  setTimeout(() => {
+    el.classList.add('toast-out');
+    setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+  }, duration);
+};
+
+// 2. Drawer Contextual Lateral (Off-canvas)
+window.openDrawer = function(title, contentHtml) {
+  const drawer = document.getElementById('crivos-drawer');
+  const backdrop = document.getElementById('crivos-drawer-backdrop');
+  const titleEl = document.getElementById('crivos-drawer-title');
+  const bodyEl = document.getElementById('crivos-drawer-body');
+  if (!drawer || !backdrop) return;
+
+  if (titleEl) titleEl.textContent = title || 'DETALHES';
+  if (bodyEl) bodyEl.innerHTML = contentHtml || '';
+
+  drawer.classList.add('active');
+  backdrop.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  haptic(12);
+};
+
+window.closeDrawer = function() {
+  const drawer = document.getElementById('crivos-drawer');
+  const backdrop = document.getElementById('crivos-drawer-backdrop');
+  if (drawer) drawer.classList.remove('active');
+  if (backdrop) backdrop.classList.remove('active');
+  document.body.style.overflow = '';
+};
+
+const drawerCloseBtn = document.getElementById('crivos-drawer-close');
+if (drawerCloseBtn) drawerCloseBtn.onclick = window.closeDrawer;
+const drawerBackdrop = document.getElementById('crivos-drawer-backdrop');
+if (drawerBackdrop) drawerBackdrop.onclick = window.closeDrawer;
+
+// 3. Command Palette Controller (Ctrl+K / Cmd+K)
+(function initCommandPalette() {
+  const backdrop = document.getElementById('cmd-palette-backdrop');
+  const input = document.getElementById('cmd-palette-input');
+  const results = document.getElementById('cmd-palette-results');
+  const triggerBtn = document.getElementById('cmd-palette-btn');
+
+  if (!backdrop || !input || !results) return;
+
+  function openPalette() {
+    backdrop.classList.add('active');
+    input.value = '';
+    renderResults('');
+    input.focus();
+    haptic(14);
+  }
+
+  function closePalette() {
+    backdrop.classList.remove('active');
+  }
+
+  if (triggerBtn) triggerBtn.onclick = openPalette;
+  backdrop.onclick = (e) => {
+    if (e.target === backdrop) closePalette();
+  };
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (backdrop.classList.contains('active')) closePalette();
+      else openPalette();
+    } else if (e.key === 'Escape' && backdrop.classList.contains('active')) {
+      closePalette();
+    }
+  });
+
+  input.addEventListener('input', () => {
+    renderResults(input.value.trim().toLowerCase());
+  });
+
+  function renderResults(q) {
+    const items = [];
+
+    // Módulos
+    TABS.forEach(([tabId, label]) => {
+      if (!q || label.toLowerCase().includes(q) || tabId.includes(q)) {
+        items.push({
+          badge: 'MÓDULO',
+          title: label,
+          sub: 'Navegar para aba',
+          action: () => { go(tabId); closePalette(); toast('Navegando para ' + label, 'info'); }
+        });
+      }
+    });
+
+    // Bibliografia / Textos
+    if (typeof TX !== 'undefined' && Array.isArray(TX)) {
+      TX.forEach(t => {
+        const full = (t.autor + ' ' + t.titulo + ' ' + (t.porque || '')).toLowerCase();
+        if (!q || full.includes(q)) {
+          items.push({
+            badge: 'TEXTO',
+            title: t.autor + ' — ' + t.titulo.slice(0, 45) + (t.titulo.length > 45 ? '…' : ''),
+            sub: t.prio + ' · ' + (t.sec === 'area' ? 'ÁREA' : 'LINHA 1'),
+            action: () => {
+              go('textos');
+              closePalette();
+              setTimeout(() => {
+                if (typeof window.inspectTextDetails === 'function') {
+                  window.inspectTextDetails(t.id);
+                }
+              }, 120);
+            }
+          });
+        }
+      });
+    }
+
+    if (items.length === 0) {
+      results.innerHTML = '<div style="padding:16px;text-align:center;font-family:monospace;font-size:12px;color:var(--ink-muted)">NENHUM RESULTADO ENCONTRADO</div>';
+      return;
+    }
+
+    results.innerHTML = items.slice(0, 10).map((it, idx) => {
+      return '<div class="cmd-item" data-idx="' + idx + '">' +
+        '<div class="cmd-item-left">' +
+          '<span class="cmd-item-badge">' + it.badge + '</span>' +
+          '<div><div class="cmd-item-title">' + it.title + '</div><div class="cmd-item-sub">' + it.sub + '</div></div>' +
+        '</div>' +
+        '<span style="font-family:monospace;font-size:10px;color:var(--ink-muted)">↵</span>' +
+      '</div>';
+    }).join('');
+
+    results.querySelectorAll('.cmd-item').forEach((el, i) => {
+      el.onclick = () => {
+        if (items[i] && items[i].action) items[i].action();
+      };
+    });
+  }
+})();
+
+// Helper para abrir detalhes do texto no Drawer Lateral
+window.inspectTextDetails = function(textId) {
+  const t = (typeof TX !== 'undefined') ? TX.find(x => x.id === textId) : null;
+  if (!t) return;
+  const m = S.log.filter(l => l.t === t.id).reduce((a, l) => a + l.m, 0);
+  const googleQ = encodeURIComponent(t.titulo + ' ' + (t.autor || '')).trim();
+  const googleUrl = 'https://www.google.com/search?q=' + googleQ;
+
+  const content = '<div style="margin-bottom:14px;">' +
+    '<span class="prio ' + t.prio + '" style="margin-right:6px;">' + t.prio + '</span>' +
+    '<span class="tag ' + (t.sec === 'area' ? 'ar' : 'li') + '">' + (t.sec === 'area' ? 'ÁREA' : 'LINHA 1') + '</span>' +
+    '<h3 style="margin:12px 0 4px 0;font-size:16px;">' + t.autor + '</h3>' +
+    '<div style="font-size:13px;font-weight:700;color:var(--ink-primary);margin-bottom:8px;">' + t.titulo + '</div>' +
+    '<div class="mu" style="font-size:11px;">' + t.ref + ' · ⏱ ' + (m / 60).toFixed(1) + 'h estudadas</div>' +
+  '</div>' +
+  '<div class="row" style="margin:12px 0;">' +
+    '<a class="btn s p" href="' + googleUrl + '" target="_blank" rel="noopener">🔍 PESQUISAR NO GOOGLE</a>' +
+  '</div>' +
+  '<div style="border-top:1px solid var(--border-color);padding-top:12px;margin-top:12px;">' +
+    '<p><b>POR QUE IMPORTA:</b> ' + t.porque + '</p>' +
+    '<p><b>TESE CENTRAL:</b> ' + t.tese + '</p>' +
+  '</div>' +
+  '<div style="margin-top:12px;">' +
+    '<b>CONCEITOS-CHAVE (' + t.conceitos.length + '):</b>' +
+    '<ul>' + t.conceitos.map(k => '<li><b>' + k[0] + '</b>: ' + k[1] + '</li>').join('') + '</ul>' +
+  '</div>' +
+  '<div style="margin-top:12px;">' +
+    '<b>ESTRUTURA DO TEXTO:</b>' +
+    '<ul>' + t.estrutura.map(k => '<li>' + k + '</li>').join('') + '</ul>' +
+  '</div>' +
+  '<div style="margin-top:14px;">' +
+    '<b>NOTAS DE FICHAMENTO RÁPIDO:</b>' +
+    '<textarea rows="4" style="width:100%;margin-top:6px;" oninput="S.notes[\'' + t.id + '\']=this.value;save()">' + esc(S.notes[t.id] || '') + '</textarea>' +
+  '</div>';
+
+  openDrawer('FICHA DO TEXTO // ' + t.id.toUpperCase(), content);
+};
+
 </script>
+
+<!-- REFINAMENTOS HOSPITAL UX: COMMAND PALETTE -->
+<div id="cmd-palette-backdrop" class="cmd-palette-backdrop" role="dialog" aria-modal="true" aria-label="Pesquisa Rápida">
+  <div class="cmd-palette-box">
+    <div class="cmd-palette-header">
+      <span style="color:var(--crivos-red);font-weight:900;">■</span>
+      <input type="text" id="cmd-palette-input" class="cmd-palette-input" placeholder="Digite para navegar, buscar texto ou módulo..." autocomplete="off" />
+      <span class="cmd-palette-esc">ESC</span>
+    </div>
+    <div id="cmd-palette-results" class="cmd-palette-results"></div>
+  </div>
+</div>
+
+<!-- REFINAMENTOS HOSPITAL UX: DRAWER CONTEXTUAL LATERAL (OFF-CANVAS) -->
+<div id="crivos-drawer-backdrop" class="crivos-drawer-backdrop"></div>
+<aside id="crivos-drawer" class="crivos-drawer" aria-label="Painel de Detalhes Contextual">
+  <div class="crivos-drawer-header">
+    <div class="crivos-drawer-title" id="crivos-drawer-title">DETALHES DA MATÉRIA</div>
+    <button type="button" id="crivos-drawer-close" class="crivos-drawer-close" aria-label="Fechar painel lateral">✕ FECHAR</button>
+  </div>
+  <div id="crivos-drawer-body" class="crivos-drawer-body"></div>
+</aside>
+
+<!-- REFINAMENTOS HOSPITAL UX: TOAST CONTAINER -->
+<div id="crivos-toast-container" class="crivos-toast-container"></div>
+
 </body>
 </html>
