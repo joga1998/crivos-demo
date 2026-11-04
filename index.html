@@ -3476,6 +3476,64 @@ main#app {
     padding: 5px 8px;
   }
 }
+
+/* Consolidated mobile layout corrections; desktop rules remain untouched. */
+@media (max-width: 768px) {
+  .tactical-sidebar,
+  .sidebar-backdrop { display: none !important; }
+  .crivos-layout-container,
+  .crivos-main-stage { margin-left: 0 !important; padding-left: 0 !important; width: 100% !important; max-width: 100% !important; }
+  main#app { margin-left: 0 !important; padding: 12px 10px calc(84px + env(safe-area-inset-bottom, 0px)) 10px !important; width: 100% !important; max-width: 100% !important; }
+  .crivos-topbar,
+  .crivos-header { height: auto !important; min-height: 48px !important; padding: 8px 12px !important; flex-wrap: wrap !important; }
+  .crivos-plan-meta { max-width: 46vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .grid,
+  .bento-grid,
+  .kpi-2x2,
+  .support-category-grid,
+  .profile-grid,
+  .sm2-grade-grid { grid-template-columns: minmax(0, 1fr) !important; width: 100% !important; }
+  .kpi-2x2,
+  .sm2-grade-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .row,
+  .app-toolbar,
+  .app-view-toolbar,
+  .shell-header,
+  .shell-dock,
+  .app-detail-header,
+  .app-detail-dock,
+  .crivos-topbar,
+  .crivos-header { flex-wrap: wrap !important; min-width: 0; }
+  input,
+  textarea,
+  select,
+  input[type="file"] { min-width: 0 !important; width: 100% !important; max-width: 100% !important; }
+  .card,
+  .app-unified-shell,
+  .app-master,
+  .app-detail,
+  .modal-box,
+  .shell-header,
+  .shell-body,
+  .app-toolbar,
+  .app-view-toolbar,
+  .support-cat-card,
+  .kpi-app-card { padding: 12px !important; box-shadow: 2px 2px 0px #111111 !important; }
+  table,
+  table thead,
+  table tbody,
+  table tr,
+  table td { display: block; width: 100%; }
+  table thead { display: none !important; }
+  table tr { border: 1px solid #111111 !important; margin-bottom: 10px !important; padding: 10px !important; background: #FFFFFF; }
+  table td { border: none !important; padding: 4px 0 !important; white-space: normal !important; text-align: left !important; }
+  .app-subnav,
+  .morph-group,
+  .filter-pills-row { max-width: 100%; overflow-x: auto !important; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .app-subnav::-webkit-scrollbar,
+  .morph-group::-webkit-scrollbar,
+  .filter-pills-row::-webkit-scrollbar { display: none; }
+}
 </style>
 </head>
 <body>
