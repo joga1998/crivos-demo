@@ -8,8 +8,12 @@ import {
   BrainCircuit,
   Timer,
   FileQuestion,
+  Mic,
   Network,
   FolderArchive,
+  Lightbulb,
+  Headphones,
+  User,
   ChevronsUpDown,
   X
 } from "lucide-react"
@@ -17,55 +21,38 @@ import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export type TabKey =
-  | "overview"
-  | "cronograma"
+  | "home"
+  | "crono"
   | "textos"
-  | "conexoes"
-  | "flashcards"
-  | "pomodoro"
-  | "simulados"
-  | "arquivos"
+  | "cards"
+  | "pomo"
+  | "sim"
+  | "arg"
+  | "mapa"
+  | "links"
+  | "dicas"
+  | "dados"
+  | "perfil"
 
-interface NavItem {
+export interface NavItem {
   id: TabKey
   title: string
   icon: React.ElementType
 }
 
-interface NavSection {
-  title: string
-  items: NavItem[]
-}
-
-const navSections: NavSection[] = [
-  {
-    title: "Overview",
-    items: [
-      { id: "overview", title: "Dashboard", icon: LayoutDashboard },
-      { id: "cronograma", title: "Cronograma Tático", icon: CalendarDays },
-    ],
-  },
-  {
-    title: "Trilha de Estudos",
-    items: [
-      { id: "textos", title: "Bibliografia & Textos", icon: BookOpen },
-      { id: "conexoes", title: "Conexões Interdisciplinares", icon: Network },
-    ],
-  },
-  {
-    title: "Ferramentas Táticas",
-    items: [
-      { id: "flashcards", title: "Flashcards SM-2", icon: BrainCircuit },
-      { id: "pomodoro", title: "Pomodoro & Foco", icon: Timer },
-      { id: "simulados", title: "Simulados & Arguição", icon: FileQuestion },
-    ],
-  },
-  {
-    title: "Acervo & Suporte",
-    items: [
-      { id: "arquivos", title: "Arquivos & Entregáveis", icon: FolderArchive },
-    ],
-  },
+export const LEGACY_TABS: NavItem[] = [
+  { id: "home", title: "Início", icon: LayoutDashboard },
+  { id: "crono", title: "Cronograma", icon: CalendarDays },
+  { id: "textos", title: "Textos", icon: BookOpen },
+  { id: "cards", title: "Flashcards", icon: BrainCircuit },
+  { id: "pomo", title: "Pomodoro", icon: Timer },
+  { id: "sim", title: "Simulado", icon: FileQuestion },
+  { id: "arg", title: "Arguição", icon: Mic },
+  { id: "mapa", title: "Conexões", icon: Network },
+  { id: "links", title: "Arquivos", icon: FolderArchive },
+  { id: "dicas", title: "Dicas", icon: Lightbulb },
+  { id: "dados", title: "Suporte", icon: Headphones },
+  { id: "perfil", title: "Perfil", icon: User },
 ]
 
 export function AppSidebar({
@@ -83,7 +70,7 @@ export function AppSidebar({
 }) {
   return (
     <>
-      {/* 1. Backdrop Móvel */}
+      {/* Backdrop Mobile */}
       {mobileOpen && (
         <div
           onClick={onCloseMobile}
@@ -91,26 +78,24 @@ export function AppSidebar({
         />
       )}
 
-      {/* 2. Container da Sidebar shadcn */}
+      {/* Sidebar Container */}
       <aside
         className={cn(
           "bg-card border-r border-border/60 flex flex-col select-none transition-all duration-300 ease-in-out z-50",
-          // Mobile classes: Fixed drawer
           "fixed top-0 bottom-0 left-0 w-64 shadow-2xl lg:shadow-none lg:static",
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
-          // Desktop classes
           collapsed ? "lg:w-16" : "lg:w-60"
         )}
       >
-        {/* Header da Sidebar */}
+        {/* Header da Sidebar com Brand CRIVOS */}
         <div className="flex h-14 items-center px-4 border-b border-border/60 justify-between shrink-0">
           {(!collapsed || mobileOpen) ? (
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground font-black text-xs tracking-wider shadow-sm">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[3px] bg-primary text-primary-foreground font-black text-xs font-brand tracking-wider shadow-sm">
                 CR
-              </div>
+              </span>
               <div className="flex flex-col min-w-0">
-                <span className="text-xs font-bold truncate leading-tight uppercase tracking-wider text-foreground">
+                <span className="text-sm font-bold truncate leading-tight uppercase tracking-wider text-foreground font-brand">
                   crivos
                 </span>
                 <span className="text-[10px] text-muted-foreground truncate font-mono">
@@ -119,7 +104,7 @@ export function AppSidebar({
               </div>
             </div>
           ) : (
-            <div className="mx-auto flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-black text-xs">
+            <div className="mx-auto flex h-7 w-7 items-center justify-center rounded-[3px] bg-primary text-primary-foreground font-black text-xs font-brand">
               CR
             </div>
           )}
@@ -135,55 +120,44 @@ export function AppSidebar({
           )}
         </div>
 
-        {/* Itens de Navegação no formato shadcn */}
-        <div className="flex-1 overflow-y-auto px-2.5 py-3 space-y-4">
-          {navSections.map((section, sIdx) => (
-            <div key={sIdx} className="space-y-1">
-              {(!collapsed || mobileOpen) && (
-                <h4 className="px-2 text-[10px] font-semibold text-muted-foreground/80 uppercase tracking-wider">
-                  {section.title}
-                </h4>
-              )}
-              <div className="space-y-0.5">
-                {section.items.map((item) => {
-                  const isActive = currentTab === item.id
-                  const Icon = item.icon
+        {/* Lista Unificada Idêntica ao TABS do Legacy (sem reagrupamentos) */}
+        <div className="flex-1 overflow-y-auto px-2.5 py-3 space-y-1">
+          {LEGACY_TABS.map((item) => {
+            const isActive = currentTab === item.id
+            const Icon = item.icon
 
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => {
-                        onSelectTab(item.id)
-                        onCloseMobile()
-                      }}
-                      title={collapsed && !mobileOpen ? item.title : undefined}
-                      className={cn(
-                        "w-full flex items-center gap-3 rounded-md px-2.5 py-2 text-xs font-medium transition-colors text-left cursor-pointer",
-                        isActive
-                          ? "bg-accent text-accent-foreground font-semibold"
-                          : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
-                        collapsed && !mobileOpen && "justify-center px-0 py-2"
-                      )}
-                    >
-                      <Icon
-                        className={cn(
-                          "size-4 shrink-0",
-                          isActive ? "text-foreground" : "text-muted-foreground"
-                        )}
-                      />
-                      {(!collapsed || mobileOpen) && (
-                        <span className="truncate flex-1">{item.title}</span>
-                      )}
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-          ))}
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => {
+                  onSelectTab(item.id)
+                  onCloseMobile()
+                }}
+                title={collapsed && !mobileOpen ? item.title : undefined}
+                className={cn(
+                  "w-full flex items-center gap-3 rounded-md px-2.5 py-2 text-xs font-medium font-elements transition-colors text-left cursor-pointer",
+                  isActive
+                    ? "bg-accent text-accent-foreground font-semibold"
+                    : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
+                  collapsed && !mobileOpen && "justify-center px-0 py-2"
+                )}
+              >
+                <Icon
+                  className={cn(
+                    "size-4 shrink-0",
+                    isActive ? "text-foreground" : "text-muted-foreground"
+                  )}
+                />
+                {(!collapsed || mobileOpen) && (
+                  <span className="truncate flex-1 tracking-tight">{item.title}</span>
+                )}
+              </button>
+            )
+          })}
         </div>
 
-        {/* Rodapé com Avatar estilo Kiranism */}
+        {/* Perfil no Rodapé */}
         <div className="p-2 border-t border-border/60 mt-auto shrink-0">
           <div
             className={cn(
@@ -193,15 +167,15 @@ export function AppSidebar({
           >
             <Avatar className="h-7 w-7 rounded-full border border-border/40 shrink-0">
               <AvatarImage src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" alt="João Gabriel" />
-              <AvatarFallback className="text-[10px] bg-muted">JG</AvatarFallback>
+              <AvatarFallback className="text-[10px] bg-muted font-brand">JG</AvatarFallback>
             </Avatar>
             {(!collapsed || mobileOpen) && (
               <>
                 <div className="flex flex-col min-w-0 flex-1">
-                  <span className="text-xs font-semibold text-foreground truncate">
+                  <span className="text-xs font-semibold text-foreground truncate font-brand">
                     João Gabriel
                   </span>
-                  <span className="text-[10px] text-muted-foreground truncate">
+                  <span className="text-[10px] text-muted-foreground truncate font-mono">
                     joao@crivos.me
                   </span>
                 </div>

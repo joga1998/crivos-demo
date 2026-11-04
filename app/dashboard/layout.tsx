@@ -11,7 +11,7 @@ export default function DashboardLayout({
 }) {
   const [collapsed, setCollapsed] = React.useState(false)
   const [mobileOpen, setMobileOpen] = React.useState(false)
-  const [currentTab, setCurrentTab] = React.useState<TabKey>("overview")
+  const [currentTab, setCurrentTab] = React.useState<TabKey>("home")
 
   return (
     <div className="flex min-h-screen bg-background text-foreground antialiased">

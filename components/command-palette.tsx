@@ -22,7 +22,7 @@ export function CommandPalette({ open, onClose, onNavigate }: CommandPaletteProp
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault()
         if (open) onClose()
-        else onNavigate("overview")
+        else onNavigate("home")
       }
       if (e.key === "Escape" && open) {
         onClose()
@@ -53,11 +53,11 @@ export function CommandPalette({ open, onClose, onNavigate }: CommandPaletteProp
     : texts.slice(0, 5)
 
   const quickNav: { title: string; tab: TabKey; icon: React.ElementType }[] = [
-    { title: "Ir para Cronograma Tático", tab: "cronograma", icon: Calendar },
+    { title: "Ir para Cronograma Tático", tab: "crono", icon: Calendar },
     { title: "Ir para Bibliografia & Autores", tab: "textos", icon: BookOpen },
-    { title: "Ir para Sessão Pomodoro", tab: "pomodoro", icon: Timer },
-    { title: "Ir para Flashcards SM-2", tab: "flashcards", icon: BrainCircuit },
-    { title: "Ir para Matriz de Conexões", tab: "conexoes", icon: Network },
+    { title: "Ir para Sessão Pomodoro", tab: "pomo", icon: Timer },
+    { title: "Ir para Flashcards SM-2", tab: "cards", icon: BrainCircuit },
+    { title: "Ir para Matriz de Conexões", tab: "mapa", icon: Network },
   ]
 
   return (

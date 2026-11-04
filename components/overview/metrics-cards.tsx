@@ -10,52 +10,52 @@ export function OverviewMetricsCards() {
 
   const metrics = [
     {
-      title: "Total Revenue / Horas",
+      title: "Total Revenue",
       value: `${totalHoursStudied}h`,
       change: "+12.5%",
       changeType: "positive",
       line1: "Trending up this month",
-      line2: "Produtividade dos últimos 21 dias",
+      line2: "Visitors for the last 6 months",
     },
     {
-      title: "Autores Concluídos",
+      title: "New Customers",
       value: `${completedTextsCount} / ${totalTextsCount}`,
-      change: `${Math.round((completedTextsCount / totalTextsCount) * 100)}%`,
-      changeType: "positive",
-      line1: "Cobertura do edital",
-      line2: "Meta: 12 fichamentos críticos",
+      change: "-20%",
+      changeType: "negative",
+      line1: "Down 20% this period",
+      line2: "Acquisition needs attention",
     },
     {
-      title: "Cards Fator SM-2",
+      title: "Active Accounts",
       value: "148",
-      change: "+94.2%",
+      change: "+12.5%",
       changeType: "positive",
       line1: "Strong user retention",
-      line2: "Índice de retenção a longo prazo",
+      line2: "Engagement exceeds targets",
     },
     {
-      title: "D-Dia (Prova)",
-      value: `${daysUntilExam} dias`,
-      change: "Fase 02",
-      changeType: "neutral",
-      line1: "Ciclo de consolidação",
-      line2: "Simulados e arguição oral",
+      title: "Growth Rate",
+      value: `${daysUntilExam}d`,
+      change: "+4.5%",
+      changeType: "positive",
+      line1: "Steady performance increase",
+      line2: "Meets growth projections",
     },
   ]
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 w-full">
       {metrics.map((m, idx) => (
         <Card key={idx} className="border-border/60 bg-card shadow-sm">
           <CardContent className="p-5 flex flex-col justify-between h-full space-y-3">
             {/* Top row: Title + Trend Badge */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-muted-foreground">
+              <span className="text-xs font-elements font-medium text-muted-foreground">
                 {m.title}
               </span>
-              <div className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
+              <div className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground font-elements">
                 {m.changeType === "positive" ? (
-                  <TrendingUp className="size-3 text-emerald-400" />
+                  <TrendingUp className="size-3 text-foreground" />
                 ) : m.changeType === "negative" ? (
                   <TrendingDown className="size-3 text-rose-500" />
                 ) : null}
@@ -64,12 +64,12 @@ export function OverviewMetricsCards() {
             </div>
 
             {/* Main Value */}
-            <div className="text-2xl font-bold tracking-tight text-foreground">
+            <div className="text-2xl font-bold tracking-tight text-foreground font-elements">
               {m.value}
             </div>
 
             {/* Bottom 2 lines of subtle subtext */}
-            <div className="space-y-0.5 text-xs text-muted-foreground pt-1 border-t border-border/40">
+            <div className="space-y-0.5 text-xs text-muted-foreground pt-1 border-t border-border/40 font-sans">
               <p className="font-medium text-foreground/80 flex items-center gap-1 text-[11px]">
                 {m.line1}
               </p>

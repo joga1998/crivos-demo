@@ -39,14 +39,14 @@ export function StudyAreaChart() {
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div>
           <div className="flex items-center gap-2">
-            <CardTitle className="text-base font-semibold text-foreground tracking-tight">
+            <CardTitle className="text-base font-semibold text-foreground tracking-tight font-elements">
               Dotted Area Chart
             </CardTitle>
             <span className="inline-flex items-center gap-0.5 text-xs text-muted-foreground font-mono">
               <TrendingDown className="size-3 text-rose-500" /> -5.2%
             </span>
           </div>
-          <CardDescription className="text-xs text-muted-foreground pt-0.5">
+          <CardDescription className="text-xs text-muted-foreground pt-0.5 font-sans">
             Showing total visitors for the last 6 months
           </CardDescription>
         </div>
@@ -60,18 +60,10 @@ export function StudyAreaChart() {
                 margin={{ top: 15, right: 10, left: -25, bottom: 0 }}
               >
                 <defs>
-                  {/* Padrão pontilhado shadcn */}
+                  {/* Padrão pontilhado */}
                   <pattern id="dotPattern" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
-                    <circle cx="2" cy="2" r="1" fill="#71717A" opacity="0.25" />
+                    <circle cx="2" cy="2" r="1" fill="#71717A" opacity="0.3" />
                   </pattern>
-                  <linearGradient id="primaryArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#E11D48" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#E11D48" stopOpacity={0.0} />
-                  </linearGradient>
-                  <linearGradient id="secondaryArea" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#A1A1AA" stopOpacity={0.15} />
-                    <stop offset="100%" stopColor="#A1A1AA" stopOpacity={0.0} />
-                  </linearGradient>
                 </defs>
                 <CartesianGrid
                   strokeDasharray="2 4"
@@ -132,7 +124,7 @@ export function StudyAreaChart() {
               </AreaChart>
             </ResponsiveContainer>
           ) : (
-            <div className="text-xs text-muted-foreground">Carregando gráfico...</div>
+            <div className="text-xs text-muted-foreground font-sans">Carregando gráfico...</div>
           )}
         </div>
       </CardContent>

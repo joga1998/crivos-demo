@@ -54,15 +54,15 @@ export function RecentTasks() {
   return (
     <Card className="border-border/60 bg-card shadow-sm h-full flex flex-col">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold text-foreground tracking-tight">
+        <CardTitle className="text-base font-semibold text-foreground tracking-tight font-elements">
           Recent Sales
         </CardTitle>
-        <CardDescription className="text-xs text-muted-foreground pt-0.5">
+        <CardDescription className="text-xs text-muted-foreground pt-0.5 font-sans">
           You made 265 sales this month.
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-2 flex-1">
-        <div className="space-y-4">
+        <div className="space-y-4 font-sans">
           {recentSales.map((sale, idx) => (
             <div
               key={idx}
@@ -71,13 +71,13 @@ export function RecentTasks() {
               <div className="flex items-center gap-3 min-w-0">
                 <Avatar className="h-9 w-9 border border-border/40 shrink-0">
                   <AvatarImage src={sale.avatar} alt={sale.name} />
-                  <AvatarFallback className="text-xs bg-muted">{sale.fallback}</AvatarFallback>
+                  <AvatarFallback className="text-xs bg-muted font-brand">{sale.fallback}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-0.5 min-w-0">
-                  <p className="text-xs font-semibold text-foreground truncate">
+                  <p className="text-xs font-semibold text-foreground truncate font-sans">
                     {sale.name}
                   </p>
-                  <p className="text-[11px] text-muted-foreground truncate">
+                  <p className="text-[11px] text-muted-foreground truncate font-sans">
                     {sale.email}
                   </p>
                 </div>

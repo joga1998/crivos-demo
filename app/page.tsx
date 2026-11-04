@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { AppSidebar, TabKey } from "@/components/app-sidebar"
+import { AppSidebar, TabKey, LEGACY_TABS } from "@/components/app-sidebar"
 import { Header } from "@/components/header"
 
-// Módulos
+// Módulos correspondentes às abas do legacy
 import OverviewPage from "./dashboard/overview/page"
 import CronogramaPage from "./dashboard/cronograma/page"
 import TextosPage from "./dashboard/textos/page"
@@ -15,27 +15,19 @@ import SimuladosPage from "./dashboard/simulados/page"
 import ArquivosPage from "./dashboard/arquivos/page"
 
 export default function RootPage() {
-  const [currentTab, setCurrentTab] = React.useState<TabKey>("overview")
+  const [currentTab, setCurrentTab] = React.useState<TabKey>("home")
   const [collapsed, setCollapsed] = React.useState(false)
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
-  // Lê hash inicial pós montagem segura
+  // Sincroniza hash inicial com URL
   React.useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash.replace("#", "") as TabKey
-      if (
-        [
-          "overview",
-          "cronograma",
-          "textos",
-          "conexoes",
-          "flashcards",
-          "pomodoro",
-          "simulados",
-          "arquivos",
-        ].includes(hash)
-      ) {
-        setCurrentTab(hash)
+      const raw = window.location.hash.replace("#", "")
+      const valid = LEGACY_TABS.map((t) => t.id)
+      if (valid.includes(raw as TabKey)) {
+        setCurrentTab(raw as TabKey)
+      } else if (raw === "overview") {
+        setCurrentTab("home")
       }
     }
     handleHash()
@@ -51,7 +43,7 @@ export default function RootPage() {
 
   return (
     <div className="flex min-h-screen bg-background text-foreground antialiased selection:bg-primary/20">
-      {/* 1. Sidebar Interativa (Desktop fixa/retrátil + Mobile Sheet Drawer) */}
+      {/* 1. Sidebar Interativa */}
       <AppSidebar
         currentTab={currentTab}
         onSelectTab={handleSelectTab}
@@ -60,7 +52,7 @@ export default function RootPage() {
         onCloseMobile={() => setMobileOpen(false)}
       />
 
-      {/* 2. Área de Conteúdo Principal */}
+      {/* 2. Área de Conteúdo Principal (sem limitação estreita de max-w) */}
       <div className="flex flex-1 flex-col min-w-0 overflow-x-hidden">
         <Header
           currentTab={currentTab}
@@ -69,15 +61,41 @@ export default function RootPage() {
           onOpenMobile={() => setMobileOpen(true)}
         />
 
-        <main className="flex-1 p-3 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full transition-all">
-          {currentTab === "overview" && <OverviewPage />}
-          {currentTab === "cronograma" && <CronogramaPage />}
+        {/* Largura otimizada para viewport integral (w-full max-w-[1600px] px-4 md:px-8 py-6) */}
+        <main className="flex-1 w-full max-w-[1600px] mx-auto p-4 sm:p-6 lg:p-8 font-sans">
+          {currentTab === "home" && <OverviewPage />}
+          {currentTab === "crono" && <CronogramaPage />}
           {currentTab === "textos" && <TextosPage />}
-          {currentTab === "conexoes" && <ConexoesPage />}
-          {currentTab === "flashcards" && <FlashcardsPage />}
-          {currentTab === "pomodoro" && <PomodoroPage />}
-          {currentTab === "simulados" && <SimuladosPage />}
-          {currentTab === "arquivos" && <ArquivosPage />}
+          {currentTab === "cards" && <FlashcardsPage />}
+          {currentTab === "pomo" && <PomodoroPage />}
+          {currentTab === "sim" && <SimuladosPage />}
+          {currentTab === "arg" && <SimuladosPage />}
+          {currentTab === "mapa" && <ConexoesPage />}
+          {currentTab === "links" && <ArquivosPage />}
+          {currentTab === "dicas" && (
+            <div className="rounded-lg border border-border/60 bg-card p-6 space-y-4">
+              <h2 className="text-xl font-bold font-elements">Dicas Táticas da Banca & Prova</h2>
+              <p className="text-sm text-muted-foreground font-sans">
+                Critérios de correção, modelos de resposta dissertativa e instruções de arguição compilados no Guia Oficial.
+              </p>
+            </div>
+          )}
+          {currentTab === "dados" && (
+            <div className="rounded-lg border border-border/60 bg-card p-6 space-y-4">
+              <h2 className="text-xl font-bold font-elements">Suporte & Dados Táticos</h2>
+              <p className="text-sm text-muted-foreground font-sans">
+                Acompanhamento tático, auditoria de sincronização e canais de atendimento CRIVOS.
+              </p>
+            </div>
+          )}
+          {currentTab === "perfil" && (
+            <div className="rounded-lg border border-border/60 bg-card p-6 space-y-4">
+              <h2 className="text-xl font-bold font-elements">Perfil do Candidato</h2>
+              <p className="text-sm text-muted-foreground font-sans">
+                Candidato: João Gabriel · Inscrição PPGHS/UERJ · Plano CRIVOS Elite Ativo.
+              </p>
+            </div>
+          )}
         </main>
       </div>
     </div>
