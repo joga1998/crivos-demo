@@ -72,14 +72,29 @@ export function Header({
         <div className="hidden sm:block h-4 w-px bg-border mx-1" />
 
         <div className="flex items-center gap-2 text-xs truncate">
-          <span className="text-muted-foreground font-medium hidden md:inline">Dashboard</span>
-          <span className="text-muted-foreground hidden md:inline">/</span>
-          <span className="font-semibold text-foreground truncate">{tabTitles[currentTab] || "Overview"}</span>
+          <div className="flex items-center gap-1.5 font-bold tracking-tight text-foreground font-sans">
+            <span className="flex h-4 w-4 items-center justify-center rounded-[3px] bg-primary text-[9px] font-black text-primary-foreground leading-none">
+              CR
+            </span>
+            <span className="text-sm font-bold tracking-tight text-foreground font-sans uppercase">
+              crivos
+            </span>
+          </div>
+          <span className="text-muted-foreground/60 hidden sm:inline">/</span>
+          <span className="font-medium text-muted-foreground hidden sm:inline truncate">{tabTitles[currentTab] || "Overview"}</span>
         </div>
       </div>
 
-      {/* 2. Controles Globais (Theme + Notificações + Badge) */}
-      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+      {/* 2. Controles Globais (Busca estilo shadcn + Theme + Notificações) */}
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {/* Input de Busca decorativo estilo Kiranism */}
+        <div className="hidden md:flex items-center justify-between gap-3 h-8 w-44 lg:w-56 rounded-md border border-input bg-muted/40 px-2.5 text-xs text-muted-foreground select-none cursor-default">
+          <span className="truncate">Buscar no edital...</span>
+          <kbd className="pointer-events-none inline-flex h-4 select-none items-center gap-0.5 rounded border border-border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+            <span className="text-[10px]">⌘</span>K
+          </kbd>
+        </div>
+
         {/* Toggle Dark / Light Theme */}
         {mounted && (
           <Button
@@ -92,7 +107,7 @@ export function Header({
             {theme === "dark" ? (
               <Sun className="size-4 text-amber-400 transition-all" />
             ) : (
-              <Moon className="size-4 text-zinc-700 transition-all" />
+              <Moon className="size-4 text-zinc-400 transition-all" />
             )}
           </Button>
         )}
@@ -110,9 +125,9 @@ export function Header({
           </span>
         </Button>
 
-        {/* Badge de Prazo */}
-        <div className="flex items-center pl-1 sm:pl-2 sm:border-l sm:border-border">
-          <Badge variant="outline" className="text-[10px] font-mono tracking-tight bg-secondary/60 whitespace-nowrap">
+        {/* Badge de Prazo discreto */}
+        <div className="flex items-center pl-1 sm:pl-2 border-l border-border">
+          <Badge variant="outline" className="text-[10px] font-mono tracking-tight bg-secondary/40 text-muted-foreground border-border/60">
             D-42
           </Badge>
         </div>

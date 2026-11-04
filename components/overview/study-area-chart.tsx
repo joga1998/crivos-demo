@@ -11,16 +11,20 @@ import {
   CartesianGrid,
 } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { TrendingDown } from "lucide-react"
 
 const chartData = [
-  { day: "14/10", meta: 3.5, real: 4.2 },
-  { day: "17/10", meta: 3.5, real: 3.8 },
-  { day: "20/10", meta: 4.0, real: 5.1 },
-  { day: "23/10", meta: 4.0, real: 4.5 },
-  { day: "26/10", meta: 4.0, real: 2.9 },
-  { day: "29/10", meta: 4.5, real: 6.0 },
-  { day: "01/11", meta: 4.5, real: 5.4 },
-  { day: "04/11", meta: 4.5, real: 4.8 },
+  { month: "Jan", uv: 400, pv: 240 },
+  { month: "Feb", uv: 820, pv: 420 },
+  { month: "Mar", uv: 500, pv: 310 },
+  { month: "Apr", uv: 680, pv: 390 },
+  { month: "May", uv: 430, pv: 290 },
+  { month: "Jun", uv: 720, pv: 480 },
+  { month: "Jul", uv: 390, pv: 260 },
+  { month: "Aug", uv: 980, pv: 580 },
+  { month: "Sep", uv: 690, pv: 420 },
+  { month: "Oct", uv: 810, pv: 510 },
+  { month: "Dec", uv: 410, pv: 280 },
 ]
 
 export function StudyAreaChart() {
@@ -31,71 +35,75 @@ export function StudyAreaChart() {
   }, [])
 
   return (
-    <Card className="border-border bg-card">
+    <Card className="border-border/60 bg-card shadow-sm h-full flex flex-col">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div>
-          <CardTitle className="text-sm font-semibold uppercase tracking-wider">
-            Evolução de Horas Líquidas
-          </CardTitle>
-          <CardDescription className="text-xs">
-            Meta planejada vs. Execução real diária
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-base font-semibold text-foreground tracking-tight">
+              Dotted Area Chart
+            </CardTitle>
+            <span className="inline-flex items-center gap-0.5 text-xs text-muted-foreground font-mono">
+              <TrendingDown className="size-3 text-rose-500" /> -5.2%
+            </span>
+          </div>
+          <CardDescription className="text-xs text-muted-foreground pt-0.5">
+            Showing total visitors for the last 6 months
           </CardDescription>
         </div>
-        <div className="flex items-center gap-3 text-[11px] font-mono">
-          <div className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-primary" />
-            <span className="text-muted-foreground">Executado</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-zinc-500" />
-            <span className="text-muted-foreground">Meta Diária</span>
-          </div>
-        </div>
       </CardHeader>
-      <CardContent className="pt-4">
-        <div className="h-[280px] w-full min-h-[280px] flex items-center justify-center">
+      <CardContent className="pt-2 flex-1 pb-4">
+        <div className="h-[300px] w-full min-h-[300px] flex items-center justify-center relative">
           {mounted ? (
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart
                 data={chartData}
-                margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                margin={{ top: 15, right: 10, left: -25, bottom: 0 }}
               >
                 <defs>
-                  <linearGradient id="realGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#E11D48" stopOpacity={0.4} />
-                    <stop offset="95%" stopColor="#E11D48" stopOpacity={0.0} />
+                  {/* Padrão pontilhado shadcn */}
+                  <pattern id="dotPattern" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="#71717A" opacity="0.25" />
+                  </pattern>
+                  <linearGradient id="primaryArea" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#E11D48" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="#E11D48" stopOpacity={0.0} />
                   </linearGradient>
-                  <linearGradient id="metaGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#71717A" stopOpacity={0.2} />
-                    <stop offset="95%" stopColor="#71717A" stopOpacity={0.0} />
+                  <linearGradient id="secondaryArea" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#A1A1AA" stopOpacity={0.15} />
+                    <stop offset="100%" stopColor="#A1A1AA" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272A" />
+                <CartesianGrid
+                  strokeDasharray="2 4"
+                  vertical={false}
+                  stroke="#27272A"
+                  opacity={0.4}
+                />
                 <XAxis
-                  dataKey="day"
+                  dataKey="month"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fill: "#A1A1AA", fontSize: 11 }}
+                  tick={{ fill: "#71717A", fontSize: 11 }}
+                  dy={6}
                 />
                 <YAxis
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fill: "#A1A1AA", fontSize: 11 }}
-                  tickFormatter={(v) => `${v}h`}
+                  tick={{ fill: "#71717A", fontSize: 11 }}
                 />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       return (
-                        <div className="rounded-lg border border-border bg-card p-2.5 shadow-lg text-xs font-mono">
+                        <div className="rounded-lg border border-border bg-card p-2 shadow-lg text-xs font-mono">
                           <div className="font-bold text-foreground mb-1">
-                            {payload[0].payload.day}
+                            {payload[0].payload.month}
                           </div>
-                          <div className="text-primary">
-                            Executado: {payload[0].value}h
+                          <div className="text-rose-500">
+                            Linha Principal: {payload[0].value}
                           </div>
                           <div className="text-muted-foreground">
-                            Meta: {payload[1].value}h
+                            Linha Secundária: {payload[1]?.value}
                           </div>
                         </div>
                       )
@@ -103,27 +111,28 @@ export function StudyAreaChart() {
                     return null
                   }}
                 />
+                {/* Linha 1: Laranja/Rose Suave */}
                 <Area
-                  type="monotone"
-                  dataKey="real"
+                  type="natural"
+                  dataKey="uv"
                   stroke="#E11D48"
-                  strokeWidth={2.5}
+                  strokeWidth={1.8}
                   fillOpacity={1}
-                  fill="url(#realGradient)"
+                  fill="url(#dotPattern)"
                 />
+                {/* Linha 2: Cinza Claro / Branco */}
                 <Area
-                  type="monotone"
-                  dataKey="meta"
-                  stroke="#71717A"
-                  strokeWidth={1.5}
-                  strokeDasharray="4 4"
+                  type="natural"
+                  dataKey="pv"
+                  stroke="#E4E4E7"
+                  strokeWidth={1.8}
                   fillOpacity={1}
-                  fill="url(#metaGradient)"
+                  fill="url(#dotPattern)"
                 />
               </AreaChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-full w-full bg-secondary/30 rounded-lg animate-pulse" />
+            <div className="text-xs text-muted-foreground">Carregando gráfico...</div>
           )}
         </div>
       </CardContent>

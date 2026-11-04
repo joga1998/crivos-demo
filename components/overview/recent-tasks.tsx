@@ -1,88 +1,90 @@
 "use client"
 
 import * as React from "react"
-import { CheckCircle2, Clock, ArrowRight, BookOpen, AlertCircle } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-const recentActivities = [
+interface SaleItem {
+  name: string
+  email: string
+  amount: string
+  avatar: string
+  fallback: string
+}
+
+const recentSales: SaleItem[] = [
   {
-    title: "Leitura Crítica: E.P. Thompson",
-    subtitle: "Costume, Lei e Direito Comum · Fichamento concluído",
-    time: "Hoje às 09:30",
-    status: "done",
-    tag: "ESSENCIAL",
+    name: "Olivia Martin",
+    email: "olivia.martin@email.com",
+    amount: "+$1,999.00",
+    avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=olivia",
+    fallback: "OM",
   },
   {
-    title: "Revisão SM-2: Bloco Teórico de Estado",
-    subtitle: "Poulantzas & Mendonça / Fontes · 18 flashcards respondidos",
-    time: "Ontem às 21:15",
-    status: "done",
-    tag: "SM-2",
+    name: "Jackson Lee",
+    email: "jackson.lee@email.com",
+    amount: "+$39.00",
+    avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=jackson",
+    fallback: "JL",
   },
   {
-    title: "Simulado Dissertativo #01",
-    subtitle: "Tema: Territorialidade e Lugar Social · Nota estimada 9.2/10",
-    time: "02 de Nov",
-    status: "done",
-    tag: "DISSERTATIVA",
+    name: "Isabella Nguyen",
+    email: "isabella.nguyen@email.com",
+    amount: "+$299.00",
+    avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=isabella",
+    fallback: "IN",
   },
   {
-    title: "Meta Pendente: Reinhart Koselleck",
-    subtitle: "Futuro Passado & Estratos do Tempo · Seções 1 a 4",
-    time: "Agendado para hoje",
-    status: "pending",
-    tag: "IMPORTANTE",
+    name: "William Kim",
+    email: "will@email.com",
+    amount: "+$99.00",
+    avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=william",
+    fallback: "WK",
+  },
+  {
+    name: "Sofia Davis",
+    email: "sofia.davis@email.com",
+    amount: "+$39.00",
+    avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=sofia",
+    fallback: "SD",
   },
 ]
 
 export function RecentTasks() {
   return (
-    <Card className="border-border bg-card">
-      <CardHeader className="flex flex-row items-center justify-between pb-3">
-        <div>
-          <CardTitle className="text-sm font-semibold uppercase tracking-wider">
-            Atividades Recentes & Próximas Metas
-          </CardTitle>
-          <CardDescription className="text-xs">
-            Registro cronológico das últimas sessões
-          </CardDescription>
-        </div>
-        <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground hover:text-foreground">
-          Ver todas <ArrowRight className="ml-1 size-3" />
-        </Button>
+    <Card className="border-border/60 bg-card shadow-sm h-full flex flex-col">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base font-semibold text-foreground tracking-tight">
+          Recent Sales
+        </CardTitle>
+        <CardDescription className="text-xs text-muted-foreground pt-0.5">
+          You made 265 sales this month.
+        </CardDescription>
       </CardHeader>
-      <CardContent className="pt-2">
-        <div className="space-y-3">
-          {recentActivities.map((act, idx) => (
+      <CardContent className="pt-2 flex-1">
+        <div className="space-y-4">
+          {recentSales.map((sale, idx) => (
             <div
               key={idx}
-              className="flex items-start justify-between gap-3 rounded-lg border border-border p-3 transition-colors hover:bg-accent/40"
+              className="flex items-center justify-between gap-3"
             >
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5">
-                  {act.status === "done" ? (
-                    <CheckCircle2 className="size-4 text-emerald-500" />
-                  ) : (
-                    <Clock className="size-4 text-amber-500" />
-                  )}
-                </div>
-                <div className="space-y-0.5">
-                  <div className="text-xs font-semibold text-foreground flex items-center gap-2">
-                    <span>{act.title}</span>
-                    <Badge variant="outline" className="text-[9px] font-mono py-0 h-4 border-border">
-                      {act.tag}
-                    </Badge>
-                  </div>
-                  <p className="text-[11px] text-muted-foreground">
-                    {act.subtitle}
+              <div className="flex items-center gap-3 min-w-0">
+                <Avatar className="h-9 w-9 border border-border/40 shrink-0">
+                  <AvatarImage src={sale.avatar} alt={sale.name} />
+                  <AvatarFallback className="text-xs bg-muted">{sale.fallback}</AvatarFallback>
+                </Avatar>
+                <div className="space-y-0.5 min-w-0">
+                  <p className="text-xs font-semibold text-foreground truncate">
+                    {sale.name}
+                  </p>
+                  <p className="text-[11px] text-muted-foreground truncate">
+                    {sale.email}
                   </p>
                 </div>
               </div>
-              <span className="text-[10px] font-mono text-muted-foreground whitespace-nowrap">
-                {act.time}
-              </span>
+              <div className="text-xs font-semibold font-mono text-foreground whitespace-nowrap">
+                {sale.amount}
+              </div>
             </div>
           ))}
         </div>
