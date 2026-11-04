@@ -4909,87 +4909,209 @@ let P = {left: 0, run: false, mode: 'w', tid: null, start: 0, acc: 0, n: 0};
 let pomoSubTab = 'timer'; // 'timer' | 'dias' | 'textos'
 
 V.pomo = () => {
+  normalizePomoSettings();
   if (!P.left) P.left = S.pomo.w * 60;
   const totalHours = (S.log.reduce((a, l) => a + l.m, 0) / 60).toFixed(1);
+  const targets = getPomoTargetsList();
 
   $('#app').innerHTML = `
-    <div class="app-screen">
+    <div class="app-screen" style="max-width:1300px;margin:0 auto;width:100%;">
       <div class="app-unified-shell">
-        <!-- Cabeçalho Integrado do Estúdio de Foco -->
-        <div class="shell-header">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="mu" style="font-size:9.5px;text-transform:uppercase;">VISÃO:</span>
-            <div class="morph-group">
-              <button type="button" class="morph-pill ${pomoSubTab === 'timer' ? 'active' : ''}" onclick="morphSelect(this, ()=>{pomoSubTab='timer';V.pomo()})">CRONÔMETRO DE FOCO</button>
-              <button type="button" class="morph-pill ${pomoSubTab === 'dias' ? 'active' : ''}" onclick="morphSelect(this, ()=>{pomoSubTab='dias';V.pomo()})">HISTÓRICO (21 DIAS)</button>
-              <button type="button" class="morph-pill ${pomoSubTab === 'textos' ? 'active' : ''}" onclick="morphSelect(this, ()=>{pomoSubTab='textos';V.pomo()})">HORAS POR TEXTO</button>
-            </div>
+        <div class="shell-header" style="padding:10px 16px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="tag ar" style="font-size:9.5px;">PRODUTIVIDADE TÁTICA</span>
+            <b style="font-family:'Inter',sans-serif;font-size:12.5px;text-transform:uppercase;">CRONÔMETRO DE FOCO & GESTÃO DE HORAS LÍQUIDAS</b>
           </div>
-          <span class="tag ar">ACUMULADO: ${totalHours}H</span>
+          <span class="tag" style="background:#111;color:#FFF;font-size:11px;font-weight:900;">ACUMULADO: ${totalHours}H</span>
         </div>
 
-        ${pomoSubTab === 'timer' ? `
-          <!-- Corpo Central do Cronômetro -->
-          <div class="shell-body" style="justify-content:space-between;align-items:center;text-align:center;">
-            <div style="width:100%;max-width:680px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border-subtle);">
-              <div class="row" style="gap:6px;">
-                <label class="mu" style="font-size:10px;">FOCO <input id="pw" type="number" value="${S.pomo.w}" style="width:46px;padding:3px 5px;">m</label>
-                <label class="mu" style="font-size:10px;">PAUSA <input id="pb" type="number" value="${S.pomo.b}" style="width:46px;padding:3px 5px;">m</label>
-                <label class="mu" style="font-size:10px;">LONGA <input id="pl" type="number" value="${S.pomo.lb}" style="width:46px;padding:3px 5px;">m</label>
+        <div class="shell-body" style="padding:14px;gap:14px;">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 460px), 1fr));gap:14px;align-items:stretch;">
+            
+            <!-- COLUNA ESQUERDA: CRONÔMETRO E CONTROLE COMPACTO -->
+            <div style="background:var(--bg-card);border:1.5px solid var(--border-color);border-left:5px solid var(--crivos-red);padding:14px;display:flex;flex-direction:column;gap:12px;">
+              <!-- Seletor de Alvo em linha própria para não sobrepor nada -->
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <span class="mu" style="font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;">ALVO TÁTICO DA SESSÃO:</span>
+                <select id="pt" style="width:100%;padding:6px 10px;font-size:11.5px;font-weight:700;background:var(--bg-primary);border:1.5px solid var(--border-color);color:var(--text-primary);box-sizing:border-box;">
+                  <option value="">[ALVO GERAL / METAS / SIMULADOS / REDAÇÃO]</option>
+                  ${targets.map(t => `<option value="${t.id}" ${S.pomoT === t.id ? 'selected' : ''}>${t.label}</option>`).join('')}
+                </select>
               </div>
-              <select id="pt" style="max-width:260px;padding:5px 8px;font-size:11px;">
-                <option value="">[ALVO: GERAL / ESCRITA / PROJETO]</option>
-                ${TX.map(t => `<option value="${t.id}" ${S.pomoT === t.id ? 'selected' : ''}>${short(t)}</option>`).join('')}
-              </select>
+
+              <!-- Parâmetros de Foco / Pausas Rápidas -->
+              <div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg-subtle);border:1px solid var(--border-color);padding:6px 10px;">
+                <span class="mu" style="font-size:9.5px;font-weight:800;text-transform:uppercase;">CONFIGURAÇÃO:</span>
+                <div class="row" style="gap:8px;">
+                  <label class="mu" style="font-size:10px;font-weight:700;">FOCO <input id="pw" type="number" value="${S.pomo.w}" style="width:38px;padding:2px 4px;font-size:11px;background:var(--bg-card);border:1px solid var(--border-color);text-align:center;">m</label>
+                  <label class="mu" style="font-size:10px;font-weight:700;">PAUSA <input id="pb" type="number" value="${S.pomo.b}" style="width:38px;padding:2px 4px;font-size:11px;background:var(--bg-card);border:1px solid var(--border-color);text-align:center;">m</label>
+                  <label class="mu" style="font-size:10px;font-weight:700;">LONGA <input id="pl" type="number" value="${S.pomo.lb}" style="width:38px;padding:2px 4px;font-size:11px;background:var(--bg-card);border:1px solid var(--border-color);text-align:center;">m</label>
+                </div>
+              </div>
+
+              <!-- Display Central do Timer -->
+              <div style="text-align:center;padding:10px 0;background:var(--bg-primary);border:1px solid var(--border-subtle);">
+                <div class="mu" id="pm" style="font-size:11px;font-weight:800;letter-spacing:0.05em;margin-bottom:2px;"></div>
+                <div class="timer" id="tm" style="font-size:clamp(56px, 8.5vw, 82px);line-height:1;margin:6px 0;font-weight:900;letter-spacing:-0.03em;"></div>
+                
+                <!-- Botões de Ação do Ciclo -->
+                <div class="row" style="justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap;">
+                  <button class="btn p" id="ps" style="min-width:140px;justify-content:center;padding:9px 18px;font-weight:900;">[${P.run ? 'PAUSAR' : 'INICIAR FOCO'}]</button>
+                  <button class="btn" id="pr" style="padding:9px 16px;">[REINICIAR]</button>
+                  <button class="btn" id="pk" style="padding:9px 16px;">[PULAR FASE]</button>
+                </div>
+              </div>
+
+              <!-- Lançamento Manual Compacto -->
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding-top:10px;border-top:1px solid var(--border-subtle);">
+                <span class="mu" style="font-size:10.5px;font-weight:700;">LANÇAMENTO MANUAL:</span>
+                <div class="row" style="gap:6px;">
+                  <input id="mm" type="number" placeholder="Minutos" style="width:80px;padding:4px 8px;font-size:11.5px;background:var(--bg-card);border:1px solid var(--border-color);">
+                  <button class="btn s" onclick="logm(+$('#mm').value);toast('Tempo registrado','success');V.pomo()">[+ REGISTRAR]</button>
+                </div>
+              </div>
             </div>
 
-            <div style="margin:auto 0;padding:12px 0;">
-              <div class="mu" id="pm" style="font-size:11px;font-weight:800;letter-spacing:0.06em;margin-bottom:4px;"></div>
-              <div class="timer" id="tm" style="font-size:clamp(52px, 11vw, 86px);line-height:1;margin:6px 0;"></div>
-              <div class="row" style="justify-content:center;gap:8px;margin-top:14px;">
-                <button class="btn p" id="ps" style="min-width:130px;justify-content:center;">[${P.run ? 'PAUSAR' : 'INICIAR FOCO'}]</button>
-                <button class="btn" id="pr">[REINICIAR]</button>
-                <button class="btn" id="pk">[PULAR FASE]</button>
+            <!-- COLUNA DIREITA: TELEMETRIA E RANKING VISUAL POR ASSUNTO -->
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <!-- Gráfico 1: 21 Dias de Horas Líquidas -->
+              <div style="background:var(--bg-card);border:1.5px solid var(--border-color);padding:12px 14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <b style="font-family:'Inter',sans-serif;font-size:11.5px;text-transform:uppercase;">HORAS LÍQUIDAS (ÚLTIMOS 21 DIAS)</b>
+                  <span class="mono" style="font-size:10px;color:var(--text-muted);">HISTÓRICO</span>
+                </div>
+                <svg id="c1" width="100%" height="130"></svg>
+              </div>
+
+              <!-- Gráfico 2: Horas Estudadas por Disciplina / Assunto -->
+              <div style="background:var(--bg-card);border:1.5px solid var(--border-color);padding:12px 14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <b style="font-family:'Inter',sans-serif;font-size:11.5px;text-transform:uppercase;">HORAS ESTUDADAS POR ASSUNTO / DISCIPLINA</b>
+                  <span class="mono" style="font-size:10px;color:var(--text-muted);">RANKING VISUAL</span>
+                </div>
+                <div id="pomo-assuntos-bars" style="display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;padding-right:4px;">
+                  <!-- Renderizado via renderAssuntosHoursBars() -->
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Rodapé Integrado para Registro Manual -->
-          <div class="shell-dock">
-            <span class="mu" style="font-size:10.5px;">LANÇAMENTO RÁPIDO MANUAL:</span>
-            <div class="row" style="gap:6px;">
-              <input id="mm" type="number" placeholder="Minutos" style="width:86px;padding:4px 8px;">
-              <button class="btn s" onclick="logm(+$('#mm').value);toast('Tempo registrado','success');V.pomo()">[+ REGISTRAR]</button>
-            </div>
           </div>
-        ` : pomoSubTab === 'dias' ? `
-          <div class="shell-body" style="justify-content:center;">
-            <h3 style="margin-top:0;">HORAS LÍQUIDAS POR DIA (ÚLTIMOS 21 DIAS)</h3>
-            <svg id="c1" width="100%" height="230"></svg>
-          </div>
-        ` : `
-          <div class="shell-body">
-            <h3 style="margin-top:0;">DISTRIBUIÇÃO DE HORAS POR TEXTO DO EDITAL</h3>
-            <svg id="c2" width="100%" height="${TX.length * 26 + 30}"></svg>
-          </div>
-        `}
+        </div>
       </div>
     </div>
   `;
 
-  if (pomoSubTab === 'timer') {
-    ['pw', 'pb', 'pl'].forEach((k, i) => $('#' + k).onchange = e => { S.pomo[['w', 'b', 'lb'][i]] = +e.target.value; save(); if (!P.run) { P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60; tick(); } });
-    $('#pt').onchange = e => { flush(); S.pomoT = e.target.value; save(); };
-    $('#ps').onclick = () => { P.run ? pause() : startP(); V.pomo(); };
-    $('#pr').onclick = () => { flush(); pause(); P.mode = 'w'; P.left = S.pomo.w * 60; V.pomo(); };
-    $('#pk').onclick = () => { flush(); nextPhase(); V.pomo(); };
-    tick();
-  } else {
-    charts();
-  }
+  ['pw', 'pb', 'pl'].forEach((k, i) => {
+    const el = $('#' + k);
+    if (!el) return;
+    el.onchange = e => {
+      const key = ['w', 'b', 'lb'][i];
+      const val = Math.max(1, Math.min(240, Math.round(Number(e.target.value) || 1)));
+      e.target.value = val;
+      S.pomo[key] = val;
+      save();
+      if (!P.run) {
+        P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60;
+        persistPomoRuntime();
+        tick();
+      }
+    };
+  });
+  const ptEl = $('#pt');
+  if (ptEl) ptEl.onchange = e => { flush(); S.pomoT = e.target.value; save(); };
+  const psEl = $('#ps');
+  if (psEl) psEl.onclick = () => { P.run ? pause() : startP(); V.pomo(); };
+  const prEl = $('#pr');
+  if (prEl) prEl.onclick = () => { flush(); pause(); P.mode = 'w'; P.left = S.pomo.w * 60; V.pomo(); };
+  const pkEl = $('#pk');
+  if (pkEl) pkEl.onclick = () => { flush(); nextPhase(); V.pomo(); };
+
+  tick();
+  charts();
 };
+
+function normalizePomoSettings() {
+  S.pomo = S.pomo || {};
+  ['w', 'b', 'lb'].forEach(key => {
+    S.pomo[key] = Math.max(1, Math.min(240, Math.round(Number(S.pomo[key]) || (def && def.pomo && def.pomo[key]) || 25)));
+  });
+}
+
+function persistPomoRuntime() {
+  S.pomoRuntime = {
+    left: Math.max(0, Math.floor(P.left || 0)),
+    mode: P.mode === 'lb' ? 'lb' : (P.mode === 'b' ? 'b' : 'w'),
+    n: Math.max(0, Math.floor(P.n || 0)),
+    acc: Math.max(0, Number(P.acc || 0)),
+    pomoT: S.pomoT || '',
+    updatedAt: Date.now()
+  };
+}
+
+function getPomoTargetsList() {
+  const list = [];
+  if (Array.isArray(TX) && TX.length > 0) {
+    TX.forEach(t => {
+      list.push({
+        id: t.id,
+        label: t.titulo || short(t),
+        short: short(t)
+      });
+    });
+  }
+  return list;
+}
+
+function renderAssuntosHoursBars() {
+  const container = document.getElementById('pomo-assuntos-bars');
+  if (!container) return;
+  const targets = getPomoTargetsList();
+  if (!targets.length) {
+    container.innerHTML = '<div class="mu" style="font-size:11px;padding:8px 0;">Nenhum assunto catalogado para este edital.</div>';
+    return;
+  }
+
+  // Agrupa horas registradas por target
+  const data = targets.map(t => {
+    const hours = S.log.filter(l => l.t === t.id).reduce((a, l) => a + l.m, 0) / 60;
+    return { id: t.id, label: t.short || t.label, full: t.label, hours };
+  });
+
+  const maxHours = Math.max(0.5, ...data.map(d => d.hours));
+  const totalH = data.reduce((a, b) => a + b.hours, 0);
+
+  container.innerHTML = data.map(item => {
+    const pct = Math.min(100, Math.round((item.hours / maxHours) * 100));
+    const share = totalH > 0 ? ((item.hours / totalH) * 100).toFixed(0) : '0';
+    return `
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;">
+          <span style="font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:75%;" title="${esc(item.full)}">
+            ${esc(item.label)}
+          </span>
+          <span class="mono" style="font-size:10.5px;color:var(--text-secondary);font-weight:800;">
+            ${item.hours.toFixed(1)}h ${totalH > 0 && item.hours > 0 ? `<small style="color:var(--crivos-red);font-size:9.5px;">(${share}%)</small>` : ''}
+          </span>
+        </div>
+        <div style="height:7px;background:var(--bg-subtle);border:1px solid var(--border-color);overflow:hidden;position:relative;">
+          <div style="height:100%;width:${item.hours > 0 ? Math.max(3, pct) : 0}%;background:${item.hours > 0 ? 'var(--crivos-red)' : 'transparent'};transition:width 0.3s ease;"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 function logm(m) { if (m > 0) { S.log.push({d: today(), t: S.pomoT || '', m: Math.round(m * 10) / 10}); save(); } }
-function flush() { if (P.mode === 'w' && P.run) { P.acc += (Date.now() - P.start) / 6e4; P.start = Date.now(); } if (P.acc >= 0.5) logm(P.acc); P.acc = 0; }
+function flush() {
+  if (P.mode === 'w' && P.run) {
+    P.acc += (Date.now() - P.start) / 6e4;
+    P.start = Date.now();
+  }
+  if (P.acc >= 0.5) logm(P.acc);
+  P.acc = 0;
+  persistPomoRuntime();
+}
+
 function updateTopbarPomodoro() {
   const shortcut = $('#topbar-user-shortcut');
   const elTopbarName = $('#topbar-user-name');
@@ -5009,41 +5131,52 @@ function updateTopbarPomodoro() {
     syncUserIdentity();
   }
 }
+
 function startP() {
+  if (P.run) return;
   haptic(18);
+  clearInterval(P.tid);
   P.run = true;
   P.start = Date.now();
+  persistPomoRuntime();
   updateTopbarPomodoro();
   P.tid = setInterval(() => {
-    P.left--;
+    P.left = Math.max(0, P.left - 1);
     if (P.left <= 0) { flush(); beep(); nextPhase(); }
+    if (P.left % 5 === 0) persistPomoRuntime();
     tick();
   }, 1000);
 }
+
 function pause() {
   haptic(14);
   if (P.run && P.mode === 'w') P.acc += (Date.now() - P.start) / 6e4;
   P.run = false;
   clearInterval(P.tid);
   flush();
+  persistPomoRuntime();
   updateTopbarPomodoro();
 }
+
 function nextPhase() {
   if (P.mode === 'w') { P.n++; P.mode = P.n % 4 ? 'b' : 'lb'; } else P.mode = 'w';
   P.left = S.pomo[P.mode === 'w' ? 'w' : P.mode] * 60;
   if (P.run) P.start = Date.now();
+  persistPomoRuntime();
   updateTopbarPomodoro();
   if (cur === 'pomo') V.pomo();
 }
+
 function tick() {
   const e = $('#tm');
   if (e) {
     e.textContent = String(Math.floor(P.left / 60)).padStart(2, '0') + ':' + String(P.left % 60).padStart(2, '0');
     const pm = $('#pm');
-    if (pm) pm.textContent = (P.mode === 'w' ? 'MODO FOCO ATIVO' : 'MODO PAUSA REPARADORA') + ' · CICLOS CONCLUÍDOS: ' + P.n;
+    if (pm) pm.textContent = (P.mode === 'w' ? 'MODO FOCO ATIVO' : 'MODO PAUSA REPARADORA') + ' · CICLOS: ' + P.n;
   }
   updateTopbarPomodoro();
 }
+
 function beep() {
   haptic([80, 60, 80, 60, 140]);
   try {
@@ -5054,24 +5187,42 @@ function beep() {
     setTimeout(() => o.stop(), 400);
   } catch (e) {}
 }
+
 function charts() {
   const c1 = $('#c1');
   if (c1) {
-    const W = c1.clientWidth || 700, days = [];
+    const W = c1.clientWidth || 440, days = [];
     for (let i = 20; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); days.push(iso(d)); }
-    const v = days.map(d => S.log.filter(l => l.d === d).reduce((a, l) => a + l.m, 0) / 60), mx = Math.max(1, ...v), bw = W / days.length;
-    c1.innerHTML = v.map((x, i) => `<rect x="${i * bw + 3}" y="${170 - x / mx * 145}" width="${Math.max(4, bw - 6)}" height="${x / mx * 145}" fill="var(--red)" stroke="var(--bd)" stroke-width="1.5"><title>${br(days[i])}: ${x.toFixed(1)}h</title></rect>${x ? `<text x="${i * bw + bw / 2}" y="${164 - x / mx * 145}" text-anchor="middle">${x.toFixed(1)}</text>` : ''}<text x="${i * bw + bw / 2}" y="192" text-anchor="middle">${days[i].slice(8)}</text>`).join('');
+    const v = days.map(d => S.log.filter(l => l.d === d).reduce((a, l) => a + l.m, 0) / 60);
+    const mx = Math.max(1, ...v);
+    const bw = W / days.length;
+    
+    // Linhas de grade sutis de precisão suíça
+    const gridLines = `
+      <line x1="0" y1="20" x2="${W}" y2="20" stroke="var(--border-color)" stroke-opacity="0.18" stroke-dasharray="2,3"/>
+      <line x1="0" y1="57" x2="${W}" y2="57" stroke="var(--border-color)" stroke-opacity="0.18" stroke-dasharray="2,3"/>
+      <line x1="0" y1="95" x2="${W}" y2="95" stroke="var(--border-color)" stroke-width="1.5"/>
+    `;
+
+    const bars = v.map((x, i) => {
+      const barH = x > 0 ? (x / mx * 75) : 3;
+      const barY = 95 - barH;
+      const fill = x > 0 ? 'var(--crivos-red)' : 'var(--border-color)';
+      const opacity = x > 0 ? '1' : '0.25';
+      return `
+        <rect x="${i * bw + 2}" y="${barY}" width="${Math.max(3, bw - 4)}" height="${barH}" fill="${fill}" opacity="${opacity}" stroke="var(--border-color)" stroke-width="0.8">
+          <title>${br(days[i])}: ${x.toFixed(1)}h</title>
+        </rect>
+        ${x > 0 ? `<text x="${i * bw + bw / 2}" y="${Math.max(14, barY - 4)}" text-anchor="middle" style="font-size:8.5px;font-family:'JetBrains Mono',monospace;font-weight:700;fill:var(--text-color);">${x.toFixed(1)}</text>` : ''}
+        <text x="${i * bw + bw / 2}" y="112" text-anchor="middle" style="font-size:8.5px;font-family:'JetBrains Mono',monospace;fill:var(--text-muted);">${days[i].slice(8)}</text>
+      `;
+    }).join('');
+
+    c1.innerHTML = gridLines + bars;
   }
-  const c2 = $('#c2');
-  if (c2) {
-    const W2 = c2.clientWidth || 300, v2 = TX.map(t => S.log.filter(l => l.t === t.id).reduce((a, l) => a + l.m, 0) / 60), m2 = Math.max(1, ...v2);
-    const padL = W2 < 420 ? 110 : 175;
-    const barMax = Math.max(40, W2 - padL - 52);
-    c2.innerHTML = TX.map((t, i) => `<text x="0" y="${i * 26 + 17}" style="font-size:${W2 < 420 ? '9.5px' : '11px'}">${short(t)}</text><rect x="${padL}" y="${i * 26 + 4}" width="${Math.max(0, barMax * v2[i] / m2)}" height="18" fill="var(--blue)" stroke="var(--bd)" stroke-width="1.5"/><text x="${padL + 6 + barMax * v2[i] / m2}" y="${i * 26 + 17}" style="font-size:10px">${v2[i].toFixed(1)}h</text>`).join('');
-  }
+  renderAssuntosHoursBars();
 }
 
-// ==============================================================
 // 06 · SIMULADO (TEST RUNNER & QUESTION BANK WORKBENCH)
 // ==============================================================
 let E = {tid: null};
@@ -5592,7 +5743,12 @@ V.links = () => {
                   <h3 style="margin:0 0 6px 0;">GUIA DE ESTUDOS CRIVOS (PÓS-EDITAL)</h3>
                   <p class="mu" style="font-size:12px;margin:0;">Planejamento estratégico integral em 12 seções táticas, cronograma executivo dia a dia, fichas profundas dos 12 textos, simulados e blindagem de arguição oral.</p>
                 </div>
-                <a class="btn p" style="justify-content:center;" href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank" rel="noopener">[ABRIR GUIA DE ESTUDOS (PDF)]</a>
+                <div class="row" style="gap:8px;flex-wrap:wrap;">
+                  <a class="btn p" style="justify-content:center;flex:1 1 180px;" href="Guia_Estudos_PPGHS_Mestrado_2027.pdf" target="_blank" rel="noopener">[ABRIR GUIA DE ESTUDOS (PDF)]</a>
+                  <a href="https://www.google.com/search?q=Edital+Oficial+PPGHS+UERJ+Mestrado+2027+PDF" target="_blank" rel="noopener noreferrer" class="btn" style="padding:9px 12px;font-size:11px;font-weight:800;background:var(--bg-primary);text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                    [ PESQUISAR EDITAL NO GOOGLE ↗ ]
+                  </a>
+                </div>
               </div>
 
               <div style="padding:16px;border:2px solid var(--border-color);border-left:6px solid var(--crivos-blue);background:var(--bg-subtle);display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
@@ -5608,26 +5764,43 @@ V.links = () => {
               </div>
             </div>
           ` : filesSubTab === 'bibliografia' ? `
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:14%;">PRIORIDADE</th>
-                  <th style="width:10%;">BLOCO</th>
-                  <th>REFERÊNCIA DO CANDIDATO ANCORADA</th>
-                  <th style="width:16%;">ARQUIVO</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${TX.map(t => `
-                  <tr>
-                    <td><span class="prio ${t.prio}">${t.prio}</span></td>
-                    <td><span class="tag ${t.sec === 'area' ? 'ar' : 'li'}">${t.sec === 'area' ? 'ÁREA' : 'LINHA 1'}</span></td>
-                    <td style="font-size:12px;">${t.ref}</td>
-                    <td><a class="btn s" href="textos/${t.arq}" target="_blank" rel="noopener">[ABRIR PDF]</a></td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
+            <!-- Bibliografia Detalhada Mapeada com Links de Pesquisa Direta no Google -->
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;background:var(--bg-subtle);padding:8px 12px;border:1px solid var(--border-color);">
+                <span class="mu" style="font-size:10px;font-weight:800;text-transform:uppercase;">CURADORIA DA BANCA // REFERÊNCIAS E FONTES NORMATIVAS</span>
+                <span class="mono" style="font-size:10.5px;color:var(--text-muted);">${TX.length} OBRAS & AUTORES MAPEADOS</span>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                ${TX.map((bItem, bIdx) => {
+                  const searchQ = encodeURIComponent(`${bItem.autor || ''} ${bItem.titulo || ''} PPGHS UERJ PDF`);
+                  const pdfUrl = (typeof pdf === 'function') ? pdf(bItem) : ('textos/' + (bItem.arq || ''));
+                  return `
+                    <div style="background:var(--bg-card);border:1.5px solid var(--border-color);border-left:4px solid var(--crivos-red);padding:12px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                      <div style="flex:1 1 320px;">
+                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                          <span class="badge" style="font-size:9px;">#${String(bIdx + 1).padStart(2, '0')}</span>
+                          <span class="badge red" style="font-size:9px;">${esc(bItem.prio || 'ESSENCIAL')}</span>
+                          <span class="mono mu" style="font-size:10px;text-transform:uppercase;">${esc(bItem.sec === 'area' ? 'ÁREA' : 'LINHA 1')}</span>
+                        </div>
+                        <div style="font-size:13px;font-weight:800;color:var(--text-primary);line-height:1.4;">
+                          ${esc(bItem.autor)} — <span style="color:var(--ink-secondary);">${esc(bItem.titulo)}</span>
+                        </div>
+                        ${bItem.tese ? `<div class="mu" style="font-size:11.5px;margin-top:3px;line-height:1.4;">${esc(bItem.tese)}</div>` : ''}
+                      </div>
+                      <div class="row" style="gap:6px;flex-wrap:wrap;">
+                        <a href="${pdfUrl}" target="_blank" rel="noopener noreferrer" class="btn s" style="text-decoration:none;font-weight:800;padding:6px 12px;font-size:11px;">
+                          [ ABRIR PDF ]
+                        </a>
+                        <a href="https://www.google.com/search?q=${searchQ}" target="_blank" rel="noopener noreferrer" class="btn s" style="text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:4px;padding:6px 12px;font-size:11px;background:var(--bg-primary);">
+                          [ PESQUISAR NO GOOGLE ↗ ]
+                        </a>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
           ` : filesSubTab === 'projeto' ? `
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%, 220px), 1fr));gap:14px;">
               <div style="padding:16px;border:2px solid var(--border-color);border-left:6px solid #111111;background:var(--bg-subtle);">
