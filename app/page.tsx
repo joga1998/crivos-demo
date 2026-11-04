@@ -4,15 +4,19 @@ import * as React from "react"
 import { AppSidebar, TabKey, LEGACY_TABS } from "@/components/app-sidebar"
 import { Header } from "@/components/header"
 
-// Módulos correspondentes às abas do legacy
+// Módulos correspondentes às abas funcionais do legacy
 import OverviewPage from "./dashboard/overview/page"
 import CronogramaPage from "./dashboard/cronograma/page"
 import TextosPage from "./dashboard/textos/page"
-import ConexoesPage from "./dashboard/conexoes/page"
 import FlashcardsPage from "./dashboard/flashcards/page"
 import PomodoroPage from "./dashboard/pomodoro/page"
 import SimuladosPage from "./dashboard/simulados/page"
+import ArguicaoPage from "./dashboard/simulados/arguicao-view"
+import ConexoesPage from "./dashboard/conexoes/page"
 import ArquivosPage from "./dashboard/arquivos/page"
+import DicasPage from "./dashboard/dicas/page"
+import DadosPage from "./dashboard/dados/page"
+import PerfilPage from "./dashboard/perfil/page"
 
 export default function RootPage() {
   const [currentTab, setCurrentTab] = React.useState<TabKey>("home")
@@ -52,7 +56,7 @@ export default function RootPage() {
         onCloseMobile={() => setMobileOpen(false)}
       />
 
-      {/* 2. Área de Conteúdo Principal (sem limitação estreita de max-w) */}
+      {/* 2. Área de Conteúdo Principal */}
       <div className="flex flex-1 flex-col min-w-0 overflow-x-hidden">
         <Header
           currentTab={currentTab}
@@ -61,7 +65,6 @@ export default function RootPage() {
           onOpenMobile={() => setMobileOpen(true)}
         />
 
-        {/* Largura otimizada para viewport integral (w-full max-w-[1600px] px-4 md:px-8 py-6) */}
         <main className="flex-1 w-full max-w-[1600px] mx-auto p-4 sm:p-6 lg:p-8 font-sans">
           {currentTab === "home" && <OverviewPage />}
           {currentTab === "crono" && <CronogramaPage />}
@@ -69,33 +72,12 @@ export default function RootPage() {
           {currentTab === "cards" && <FlashcardsPage />}
           {currentTab === "pomo" && <PomodoroPage />}
           {currentTab === "sim" && <SimuladosPage />}
-          {currentTab === "arg" && <SimuladosPage />}
+          {currentTab === "arg" && <ArguicaoPage />}
           {currentTab === "mapa" && <ConexoesPage />}
           {currentTab === "links" && <ArquivosPage />}
-          {currentTab === "dicas" && (
-            <div className="rounded-lg border border-border/60 bg-card p-6 space-y-4">
-              <h2 className="text-xl font-bold font-elements">Dicas Táticas da Banca & Prova</h2>
-              <p className="text-sm text-muted-foreground font-sans">
-                Critérios de correção, modelos de resposta dissertativa e instruções de arguição compilados no Guia Oficial.
-              </p>
-            </div>
-          )}
-          {currentTab === "dados" && (
-            <div className="rounded-lg border border-border/60 bg-card p-6 space-y-4">
-              <h2 className="text-xl font-bold font-elements">Suporte & Dados Táticos</h2>
-              <p className="text-sm text-muted-foreground font-sans">
-                Acompanhamento tático, auditoria de sincronização e canais de atendimento CRIVOS.
-              </p>
-            </div>
-          )}
-          {currentTab === "perfil" && (
-            <div className="rounded-lg border border-border/60 bg-card p-6 space-y-4">
-              <h2 className="text-xl font-bold font-elements">Perfil do Candidato</h2>
-              <p className="text-sm text-muted-foreground font-sans">
-                Candidato: João Gabriel · Inscrição PPGHS/UERJ · Plano CRIVOS Elite Ativo.
-              </p>
-            </div>
-          )}
+          {currentTab === "dicas" && <DicasPage />}
+          {currentTab === "dados" && <DadosPage />}
+          {currentTab === "perfil" && <PerfilPage />}
         </main>
       </div>
     </div>

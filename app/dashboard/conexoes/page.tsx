@@ -2,155 +2,142 @@
 
 import * as React from "react"
 import { useDemoData } from "@/hooks/use-demo-data"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Network, Share2, Compass, Layers, ArrowUpRight, CheckCircle2 } from "lucide-react"
+import { Network, Layers, GitFork } from "lucide-react"
 
 export default function ConexoesPage() {
   const { data } = useDemoData()
   const texts = data.texts || []
-  const tabs = data.tabs || []
+  const axes = data.tabs || []
 
-  // Constrói lista de arestas a partir das conexões dos textos
-  const connectionsList = React.useMemo(() => {
-    const list: { from: string; fromTitle: string; to: string; desc: string }[] = []
-    texts.forEach((t) => {
-      if (Array.isArray(t.conexoes)) {
-        t.conexoes.forEach(([target, desc]) => {
-          list.push({
-            from: t.autor,
-            fromTitle: t.titulo,
-            to: target,
-            desc,
-          })
-        })
-      }
-    })
-    return list
-  }, [texts])
+  const [selectedAxisIdx, setSelectedAxisIdx] = React.useState<number>(0)
+  const [selectedAuthorId, setSelectedAuthorId] = React.useState<string>(texts[0]?.id || "haesbaert")
 
-  const [activeTab, setActiveTab] = React.useState<"grafo" | "eixos">("grafo")
-  const [selectedAxis, setSelectedAxis] = React.useState(0)
+  const currentAxis = axes[selectedAxisIdx] || axes[0]
+  const selectedText = texts.find((t) => t.id === selectedAuthorId) || texts[0]
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="space-y-6 w-full">
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-border/60 pb-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-            Conexões Interdisciplinares & Eixos
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground font-elements flex items-center gap-2">
+            <Network className="size-5 text-primary" /> Conexões Interdisciplinares & Eixos Transversais
           </h2>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Articulações teóricas transversais entre os autores exigidos na prova e na banca.
+          <p className="text-xs sm:text-sm text-muted-foreground font-sans">
+            Pontes conceituais, aproximações e tensões teóricas entre os autores cobrados no edital
           </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button
-            variant={activeTab === "grafo" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setActiveTab("grafo")}
-            className="h-8 text-xs font-semibold"
-          >
-            <Share2 className="mr-1.5 size-3.5" />
-            Matriz de Conexões ({connectionsList.length})
-          </Button>
-          <Button
-            variant={activeTab === "eixos" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setActiveTab("eixos")}
-            className="h-8 text-xs font-semibold"
-          >
-            <Layers className="mr-1.5 size-3.5" />
-            Eixos Transversais ({tabs.length})
-          </Button>
         </div>
       </div>
 
-      {activeTab === "grafo" ? (
-        /* Visualização em Lista de Articulações */
-        <div className="grid gap-4 md:grid-cols-2">
-          {connectionsList.map((conn, idx) => (
-            <Card key={idx} className="border-border bg-card hover:border-primary/50 transition-colors">
-              <CardHeader className="p-4 pb-2">
-                <div className="flex items-center justify-between gap-2">
-                  <Badge variant="outline" className="text-[10px] font-mono border-primary/30 text-primary">
-                    #CONEXÃO {String(idx + 1).padStart(2, "0")}
-                  </Badge>
-                  <span className="text-[11px] font-mono text-muted-foreground">Articulação Teórica</span>
-                </div>
-                <CardTitle className="text-sm font-bold pt-1 flex items-center gap-2">
-                  <span className="text-foreground">{conn.from}</span>
-                  <span className="text-primary font-mono">↔</span>
-                  <span className="text-primary">{conn.to}</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-4 pt-1">
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {conn.desc}
-                </p>
-                <div className="mt-3 pt-2 border-t border-border/50 flex items-center justify-between text-[10px] font-mono text-muted-foreground">
-                  <span className="truncate max-w-[220px]">{conn.fromTitle}</span>
-                  <span className="text-emerald-500 font-semibold flex items-center gap-1">
-                    <CheckCircle2 className="size-3" /> MAPEADA
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
+      {/* Seletor de Eixos Transversais */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 font-elements text-xs">
+          {axes.map((ax, idx) => (
+            <button
+              key={idx}
+              onClick={() => setSelectedAxisIdx(idx)}
+              className={`px-3 py-2 rounded-md border font-semibold transition-all whitespace-nowrap ${selectedAxisIdx === idx ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border/60 bg-card text-muted-foreground hover:text-foreground"}`}
+            >
+              {idx + 1}. {ax.t}
+            </button>
           ))}
         </div>
-      ) : (
-        /* Visualização de Eixos Transversais */
-        <div className="space-y-6">
-          {/* Seletor de Eixo */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-border">
-            {tabs.map((tab, idx) => (
-              <button
-                key={idx}
-                onClick={() => setSelectedAxis(idx)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
-                  selectedAxis === idx
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "bg-secondary text-secondary-foreground hover:bg-accent"
-                }`}
-              >
-                Eixo {idx + 1}: {tab.t}
-              </button>
-            ))}
+
+        {/* Quadro Comparativo do Eixo */}
+        {currentAxis && currentAxis.rows && (
+          <Card className="border-border/60 bg-card shadow-sm overflow-hidden">
+            <CardHeader className="pb-3 border-b border-border/40">
+              <CardTitle className="text-base font-bold font-elements text-foreground">
+                Eixo Temático: {currentAxis.t}
+              </CardTitle>
+              <CardDescription className="text-xs font-sans text-muted-foreground">
+                Matriz de comparação analítica entre abordagens teóricas
+              </CardDescription>
+            </CardHeader>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs font-sans">
+                <thead className="bg-secondary/40 border-b border-border/60 text-muted-foreground font-elements uppercase tracking-wider text-[10px]">
+                  <tr>
+                    {currentAxis.headers?.map((h: string, idx: number) => (
+                      <th key={idx} className="p-3 font-bold">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/40">
+                  {currentAxis.rows.map((row: string[], rIdx: number) => (
+                    <tr key={rIdx} className="hover:bg-accent/30 transition-colors">
+                      {row.map((cell: string, cIdx: number) => (
+                        <td key={cIdx} className={`p-3 leading-relaxed ${cIdx === 0 ? "font-bold font-elements text-foreground" : "text-muted-foreground"}`}>
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        )}
+
+        {/* Matriz de Conexões Específicas por Autor */}
+        <div className="grid gap-6 lg:grid-cols-12 pt-2">
+          {/* Seletor de Autor */}
+          <div className="lg:col-span-4 space-y-2">
+            <h3 className="text-xs font-bold font-elements uppercase tracking-wider text-muted-foreground">
+              Selecione o Autor para Ver Pontes
+            </h3>
+            <div className="space-y-1.5 max-h-[420px] overflow-y-auto pr-1">
+              {texts.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setSelectedAuthorId(t.id)}
+                  className={`w-full text-left p-2.5 rounded-md border text-xs font-elements transition-colors flex items-center justify-between ${selectedAuthorId === t.id ? "border-primary bg-accent/40 font-bold text-foreground" : "border-border/60 bg-card text-muted-foreground hover:text-foreground"}`}
+                >
+                  <span className="truncate">{t.autor}</span>
+                  <Badge variant="outline" className="text-[9px] font-mono">
+                    {t.conexoes?.length || 0} pontes
+                  </Badge>
+                </button>
+              ))}
+            </div>
           </div>
 
-          {tabs[selectedAxis] && (
-            <Card className="border-border bg-card">
-              <CardHeader className="p-6 pb-3 border-b border-border">
-                <Badge variant="outline" className="w-fit text-[10px] font-mono text-primary border-primary/30 mb-1">
-                  EIXO TEMÁTICO #{selectedAxis + 1}
-                </Badge>
-                <CardTitle className="text-lg font-bold">
-                  {tabs[selectedAxis].t}
-                </CardTitle>
-                <CardDescription className="text-xs">
-                  {tabs[selectedAxis].intro}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="divide-y divide-border">
-                  {(tabs[selectedAxis].rows || []).map((row: [string, string], rIdx: number) => (
-                    <div key={rIdx} className="py-3 flex flex-col sm:flex-row sm:items-start gap-3">
-                      <div className="sm:w-1/3 text-xs font-bold text-foreground">
-                        {row[0]}
-                      </div>
-                      <div className="sm:w-2/3 text-xs text-muted-foreground leading-relaxed">
-                        {row[1]}
-                      </div>
+          {/* Conexões Detalhadas */}
+          <div className="lg:col-span-8 space-y-3">
+            <h3 className="text-xs font-bold font-elements uppercase tracking-wider text-muted-foreground">
+              Pontes Conceituais de {selectedText?.autor}
+            </h3>
+            {selectedText?.conexoes && selectedText.conexoes.length > 0 ? (
+              <div className="space-y-3">
+                {selectedText.conexoes.map(([target, desc], idx) => (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-lg border border-border/60 bg-card space-y-1.5 hover:border-primary/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-2">
+                      <GitFork className="size-4 text-primary shrink-0" />
+                      <span className="font-elements font-bold text-xs text-foreground">
+                        Diálogo com {target}
+                      </span>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+                    <p className="text-xs font-sans text-muted-foreground leading-relaxed pl-6">
+                      {desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <Card className="border-border/60 bg-card p-6 text-center text-xs text-muted-foreground font-sans">
+                Nenhuma conexão cadastrada para este autor.
+              </Card>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }
