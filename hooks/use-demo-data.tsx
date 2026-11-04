@@ -52,53 +52,45 @@ interface DemoContextValue {
   addStudyMinutes: (textId: string, minutes: number) => void
 }
 
+const defaultState: DemoState = {
+  completedTexts: { haesbaert: "ok", thompson_cc: "ok", certeau: "ok" },
+  studyLogs: [
+    { d: "2026-10-14", t: "haesbaert", m: 90 },
+    { d: "2026-10-15", t: "thompson_cc", m: 120 },
+    { d: "2026-10-18", t: "certeau", m: 150 },
+    { d: "2026-10-21", t: "hartog", m: 80 },
+    { d: "2026-10-25", t: "poulantzas", m: 110 },
+    { d: "2026-10-29", t: "catroga", m: 130 },
+    { d: "2026-11-01", t: "haesbaert", m: 100 },
+    { d: "2026-11-03", t: "thompson_em", m: 140 },
+  ],
+  flashcardProgress: {},
+  dailyStreak: 14,
+}
+
 const DemoDataContext = React.createContext<DemoContextValue | null>(null)
 
 export function DemoDataProvider({ children }: { children: React.ReactNode }) {
   const data = demoDatasetRaw as unknown as DemoDataset
+  const [state, setState] = React.useState<DemoState>(defaultState)
 
-  const [state, setState] = React.useState<DemoState>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = localStorage.getItem("ppghs_painel_v1")
-        if (saved) {
-          const parsed = JSON.parse(saved)
-          return {
-            completedTexts: parsed.texts || {},
-            studyLogs: parsed.log || [
-              { d: "2026-10-14", t: "haesbaert", m: 90 },
-              { d: "2026-10-15", t: "thompson_cc", m: 120 },
-              { d: "2026-10-18", t: "certeau", m: 150 },
-              { d: "2026-10-21", t: "hartog", m: 80 },
-              { d: "2026-10-25", t: "poulantzas", m: 110 },
-              { d: "2026-10-29", t: "catroga", m: 130 },
-              { d: "2026-11-01", t: "haesbaert", m: 100 },
-              { d: "2026-11-03", t: "thompson_em", m: 140 },
-            ],
-            flashcardProgress: parsed.cards || {},
-            dailyStreak: 14,
-          }
-        }
-      } catch (e) {
-        console.warn("Could not load local demo state", e)
+  // Lê localStorage com segurança pós-montagem para evitar descompasso de hidratação
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem("ppghs_painel_v1")
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        setState({
+          completedTexts: parsed.texts || defaultState.completedTexts,
+          studyLogs: parsed.log && parsed.log.length ? parsed.log : defaultState.studyLogs,
+          flashcardProgress: parsed.cards || {},
+          dailyStreak: 14,
+        })
       }
+    } catch (e) {
+      console.warn("Could not load local demo state", e)
     }
-    return {
-      completedTexts: { haesbaert: "ok", thompson_cc: "ok", certeau: "ok" },
-      studyLogs: [
-        { d: "2026-10-14", t: "haesbaert", m: 90 },
-        { d: "2026-10-15", t: "thompson_cc", m: 120 },
-        { d: "2026-10-18", t: "certeau", m: 150 },
-        { d: "2026-10-21", t: "hartog", m: 80 },
-        { d: "2026-10-25", t: "poulantzas", m: 110 },
-        { d: "2026-10-29", t: "catroga", m: 130 },
-        { d: "2026-11-01", t: "haesbaert", m: 100 },
-        { d: "2026-11-03", t: "thompson_em", m: 140 },
-      ],
-      flashcardProgress: {},
-      dailyStreak: 14,
-    }
-  })
+  }, [])
 
   const totalMinutes = state.studyLogs.reduce((acc, log) => acc + log.m, 0)
   const totalHoursStudied = Number((totalMinutes / 60).toFixed(1))
@@ -107,8 +99,6 @@ export function DemoDataProvider({ children }: { children: React.ReactNode }) {
     (st) => st === "ok" || st === "rev"
   ).length
   const totalTextsCount = data.texts?.length || 12
-
-  // Dias até a prova teórica (exame PPGHS estimado)
   const daysUntilExam = 42
 
   const markTextStatus = (id: string, status: string) => {
@@ -117,14 +107,12 @@ export function DemoDataProvider({ children }: { children: React.ReactNode }) {
         ...prev,
         completedTexts: { ...prev.completedTexts, [id]: status },
       }
-      if (typeof window !== "undefined") {
-        try {
-          const raw = localStorage.getItem("ppghs_painel_v1")
-          const parsed = raw ? JSON.parse(raw) : {}
-          parsed.texts = updated.completedTexts
-          localStorage.setItem("ppghs_painel_v1", JSON.stringify(parsed))
-        } catch (e) {}
-      }
+      try {
+        const raw = localStorage.getItem("ppghs_painel_v1")
+        const parsed = raw ? JSON.parse(raw) : {}
+        parsed.texts = updated.completedTexts
+        localStorage.setItem("ppghs_painel_v1", JSON.stringify(parsed))
+      } catch (e) {}
       return updated
     })
   }
@@ -136,6 +124,12 @@ export function DemoDataProvider({ children }: { children: React.ReactNode }) {
         ...prev,
         studyLogs: [...prev.studyLogs, { d: todayIso, t: textId, m: minutes }],
       }
+      try {
+        const raw = localStorage.getItem("ppghs_painel_v1")
+        const parsed = raw ? JSON.parse(raw) : {}
+        parsed.log = updated.studyLogs
+        localStorage.setItem("ppghs_painel_v1", JSON.stringify(parsed))
+      } catch (e) {}
       return updated
     })
   }

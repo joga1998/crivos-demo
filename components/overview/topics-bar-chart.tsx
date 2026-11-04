@@ -22,6 +22,12 @@ const topicData = [
 ]
 
 export function TopicsBarChart() {
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
     <Card className="border-border bg-card">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -38,53 +44,57 @@ export function TopicsBarChart() {
         </span>
       </CardHeader>
       <CardContent className="pt-4">
-        <div className="h-[280px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={topicData}
-              margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272A" />
-              <XAxis
-                dataKey="topic"
-                tickLine={false}
-                axisLine={false}
-                tick={{ fill: "#A1A1AA", fontSize: 11 }}
-              />
-              <YAxis
-                tickLine={false}
-                axisLine={false}
-                tick={{ fill: "#A1A1AA", fontSize: 11 }}
-                tickFormatter={(v) => `${v}h`}
-              />
-              <Tooltip
-                content={({ active, payload }) => {
-                  if (active && payload && payload.length) {
-                    return (
-                      <div className="rounded-lg border border-border bg-card p-2 text-xs font-mono shadow-md">
-                        <div className="font-bold text-foreground">
-                          {payload[0].payload.topic}
+        <div className="h-[280px] w-full min-h-[280px] flex items-center justify-center">
+          {mounted ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={topicData}
+                margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272A" />
+                <XAxis
+                  dataKey="topic"
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: "#A1A1AA", fontSize: 11 }}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: "#A1A1AA", fontSize: 11 }}
+                  tickFormatter={(v) => `${v}h`}
+                />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      return (
+                        <div className="rounded-lg border border-border bg-card p-2 text-xs font-mono shadow-md">
+                          <div className="font-bold text-foreground">
+                            {payload[0].payload.topic}
+                          </div>
+                          <div className="text-primary">
+                            Dedicação: {payload[0].value} horas
+                          </div>
+                          <div className="text-muted-foreground text-[10px]">
+                            Prioridade: {payload[0].payload.peso}
+                          </div>
                         </div>
-                        <div className="text-primary">
-                          Dedicação: {payload[0].value} horas
-                        </div>
-                        <div className="text-muted-foreground text-[10px]">
-                          Prioridade: {payload[0].payload.peso}
-                        </div>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Bar
-                dataKey="horas"
-                fill="#E11D48"
-                radius={[4, 4, 0, 0]}
-                maxBarSize={45}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+                      )
+                    }
+                    return null
+                  }}
+                />
+                <Bar
+                  dataKey="horas"
+                  fill="#E11D48"
+                  radius={[4, 4, 0, 0]}
+                  maxBarSize={45}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-full w-full bg-secondary/30 rounded-lg animate-pulse" />
+          )}
         </div>
       </CardContent>
     </Card>

@@ -3,7 +3,6 @@
 import * as React from "react"
 import { AppSidebar, TabKey } from "@/components/app-sidebar"
 import { Header } from "@/components/header"
-import { CommandPalette } from "@/components/command-palette"
 
 // Módulos
 import OverviewPage from "./dashboard/overview/page"
@@ -19,9 +18,8 @@ export default function RootPage() {
   const [currentTab, setCurrentTab] = React.useState<TabKey>("overview")
   const [collapsed, setCollapsed] = React.useState(false)
   const [mobileOpen, setMobileOpen] = React.useState(false)
-  const [searchOpen, setSearchOpen] = React.useState(false)
 
-  // Sincroniza hash da URL (#cronograma, #pomodoro, etc.)
+  // Lê hash inicial pós montagem segura
   React.useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace("#", "") as TabKey
@@ -53,7 +51,7 @@ export default function RootPage() {
 
   return (
     <div className="flex min-h-screen bg-background text-foreground antialiased selection:bg-primary/20">
-      {/* 1. Sidebar Interativa */}
+      {/* 1. Sidebar Interativa (Desktop fixa/retrátil + Mobile Sheet Drawer) */}
       <AppSidebar
         currentTab={currentTab}
         onSelectTab={handleSelectTab}
@@ -62,17 +60,16 @@ export default function RootPage() {
         onCloseMobile={() => setMobileOpen(false)}
       />
 
-      {/* 2. Área de Conteúdo Principal com Troca Fluida */}
+      {/* 2. Área de Conteúdo Principal */}
       <div className="flex flex-1 flex-col min-w-0 overflow-x-hidden">
         <Header
           currentTab={currentTab}
           collapsed={collapsed}
           setCollapsed={setCollapsed}
           onOpenMobile={() => setMobileOpen(true)}
-          onOpenSearch={() => setSearchOpen(true)}
         />
 
-        <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full transition-all">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full transition-all">
           {currentTab === "overview" && <OverviewPage />}
           {currentTab === "cronograma" && <CronogramaPage />}
           {currentTab === "textos" && <TextosPage />}
@@ -83,13 +80,6 @@ export default function RootPage() {
           {currentTab === "arquivos" && <ArquivosPage />}
         </main>
       </div>
-
-      {/* 3. Command Palette Modal (Ctrl+K) */}
-      <CommandPalette
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        onNavigate={handleSelectTab}
-      />
     </div>
   )
 }

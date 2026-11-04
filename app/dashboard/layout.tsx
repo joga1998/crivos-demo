@@ -31,7 +31,6 @@ export default function DashboardLayout({
           collapsed={collapsed}
           setCollapsed={setCollapsed}
           onOpenMobile={() => setMobileOpen(true)}
-          onOpenSearch={() => {}}
         />
         <main className="flex-1 p-4 md:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto w-full">
           {children}

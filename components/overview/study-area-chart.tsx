@@ -24,6 +24,12 @@ const chartData = [
 ]
 
 export function StudyAreaChart() {
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
     <Card className="border-border bg-card">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -47,74 +53,78 @@ export function StudyAreaChart() {
         </div>
       </CardHeader>
       <CardContent className="pt-4">
-        <div className="h-[280px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart
-              data={chartData}
-              margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient id="realGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#E11D48" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#E11D48" stopOpacity={0.0} />
-                </linearGradient>
-                <linearGradient id="metaGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#71717A" stopOpacity={0.2} />
-                  <stop offset="95%" stopColor="#71717A" stopOpacity={0.0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272A" />
-              <XAxis
-                dataKey="day"
-                tickLine={false}
-                axisLine={false}
-                tick={{ fill: "#A1A1AA", fontSize: 11 }}
-              />
-              <YAxis
-                tickLine={false}
-                axisLine={false}
-                tick={{ fill: "#A1A1AA", fontSize: 11 }}
-                tickFormatter={(v) => `${v}h`}
-              />
-              <Tooltip
-                content={({ active, payload }) => {
-                  if (active && payload && payload.length) {
-                    return (
-                      <div className="rounded-lg border border-border bg-card p-2.5 shadow-lg text-xs font-mono">
-                        <div className="font-bold text-foreground mb-1">
-                          {payload[0].payload.day}
+        <div className="h-[280px] w-full min-h-[280px] flex items-center justify-center">
+          {mounted ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart
+                data={chartData}
+                margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+              >
+                <defs>
+                  <linearGradient id="realGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#E11D48" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#E11D48" stopOpacity={0.0} />
+                  </linearGradient>
+                  <linearGradient id="metaGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#71717A" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#71717A" stopOpacity={0.0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272A" />
+                <XAxis
+                  dataKey="day"
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: "#A1A1AA", fontSize: 11 }}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: "#A1A1AA", fontSize: 11 }}
+                  tickFormatter={(v) => `${v}h`}
+                />
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      return (
+                        <div className="rounded-lg border border-border bg-card p-2.5 shadow-lg text-xs font-mono">
+                          <div className="font-bold text-foreground mb-1">
+                            {payload[0].payload.day}
+                          </div>
+                          <div className="text-primary">
+                            Executado: {payload[0].value}h
+                          </div>
+                          <div className="text-muted-foreground">
+                            Meta: {payload[1].value}h
+                          </div>
                         </div>
-                        <div className="text-primary">
-                          Executado: {payload[0].value}h
-                        </div>
-                        <div className="text-muted-foreground">
-                          Meta: {payload[1].value}h
-                        </div>
-                      </div>
-                    )
-                  }
-                  return null
-                }}
-              />
-              <Area
-                type="monotone"
-                dataKey="real"
-                stroke="#E11D48"
-                strokeWidth={2.5}
-                fillOpacity={1}
-                fill="url(#realGradient)"
-              />
-              <Area
-                type="monotone"
-                dataKey="meta"
-                stroke="#71717A"
-                strokeWidth={1.5}
-                strokeDasharray="4 4"
-                fillOpacity={1}
-                fill="url(#metaGradient)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+                      )
+                    }
+                    return null
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="real"
+                  stroke="#E11D48"
+                  strokeWidth={2.5}
+                  fillOpacity={1}
+                  fill="url(#realGradient)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="meta"
+                  stroke="#71717A"
+                  strokeWidth={1.5}
+                  strokeDasharray="4 4"
+                  fillOpacity={1}
+                  fill="url(#metaGradient)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-full w-full bg-secondary/30 rounded-lg animate-pulse" />
+          )}
         </div>
       </CardContent>
     </Card>
