@@ -3478,12 +3478,12 @@ main#app {
 }
 
 /* ==============================================================
-   CRIVOS SHADCN/UI TACTICAL DARK THEME ENGINE
+   CRIVOS SHADCN DARK THEME & FULL-BLEED MOBILE
    ============================================================== */
 :root {
   --bg-paper: #09090b !important;
   --bg-card: #18181b !important;
-  --bg-subtle: #18181b !important;
+  --bg-subtle: #27272a !important;
   --bg-dark: #09090b !important;
   --ink-primary: #f4f4f5 !important;
   --ink-muted: #a1a1aa !important;
@@ -3511,34 +3511,32 @@ body {
   overflow-x: hidden !important;
 }
 
-#coord-canvas {
+#boot-overlay {
   display: none !important;
 }
 
-/* SHADCN CARDS */
+/* CARDS SHADCN */
 .app-unified-shell,
 .kpi-app-card,
 .shadcn-card,
 .card,
 .box,
 .crono-card,
-.card-face,
-.text-item-card,
-.arg-card,
-.mapa-card,
-.link-card {
+.app-master,
+.app-detail {
   background-color: #18181b !important;
   border: 1px solid #27272a !important;
   border-radius: 0.75rem !important;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3) !important;
 }
 
-/* SHADCN BOTÕES */
+/* BOTÕES SHADCN */
 button, .btn {
   border-radius: 0.5rem !important;
   font-family: inherit !important;
   font-weight: 500 !important;
   transition: all 0.15s ease-in-out !important;
+  cursor: pointer !important;
 }
 .btn.p, button.btn-primary, .btn-p {
   background-color: #e11d48 !important;
@@ -3575,7 +3573,6 @@ button, .btn {
   height: 52px !important;
   padding: 0 16px !important;
   background-color: #09090b !important;
-  border-bottom: none !important;
 }
 .crivos-header {
   display: none !important;
@@ -3593,7 +3590,7 @@ button, .btn {
   background-color: #09090b !important;
 }
 
-/* SIDEBAR DESKTOP */
+/* SIDEBAR NO DESKTOP */
 @media (min-width: 821px) {
   .tactical-sidebar {
     width: 240px !important;
@@ -3609,9 +3606,6 @@ button, .btn {
     left: 0 !important;
     z-index: 40 !important;
     padding: 12px 8px !important;
-  }
-  .sidebar-mobile-header {
-    display: none !important;
   }
   .sidebar-track {
     width: 100% !important;
@@ -3652,6 +3646,7 @@ button, .btn {
     opacity: 1 !important;
     display: inline-block !important;
     transform: none !important;
+    color: inherit !important;
   }
   .sidebar-footer {
     display: none !important;
@@ -3663,6 +3658,9 @@ button, .btn {
     overflow-y: auto !important;
     background-color: #09090b !important;
   }
+  main#app {
+    padding: 24px !important;
+  }
   .crivos-bottom-nav {
     display: none !important;
   }
@@ -3671,7 +3669,7 @@ button, .btn {
   }
 }
 
-/* MOBILE FULL-BLEED (LARGURA TOTAL 100%, SEM BARRA LATERAL FIXA) */
+/* MOBILE FULL-BLEED (LARGURA 100%, SEM BARRA LATERAL FIXA) */
 @media (max-width: 820px) {
   .tactical-sidebar {
     position: fixed !important;
@@ -3705,21 +3703,6 @@ button, .btn {
   .sidebar-backdrop.active {
     display: block !important;
   }
-  .sidebar-mobile-header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding-bottom: 12px !important;
-    border-bottom: 1px solid #27272a !important;
-    margin-bottom: 12px !important;
-  }
-  .sidebar-close-btn {
-    background: transparent !important;
-    border: none !important;
-    color: #a1a1aa !important;
-    font-size: 18px !important;
-    cursor: pointer !important;
-  }
   .sidebar-track {
     width: 100% !important;
     display: flex !important;
@@ -3748,6 +3731,7 @@ button, .btn {
     opacity: 1 !important;
     display: inline-block !important;
     transform: none !important;
+    color: inherit !important;
   }
 
   .crivos-main-stage {
@@ -3803,294 +3787,36 @@ button, .btn {
   }
 }
 
-/* SHADCN OVERVIEW KPI GRID */
-.overview-kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
-}
-@media (max-width: 1024px) {
-  .overview-kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 640px) {
-  .overview-kpi-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-}
-.overview-kpi-card {
-  background-color: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 0.75rem;
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.overview-kpi-card:hover {
-  border-color: #3f3f46;
-  transform: translateY(-1px);
-}
-.kpi-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.kpi-title {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: #a1a1aa;
-  text-transform: uppercase;
-}
-.kpi-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-.kpi-badge.up {
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
-}
-.kpi-badge.neutral {
-  background: #27272a;
-  color: #a1a1aa;
-}
-.kpi-main-val {
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.1;
-  margin-bottom: 6px;
-}
-.kpi-subtext {
-  font-size: 12px;
-  color: #71717a;
-}
-
-/* OVERVIEW CHARTS ROW */
-.overview-charts-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-@media (max-width: 960px) {
-  .overview-charts-grid {
-    grid-template-columns: 1fr;
-  }
-}
-.chart-card {
-  background-color: #18181b;
-  border: 1px solid #27272a;
-  border-radius: 0.75rem;
-  padding: 20px;
-}
-.chart-header {
-  margin-bottom: 16px;
-}
-.chart-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #f4f4f5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.chart-sub {
-  font-size: 12px;
-  color: #71717a;
-  margin-top: 2px;
-}
-
-/* TOPBAR CUSTOM */
-.crivos-topbar {
-  padding: 0 16px;
-}
-.topbar-brand-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  text-decoration: none;
-}
-.topbar-sq-cr {
-  width: 28px;
-  height: 28px;
-  background: #e11d48;
-  color: #ffffff;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 900;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-}
-.topbar-crumb-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-}
-.topbar-crumb-dim {
-  color: #71717a;
-}
-.topbar-crumb-sep {
-  color: #3f3f46;
-}
-.topbar-crumb-active {
-  color: #f4f4f5;
-  font-weight: 600;
-}
-
-
-/* REFINAMENTO DOS ELEMENTOS DO APP MASTER-DETAIL (TEXTOS / CRONOGRAMA) */
-.app-master {
-  background-color: #18181b !important;
-  border: 1px solid #27272a !important;
-  border-radius: 0.75rem !important;
-}
-.app-master-header {
-  background-color: #18181b !important;
-  border-bottom: 1px solid #27272a !important;
-  color: #f4f4f5 !important;
-  border-top-left-radius: 0.75rem !important;
-  border-top-right-radius: 0.75rem !important;
-}
-.master-item {
-  border-bottom: 1px solid #27272a !important;
-  background: transparent !important;
-  transition: background 0.15s ease !important;
-  cursor: pointer !important;
-}
-.master-item:hover {
-  background: #27272a !important;
-}
-.master-item.active {
-  background: #27272a !important;
-  border-left: 3px solid #e11d48 !important;
-}
-.app-detail {
-  background-color: #18181b !important;
-  border: 1px solid #27272a !important;
-  border-radius: 0.75rem !important;
-}
-.app-detail-header {
-  background-color: #18181b !important;
-  border-bottom: 1px solid #27272a !important;
-  color: #f4f4f5 !important;
-  border-top-left-radius: 0.75rem !important;
-  border-top-right-radius: 0.75rem !important;
-}
-
-/* CRONOGRAMA PILLS / BOTOES */
-.morph-group {
-  background-color: #18181b !important;
-  border: 1px solid #27272a !important;
-  border-radius: 0.5rem !important;
-  padding: 2px !important;
-}
-.morph-pill {
-  background: transparent !important;
-  color: #a1a1aa !important;
-  border-radius: 0.375rem !important;
-  border: none !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  padding: 4px 10px !important;
-  cursor: pointer !important;
-}
-.morph-pill.active {
-  background-color: #27272a !important;
-  color: #ffffff !important;
-}
-
-/* POMODORO TIMER DIGITS */
-.timer, .pomo-big-digits {
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-weight: 700 !important;
-  color: #ffffff !important;
-}
-
 </style>
 </head>
 <body>
 
 <!-- 1. CINEMATIC BOOT / AUDITORIA SEQUENCE OVERLAY -->
-<div id="boot-overlay" aria-label="Inicializando Sistema CRIVOS">
-  <div class="boot-shutter-container">
-    <div class="boot-shutter"></div>
-    <div class="boot-shutter"></div>
-    <div class="boot-shutter"></div>
-    <div class="boot-shutter"></div>
-    <div class="boot-shutter"></div>
-  </div>
-
-  <div class="boot-top">
-    <div class="boot-brand">
-      <span class="boot-brand-sq"></span>
-      <span>CRIVOS</span>
-    </div>
-    <div class="boot-top-meta">SISTEMA TÁTICO // PPGHS 2027</div>
-  </div>
-
-  <div class="boot-terminal" id="boot-terminal">
-    <div class="boot-line"><span class="boot-tag-ok">[SISTEMA]</span> <span>INICIALIZANDO MOTOR DE ESTUDOS SOB DEMANDA...</span></div>
-    <div class="boot-line"><span class="boot-tag-info">[EDITAL]</span> <span>MATRIZ DE INCIDÊNCIA E CRONOGRAMA SINCRONIZADOS</span></div>
-    <div class="boot-line"><span class="boot-tag-alert">[PARETO]</span> <span>ISOLAMENTO DOS TÓPICOS ESSENCIAIS E EIXOS DA BANCA</span></div>
-    <div class="boot-line"><span class="boot-tag-ok">[SM-2]</span> <span>FILA DE REPETIÇÃO ESPAÇADA E MÉTRICAS CARREGADAS</span></div>
-    <div class="boot-line"><span class="boot-tag-ok">[PRONTO]</span> <span>LIBERANDO PAINEL TÁTICO INDIVIDUAL...</span></div>
-  </div>
-
-  <div class="boot-bottom">
-    <div class="boot-counter-row">
-      <span class="boot-status-label" id="boot-status-text">CALIBRANDO PARÂMETROS DA BANCA...</span>
-      <span class="boot-counter" id="boot-counter">00%</span>
-    </div>
-    <div class="boot-bar-track">
-      <div class="boot-bar-fill" id="boot-bar-fill"></div>
-    </div>
-  </div>
-</div>
-
 <!-- 2. INTERACTIVE COORDINATE GRID CANVAS DE FUNDO -->
-<canvas id="coord-canvas"></canvas>
+
 
 <!-- FAIXA SUPERIOR FIXA DA APLICAÇÃO (INSTITUCIONAL + IDENTIFICAÇÃO DO PLANO) -->
 <header class="crivos-headbar" id="crivos-headbar">
   <div class="crivos-topbar">
     <div style="display:flex;align-items:center;gap:12px;">
-      <button type="button" class="shadcn-icon-btn" id="navtog" aria-label="Alternar Menu" style="display:inline-flex;">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+      <button type="button" class="shadcn-icon-btn" id="navtog" aria-label="Alternar Menu" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:#18181b;border:1px solid #27272a;border-radius:6px;color:#a1a1aa;cursor:pointer;">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <div class="topbar-crumb-box">
-        <span class="topbar-crumb-dim">Dashboard</span>
-        <span class="topbar-crumb-sep">/</span>
-        <span class="topbar-crumb-active" id="topbar-active-tab-label">Overview</span>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;">
+        <span style="color:#71717a;">Dashboard</span>
+        <span style="color:#3f3f46;">/</span>
+        <span style="color:#f4f4f5;font-weight:600;" id="topbar-active-tab-label">Overview</span>
       </div>
     </div>
 
     <div style="display:flex;align-items:center;gap:10px;">
-      <span class="shadcn-badge-dday" id="topbar-dday-badge">D-42 ATÉ A PROVA</span>
-      <button type="button" class="btn s" id="cmd-palette-btn" style="padding:4px 10px;font-size:11px;display:inline-flex;align-items:center;gap:6px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:3px 8px;border-radius:9999px;background:rgba(225,29,72,0.15);border:1px solid rgba(225,29,72,0.4);color:#f43f5e;" id="topbar-dday-badge">D-42 ATÉ A PROVA</span>
+      <button type="button" class="btn s" id="cmd-palette-btn" style="padding:4px 10px;font-size:11px;display:inline-flex;align-items:center;gap:6px;background:#18181b;border:1px solid #27272a;color:#a1a1aa;">
         <span>Buscar...</span>
         <kbd style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#71717a;background:#27272a;padding:1px 4px;border-radius:3px;">⌘K</kbd>
       </button>
-      <button type="button" class="shadcn-icon-btn" onclick="go('perfil')" title="Perfil do Candidato">
-        <span style="font-weight:700;font-size:12px;color:#e11d48;" id="topbar-mini-avatar">JG</span>
+      <button type="button" onclick="go('perfil')" title="Perfil do Candidato" style="width:32px;height:32px;border-radius:50%;background:#18181b;border:1px solid #27272a;display:inline-flex;align-items:center;justify-content:center;color:#e11d48;font-weight:700;font-size:12px;cursor:pointer;">
+        <span id="topbar-mini-avatar">JG</span>
       </button>
     </div>
   </div>
@@ -4100,7 +3826,6 @@ button, .btn {
 <div class="crivos-layout-container">
   <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
   <aside id="sidebar-nav" class="tactical-sidebar" aria-label="Navegação Tática Lateral">
-    <!-- Cabeçalho Institucional da Sidebar Estilo Kiranism -->
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 8px 16px 8px;border-bottom:1px solid #27272a;margin-bottom:12px;">
       <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="go('home')">
         <div style="width:32px;height:32px;background:#e11d48;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:900;font-size:14px;letter-spacing:-0.02em;">CR</div>
@@ -4109,13 +3834,11 @@ button, .btn {
           <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#71717a;">Mestrado · Linha 1</span>
         </div>
       </div>
-      <button type="button" class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Fechar menu" style="padding:4px;display:none;">✕</button>
+      <button type="button" class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Fechar menu" style="background:transparent;border:none;color:#a1a1aa;font-size:18px;cursor:pointer;">✕</button>
     </div>
 
-    <!-- Lista de Links de Navegação -->
     <div class="sidebar-track" id="nav"></div>
 
-    <!-- Rodapé da Sidebar: Perfil do Usuário com Avatar -->
     <div style="margin-top:auto;padding-top:12px;border-top:1px solid #27272a;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="go('perfil')">
       <div style="width:32px;height:32px;border-radius:50%;background:#27272a;border:1px solid #3f3f46;display:flex;align-items:center;justify-content:center;color:#e11d48;font-weight:700;font-size:12px;">
         JG
@@ -4688,252 +4411,152 @@ window.morphSelect = (btn, fn) => {
 // ==============================================================
 V.home = () => {
   const sc = sched(), t = today(), tod = sc.filter(x => x.d === t), done = sc.filter(x => S.days[x.i] === 'done').length;
-  const next = tod.length ? tod : sc.filter(x => x.d > t && !S.days[x.i]).slice(0, 2);
+  const next = tod.length ? tod : sc.filter(x => x.d > t && !S.days[x.i]).slice(0, 1);
   const upcoming = sc.filter(x => x.d > t && !S.days[x.i]).slice(0, 3);
-  const tx = TX.filter(x => (S.texts[x.id] || '')).length;
-  const mins = S.log.reduce((a, l) => a + l.m, 0);
-  const sm2Queue = queue().length;
-  const curName = getCandidateName();
+  const tx = TX.filter(x => (S.texts[x.id] || '')).length, dom = TX.filter(x => S.texts[x.id] === 'dominado').length;
+  const mins = S.log.reduce((a, l) => a + l.m, 0), late = lateTasks();
+  const isMob = window.innerWidth <= 820;
+  const curMission = next[0] || null;
 
   $('#app').innerHTML = `
-    <div style="max-width:1400px;margin:0 auto;display:flex;flex-direction:column;gap:20px;">
-      
-      <!-- HERO HEADER DE BOAS VINDAS ESTILO SHADCN -->
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
-        <div>
-          <h1 style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;color:#ffffff;margin:0 0 4px 0;letter-spacing:-0.02em;">
-            Olá, ${curName} 👋
-          </h1>
-          <p style="font-size:13px;color:#a1a1aa;margin:0;">
-            Acompanhe o rendimento tático, horas líquidas e cobertura do edital PPGHS/UERJ.
-          </p>
+    <div class="app-screen">
+      <!-- Faixa Compacta de Telemetria para Mobile (Substitui excesso de cards) -->
+      <div class="mobile-telemetry-strip">
+        <div class="mts-cell" onclick="go('crono')">
+          <div class="mts-label">CRONO</div>
+          <div class="mts-val">${Math.round(done / sc.length * 100)}%</div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <a class="btn s" href="Crivos-Guia-PPGHS-UERJ-2027.pdf" target="_blank" style="padding:6px 12px;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Guia A4 (PDF)
-          </a>
-          <button class="btn p" onclick="go('pomo')" style="padding:6px 14px;font-size:12px;display:inline-flex;align-items:center;gap:6px;">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            Iniciar Pomodoro
-          </button>
+        <div class="mts-cell" onclick="go('textos')">
+          <div class="mts-label">TEXTOS</div>
+          <div class="mts-val">${tx}/12</div>
+        </div>
+        <div class="mts-cell" onclick="go('cards')">
+          <div class="mts-label">SM-2 HOJE</div>
+          <div class="mts-val">${queue().length}</div>
+        </div>
+        <div class="mts-cell" onclick="go('pomo')">
+          <div class="mts-label">HORAS</div>
+          <div class="mts-val">${(mins / 60).toFixed(0)}h</div>
         </div>
       </div>
 
-      <!-- 4 CARDS KPI SHADCN NO TOPO -->
-      <div class="overview-kpi-grid">
-        <div class="overview-kpi-card" onclick="go('pomo')">
-          <div class="kpi-header-row">
-            <span class="kpi-title">HORAS LÍQUIDAS ACUMULADAS</span>
-            <span class="kpi-badge up">↗ +12.5%</span>
+      <div class="bento-grid">
+        <!-- Painel Unificado da Missão Ativa -->
+        <div class="app-unified-shell">
+          <div class="shell-header">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="tag ar">OPERACIONAL</span>
+              <b style="font-family:'Space Grotesk',sans-serif;font-size:12.5px;text-transform:uppercase;">${tod.length ? 'MISSÃO DE HOJE · ' + br(t) : 'PRÓXIMA MISSÃO PROGRAMADA'}</b>
+            </div>
+            ${late.length ? `<button class="btn s p" style="padding:3px 8px;font-size:9.5px;" onclick="go('crono')">[!] ${late.length} ATRASO(S)</button>` : `<span class="mu" style="font-size:10px;">EM DIA</span>`}
           </div>
-          <div>
-            <div class="kpi-main-val">${(mins / 60).toFixed(0)}h</div>
-            <div class="kpi-subtext">Produtividade dos últimos 21 dias</div>
-          </div>
-        </div>
 
-        <div class="overview-kpi-card" onclick="go('textos')">
-          <div class="kpi-header-row">
-            <span class="kpi-title">AUTORES & FICHAMENTOS CONCLUÍDOS</span>
-            <span class="kpi-badge neutral">0%</span>
-          </div>
-          <div>
-            <div class="kpi-main-val">${tx} / 12</div>
-            <div class="kpi-subtext">Cobertura da bibliografia oficial</div>
-          </div>
-        </div>
-
-        <div class="overview-kpi-card" onclick="go('cards')">
-          <div class="kpi-header-row">
-            <span class="kpi-title">CARDS NO FATOR SM-2</span>
-            <span class="kpi-badge up">↗ 94.2%</span>
-          </div>
-          <div>
-            <div class="kpi-main-val">${sm2Queue > 0 ? sm2Queue : 148}</div>
-            <div class="kpi-subtext">Índice de retenção a longo prazo</div>
-          </div>
-        </div>
-
-        <div class="overview-kpi-card" onclick="go('crono')">
-          <div class="kpi-header-row">
-            <span class="kpi-title">CONTAGEM REGRESSIVA (D-DIA)</span>
-            <span class="kpi-badge neutral" style="color:#e11d48;background:rgba(225,29,72,0.15)">FASE 02</span>
-          </div>
-          <div>
-            <div class="kpi-main-val">42 dias</div>
-            <div class="kpi-subtext">Ciclo de consolidação e simulados</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SEGUNDA LINHA: GRÁFICOS VISUAIS SVG SHADCN DARK MODE -->
-      <div class="overview-charts-grid">
-        <!-- GRÁFICO 1: EVOLUÇÃO DE HORAS LÍQUIDAS COM ÁREA TRANSLÚCIDA -->
-        <div class="chart-card">
-          <div class="chart-header">
-            <div class="chart-title">
-              <span>EVOLUÇÃO DE HORAS LÍQUIDAS</span>
-              <div style="display:flex;align-items:center;gap:12px;font-size:11px;font-weight:400;color:#a1a1aa;">
-                <span style="display:inline-flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#e11d48;"></span> Executado</span>
-                <span style="display:inline-flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:#52525b;"></span> Meta Diária</span>
+          <div class="shell-body" style="justify-content:space-between;gap:14px;">
+            ${next.length ? `
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                ${next.map((mission) => {
+                  const mSt = S.days[mission.i] || '';
+                  const isMoved = S.moved && S.moved[mission.i];
+                  return `
+                    <div style="padding:14px;background:var(--bg-subtle);border:2px solid var(--border-color);border-left:5px solid ${isMoved ? 'var(--crivos-yellow)' : 'var(--crivos-red)'};display:flex;flex-direction:column;gap:8px;">
+                      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+                        <div style="display:flex;align-items:center;gap:6px;">
+                          <span class="mono" style="font-size:11.5px;font-weight:700;">${br(mission.d)} (${wd(mission.d).toUpperCase()})</span>
+                          ${isMoved ? `<span class="tag" style="background:var(--crivos-yellow);color:#111;font-size:9px;padding:2px 6px;border-color:var(--border-color);">[REAGENDADA DE ${br(D.sched[mission.i]?.d || '')}]</span>` : ''}
+                        </div>
+                        <div style="display:flex;align-items:center;gap:6px;">
+                          <span class="tag">META: ${String(mission.h).replace('.', ',')}H</span>
+                          <span class="tag ${mSt === 'done' ? 'sim' : (mSt === 'skip' ? 'adm' : (mission.d < t ? 'esc' : 'ar'))}">${mSt === 'done' ? '✓ FEITO' : (mSt === 'skip' ? 'PULADO' : (mission.d < t ? 'ATRASO' : 'ATIVO'))}</span>
+                        </div>
+                      </div>
+                      <div style="font-size:14px;line-height:1.6;color:var(--ink-primary);">
+                        ${mission.t}
+                      </div>
+                      <div class="row" style="gap:6px;margin-top:2px;">
+                        <button class="btn s ${mSt === 'done' ? 'p' : ''}" onclick="mark(${mission.i},'done');V.home()">[${mSt === 'done' ? '✓ FEITO' : 'CONCLUIR MISSÃO'}]</button>
+                        <button class="btn s ${mSt === 'skip' ? 'p' : ''}" onclick="mark(${mission.i},'skip');V.home()">[${mSt === 'skip' ? '✖ PULADO' : 'PULAR'}]</button>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
               </div>
-            </div>
-            <div class="chart-sub">Meta planejada vs. Execução real diária no ciclo de preparação</div>
-          </div>
+            ` : '<p class="mu">Cronograma concluído. Siga para revisão final.</p>'}
 
-          <div style="width:100%;height:220px;position:relative;">
-            <svg viewBox="0 0 600 200" style="width:100%;height:100%;overflow:visible;">
-              <defs>
-                <linearGradient id="roseGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#e11d48" stop-opacity="0.45" />
-                  <stop offset="100%" stop-color="#e11d48" stop-opacity="0.0" />
-                </linearGradient>
-              </defs>
-              <!-- Linhas de grade horizontais -->
-              <line x1="40" y1="20" x2="590" y2="20" stroke="#27272a" stroke-dasharray="3 3" />
-              <line x1="40" y1="65" x2="590" y2="65" stroke="#27272a" stroke-dasharray="3 3" />
-              <line x1="40" y1="110" x2="590" y2="110" stroke="#27272a" stroke-dasharray="3 3" />
-              <line x1="40" y1="155" x2="590" y2="155" stroke="#27272a" stroke-dasharray="3 3" />
-
-              <!-- Rótulos do eixo Y -->
-              <text x="15" y="24" fill="#71717a" font-size="10" font-family="JetBrains Mono">8h</text>
-              <text x="15" y="69" fill="#71717a" font-size="10" font-family="JetBrains Mono">6h</text>
-              <text x="15" y="114" fill="#71717a" font-size="10" font-family="JetBrains Mono">4h</text>
-              <text x="15" y="159" fill="#71717a" font-size="10" font-family="JetBrains Mono">2h</text>
-
-              <!-- Linha tracejada da meta -->
-              <path d="M 40 110 Q 150 110 300 110 T 590 100" fill="none" stroke="#52525b" stroke-width="1.5" stroke-dasharray="4 4" />
-
-              <!-- Área sombreada e linha de execução -->
-              <path d="M 40 105 C 100 115, 140 85, 200 80 C 260 75, 300 145, 360 135 C 420 50, 480 60, 590 85 L 590 170 L 40 170 Z" fill="url(#roseGradient)" />
-              <path d="M 40 105 C 100 115, 140 85, 200 80 C 260 75, 300 145, 360 135 C 420 50, 480 60, 590 85" fill="none" stroke="#e11d48" stroke-width="2.5" />
-
-              <!-- Rótulos de data do eixo X -->
-              <text x="40" y="190" fill="#71717a" font-size="10" font-family="JetBrains Mono">14/10</text>
-              <text x="130" y="190" fill="#71717a" font-size="10" font-family="JetBrains Mono">17/10</text>
-              <text x="220" y="190" fill="#71717a" font-size="10" font-family="JetBrains Mono">20/10</text>
-              <text x="310" y="190" fill="#71717a" font-size="10" font-family="JetBrains Mono">26/10</text>
-              <text x="410" y="190" fill="#71717a" font-size="10" font-family="JetBrains Mono">29/10</text>
-              <text x="500" y="190" fill="#71717a" font-size="10" font-family="JetBrains Mono">01/11</text>
-              <text x="560" y="190" fill="#71717a" font-size="10" font-family="JetBrains Mono">Hoje</text>
-            </svg>
-          </div>
-        </div>
-
-        <!-- GRÁFICO 2: BARRAS POR AUTOR / EIXO -->
-        <div class="chart-card">
-          <div class="chart-header">
-            <div class="chart-title">
-              <span>HORAS POR AUTOR / EIXO</span>
-              <span style="font-size:11px;font-weight:400;color:#a1a1aa;">Top 6 Autores</span>
-            </div>
-            <div class="chart-sub">Distribuição de dedicação analítica</div>
-          </div>
-
-          <div style="width:100%;height:220px;">
-            <svg viewBox="0 0 320 200" style="width:100%;height:100%;">
-              <!-- Linhas de grade -->
-              <line x1="30" y1="30" x2="310" y2="30" stroke="#27272a" stroke-dasharray="2 2" />
-              <line x1="30" y1="75" x2="310" y2="75" stroke="#27272a" stroke-dasharray="2 2" />
-              <line x1="30" y1="120" x2="310" y2="120" stroke="#27272a" stroke-dasharray="2 2" />
-              <line x1="30" y1="165" x2="310" y2="165" stroke="#27272a" stroke-dasharray="2 2" />
-
-              <text x="5" y="34" fill="#71717a" font-size="9" font-family="JetBrains Mono">16h</text>
-              <text x="5" y="79" fill="#71717a" font-size="9" font-family="JetBrains Mono">12h</text>
-              <text x="5" y="124" fill="#71717a" font-size="9" font-family="JetBrains Mono">8h</text>
-              <text x="5" y="169" fill="#71717a" font-size="9" font-family="JetBrains Mono">4h</text>
-
-              <!-- Barras com cantos superiores arredondados e cor rose shadcn -->
-              <rect x="42" y="65" width="28" height="100" rx="4" fill="#e11d48" />
-              <text x="56" y="185" fill="#71717a" font-size="9" font-family="Inter" text-anchor="middle">Haesbaert</text>
-
-              <rect x="88" y="35" width="28" height="130" rx="4" fill="#e11d48" />
-              <text x="102" y="185" fill="#71717a" font-size="9" font-family="Inter" text-anchor="middle">Thompson</text>
-
-              <rect x="134" y="90" width="28" height="75" rx="4" fill="#e11d48" />
-              <text x="148" y="185" fill="#71717a" font-size="9" font-family="Inter" text-anchor="middle">Certeau</text>
-
-              <rect x="180" y="115" width="28" height="50" rx="4" fill="#e11d48" />
-              <text x="194" y="185" fill="#71717a" font-size="9" font-family="Inter" text-anchor="middle">Hartog</text>
-
-              <rect x="226" y="75" width="28" height="90" rx="4" fill="#e11d48" />
-              <text x="240" y="185" fill="#71717a" font-size="9" font-family="Inter" text-anchor="middle">Poulantzas</text>
-
-              <rect x="272" y="98" width="28" height="67" rx="4" fill="#e11d48" />
-              <text x="286" y="185" fill="#71717a" font-size="9" font-family="Inter" text-anchor="middle">Catroga</text>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <!-- TERCEIRA LINHA: ATIVIDADES RECENTES & PRÓXIMAS METAS COM AÇÕES FUNCIONAIS REAIS -->
-      <div class="chart-card">
-        <div class="chart-header">
-          <div class="chart-title">
-            <span>ATIVIDADES RECENTES & MISSÕES OPERACIONAIS</span>
-            <button class="btn s" onclick="go('crono')" style="font-size:11px;padding:3px 8px;">Ver cronograma completo →</button>
-          </div>
-          <div class="chart-sub">Execução de metas do cronograma e status da preparação</div>
-        </div>
-
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          ${next.length ? next.map(m => {
-            const mSt = S.days[m.i] || '';
-            const isDone = (mSt === 'done');
-            return `
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#27272a;border-radius:8px;border:1px solid #3f3f46;flex-wrap:wrap;gap:10px;">
-                <div style="display:flex;align-items:center;gap:12px;min-width:0;flex:1;">
-                  <button type="button" onclick="mark(${m.i},'done');V.home();" style="width:24px;height:24px;border-radius:6px;background:${isDone ? '#22c55e' : '#18181b'};border:1px solid ${isDone ? '#22c55e' : '#52525b'};color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-                    ${isDone ? '✓' : ''}
-                  </button>
-                  <div style="min-width:0;">
-                    <div style="font-size:13px;font-weight:600;color:${isDone ? '#a1a1aa' : '#ffffff'};${isDone ? 'text-decoration:line-through;' : ''}white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-                      ${m.t}
-                    </div>
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#71717a;margin-top:2px;">
-                      ${br(m.d)} (${wd(m.d).toUpperCase()}) · Meta: ${m.h}h
-                    </div>
+            <div>
+              <div class="mu" style="font-size:9.5px;margin-bottom:6px;text-transform:uppercase;">SEQUÊNCIA IMEDIATA DO CRONOGRAMA:</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;">
+                ${upcoming.slice(0, isMob ? 2 : 3).map(u => `
+                  <div style="padding:8px 10px;border:1px solid var(--border-color);background:var(--bg-subtle);font-size:11px;cursor:pointer;" onclick="cronoSelectedDayIdx=${u.i};go('crono')">
+                    <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:10px;color:var(--crivos-red);">${br(u.d)} (${wd(u.d)}) · ${u.h}h</div>
+                    <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;">${strip(u.t)}</div>
                   </div>
-                </div>
-
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <button class="btn s" onclick="mark(${m.i}, 'done');V.home();" style="padding:4px 10px;font-size:11px;background:${isDone ? '#22c55e' : '#3f3f46'};color:#fff;">
-                    ${isDone ? '✓ Concluído' : 'Marcar Feito'}
-                  </button>
-                  <button class="btn s" onclick="go('pomo')" style="padding:4px 10px;font-size:11px;">
-                    Pomodoro
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join('') : '<div style="padding:16px;color:#71717a;font-size:13px;">Todas as metas ativas do dia foram concluídas!</div>'}
-
-          <!-- Exemplo das sessões recentes cadastradas -->
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#18181b;border-radius:8px;border:1px solid #27272a;flex-wrap:wrap;gap:10px;">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <span style="width:24px;height:24px;border-radius:6px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#4ade80;display:inline-flex;align-items:center;justify-content:center;font-size:12px;">✓</span>
-              <div>
-                <div style="font-size:13px;font-weight:600;color:#f4f4f5;">Leitura Crítica: E.P. Thompson — Costumes em Comum</div>
-                <div style="font-size:11px;color:#71717a;">Fichamento concluído · Foco na Linha 1</div>
+                `).join('')}
               </div>
             </div>
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#71717a;">Hoje às 09:30</span>
           </div>
 
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#18181b;border-radius:8px;border:1px solid #27272a;flex-wrap:wrap;gap:10px;">
-            <div style="display:flex;align-items:center;gap:12px;">
-              <span style="width:24px;height:24px;border-radius:6px;background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#4ade80;display:inline-flex;align-items:center;justify-content:center;font-size:12px;">✓</span>
+          ${curMission ? `
+            <div class="shell-dock">
+              <div class="row" style="gap:6px;">
+                <button class="btn s p" onclick="mark(${curMission.i},'done');go('home')">[CONCLUIR MISSÃO]</button>
+                <button class="btn s" onclick="mark(${curMission.i},'skip');go('home')">[PULAR]</button>
+              </div>
+              <button class="btn s" onclick="go('pomo')">[INICIAR POMODORO →]</button>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Coluna 2 (Desktop): Matriz 2x2 de Indicadores Táticos -->
+        <div class="desktop-only-pane" style="min-height:0;height:100%;">
+          <div class="kpi-2x2">
+            <div class="kpi-app-card" onclick="go('crono')">
               <div>
-                <div style="font-size:13px;font-weight:600;color:#f4f4f5;">Revisão SM-2: Bloco Teórico de Estado (Poulantzas & Certeau)</div>
-                <div style="font-size:11px;color:#71717a;">18 flashcards respondidos · 100% de acerto</div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">02 · CRONOGRAMA</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${Math.round(done / sc.length * 100)}%</div>
+                <div class="bar"><i style="width:${done / sc.length * 100}%"></i></div>
+              </div>
+              <div>
+                <div class="kpi-trend positive">▲ ${done}/${sc.length} DIAS FEITOS</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[ABRIR AGENDA →]</div>
               </div>
             </div>
-            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#71717a;">Ontem às 21:15</span>
+
+            <div class="kpi-app-card" onclick="go('textos')">
+              <div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">03 · BIBLIOGRAFIA</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${tx}/12</div>
+                <div class="bar"><i style="width:${tx / 12 * 100}%"></i></div>
+              </div>
+              <div>
+                <div class="kpi-trend neutral">■ ${dom} DOMINADOS</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[ABRIR FICHAS →]</div>
+              </div>
+            </div>
+
+            <div class="kpi-app-card" onclick="go('cards')">
+              <div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">04 · RETENÇÃO SM-2</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${queue().length}</div>
+              </div>
+              <div>
+                <div class="kpi-trend positive">■ SEQUÊNCIA: ${streak()} DIAS</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[REVISAR FILA →]</div>
+              </div>
+            </div>
+
+            <div class="kpi-app-card" onclick="go('pomo')">
+              <div>
+                <div class="mu" style="font-size:10px;text-transform:uppercase;">05 · TEMPO LÍQUIDO</div>
+                <div class="big" style="font-size:28px;margin:4px 0;">${(mins / 60).toFixed(1)}h</div>
+              </div>
+              <div>
+                <div class="kpi-trend neutral">■ META TOTAL ~117H</div>
+                <div class="mu" style="font-size:10px;margin-top:4px;">[CRONÔMETRO →]</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   `;
 };
