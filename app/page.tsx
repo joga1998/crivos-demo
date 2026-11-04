@@ -1,5 +1,12 @@
-import { redirect } from "next/navigation"
+"use client"
+
+import OverviewPage from "./dashboard/overview/page"
+import DashboardLayout from "./dashboard/layout"
 
 export default function RootPage() {
-  redirect("/dashboard/overview")
+  return (
+    <DashboardLayout>
+      <OverviewPage />
+    </DashboardLayout>
+  )
 }
