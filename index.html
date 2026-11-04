@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>
+window.__CRIVOS_ERRORS__ = [];
+window.addEventListener('error', function(event) {
+  window.__CRIVOS_ERRORS__.push({
+    message: event.message,
+    filename: event.filename,
+    lineno: event.lineno,
+    colno: event.colno,
+    error: event.error ? event.error.stack : null
+  });
+  console.error('[CRIVOS RUNTIME ERROR]', event);
+  var box = document.getElementById('debug-runtime-box');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'debug-runtime-box';
+    box.style.cssText = 'position:fixed;bottom:10px;left:10px;right:10px;background:#ef4444;color:#ffffff;padding:12px;border-radius:6px;font-family:monospace;font-size:12px;z-index:9999999;box-shadow:0 8px 30px rgba(0,0,0,0.8);white-space:pre-wrap;max-height:40vh;overflow-y:auto;';
+    document.body ? document.body.appendChild(box) : document.documentElement.appendChild(box);
+  }
+  box.textContent += '\n[ERRO]: ' + event.message + ' em ' + event.filename + ':' + event.lineno + ':' + event.colno + '\n' + (event.error ? event.error.stack : '');
+});
+</script>
+
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -4475,14 +4497,17 @@ function nav() {
   });
 }
 
-$('#nav').onclick = e => {
-  const btn = e.target.closest('button[data-v]');
-  if (btn && btn.dataset.v) {
-    haptic(12);
-    go(btn.dataset.v);
-    navSet(false);
-  }
-};
+const navEl = $('#nav');
+if (navEl) {
+  navEl.onclick = e => {
+    const btn = e.target.closest('button[data-v]');
+    if (btn && btn.dataset.v) {
+      haptic(12);
+      go(btn.dataset.v);
+      navSet(false);
+    }
+  };
+}
 
 // Cliques na Barra de Abas Inferior Mobile
 const bottomNav = $('#bottom-nav');
@@ -4541,17 +4566,15 @@ function navSet(o) {
   }
 }
 
-$('#navtog').onclick = e => {
-  e.stopPropagation();
-  const t = $('#navtog');
-  if (t) {
-    t.classList.remove('btn-pulse');
-    void t.offsetWidth;
-    t.classList.add('btn-pulse');
-  }
-  const s = $('#sidebar-nav');
-  navSet(s ? !s.classList.contains('open') : false);
-};
+const navtogEl = $('#navtog');
+if (navtogEl) {
+  navtogEl.onclick = e => {
+    e.preventDefault();
+    haptic(16);
+    const isOpen = $('#sidebar-nav') ? $('#sidebar-nav').classList.contains('open') : false;
+    navSet(!isOpen);
+  };
+}
 
 const closeBtn = $('#sidebar-close-btn');
 if (closeBtn) closeBtn.onclick = () => navSet(false);
@@ -4578,15 +4601,30 @@ function go(v) {
   cur = v;
   S.lastTab = v;
   save();
-  // Mantém a URL sempre limpa sem #secao e o título fixo
   if (location.hash) {
     history.replaceState(null, FIXED_TITLE, location.pathname + location.search);
   }
   document.title = FIXED_TITLE;
-  nav();
-  $('#app').innerHTML = '';
-  V[v]();
-  window.scrollTo(0, 0);
+  try { nav(); } catch (e) { console.error('Erro em nav():', e); }
+  const appEl = $('#app') || document.getElementById('app') || document.querySelector('main');
+  if (appEl) {
+    appEl.innerHTML = '';
+  }
+  try {
+    if (typeof V[v] === 'function') {
+      V[v]();
+    } else if (typeof V.home === 'function') {
+      V.home();
+    }
+  } catch (err) {
+    console.error('Erro ao renderizar view ' + v + ':', err);
+    if (appEl) {
+      appEl.innerHTML = '<div style="padding:24px;color:#f87171;font-family:monospace;background:#18181b;border:1px solid #7f1d1d;border-radius:8px;margin:20px;">' +
+        '<b>[ERRO DE RENDERIZAÇÃO DA ABA ' + v.toUpperCase() + ']:</b> ' + err.message + '<br><pre>' + (err.stack || '') + '</pre>' +
+      '</div>';
+    }
+  }
+  try { window.scrollTo(0, 0); } catch (e) {}
 }
 
 function cd(t) {
@@ -6853,15 +6891,18 @@ V.perfil = () => {
   };
 };
 
-$('#topbar-user-shortcut').onclick = (e) => {
-  e.preventDefault();
-  haptic(14);
-  if (P.run) {
-    go('pomo');
-  } else {
-    go('perfil');
-  }
-};
+const userShortcutBtn = $('#topbar-user-shortcut') || document.getElementById('topbar-user-shortcut') || document.querySelector('[title="Perfil do Candidato"]');
+if (userShortcutBtn) {
+  userShortcutBtn.onclick = (e) => {
+    e.preventDefault();
+    haptic(14);
+    if (typeof P !== 'undefined' && P.run) {
+      go('pomo');
+    } else {
+      go('perfil');
+    }
+  };
+}
 
 // ---------- init & theme
 function updateThemeUI() {
@@ -6941,8 +6982,39 @@ syncUserIdentity();
 window.addEventListener('beforeunload', () => { if (P.run) pause(); });
 
 // Inicia na última aba visitada sem sujar a URL com #hash
-const initialTab = TABS.some(t => t[0] === S.lastTab) ? S.lastTab : 'home';
-go(initialTab);
+
+
+// Função global de boot da UI
+function bootCrivosApp() {
+  try {
+    bindThemeTriggers();
+    initBottomSheetGrid();
+    updateThemeUI();
+    syncUserIdentity();
+  } catch (e) {
+    console.error('[CRIVOS] Erro no pré-boot:', e);
+  }
+
+  try {
+    const initialTab = (typeof TABS !== 'undefined' && TABS.some(t => t[0] === S.lastTab)) ? S.lastTab : 'home';
+    console.log('[CRIVOS] Disparando go(' + initialTab + ')');
+    go(initialTab);
+  } catch (err) {
+    console.error('[CRIVOS] Erro fatal no boot:', err);
+    if (typeof V !== 'undefined' && V.home) {
+      try { V.home(); } catch (e2) { console.error('[CRIVOS] Falha no fallback V.home:', e2); }
+    }
+  }
+}
+
+// Dispara imediatamente e também no DOMContentLoaded por segurança
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootCrivosApp);
+} else {
+  bootCrivosApp();
+}
+
+
 
 /* ------------------------------------------------------------------
    CANVAS DE COORDENADAS INTERATIVO (RETINA + TOUCH + PULSO AUTÔNOMO)
