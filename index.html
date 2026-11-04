@@ -3546,7 +3546,7 @@ main#app {
       <div class="crivos-plan-info">
         <div class="crivos-brand-row">
           <span class="crivos-brand-title">PPGHS / UERJ 2027</span>
-          <span class="nav-brand-badge">// PRIME</span>
+          <span class="nav-brand-badge">// DEMO</span>
         </div>
         <div class="crivos-plan-meta">
           HISTÓRIA SOCIAL DO TERRITÓRIO · LINHA 1
@@ -3701,7 +3701,7 @@ main#app {
 const D = JSON.parse(document.getElementById('data').textContent);
 const LS = 'ppghs_painel_v1';
 const FIXED_TITLE = 'CRIVOS // PPGHS UERJ 2027';
-let currentPlanTier = 'prime'; // Plano CRIVOS PRIME (integra arquivos do próprio usuário)
+let currentPlanTier = 'elite'; // Plano CRIVOS ELITE (Acesso Completo)
 document.title = FIXED_TITLE;
 
 let S = {};
@@ -4595,7 +4595,7 @@ V.textos = () => {
               </div>
               <div style="display:flex;align-items:center;gap:6px;">
                 <span class="mu" style="font-size:10px;">${(curMins / 60).toFixed(1)}h</span>
-                ${(currentPlanTier === 'prime')
+                ${(currentPlanTier === 'elite')
                   ? `<a class="btn s p" href="${pdfUrl}" target="_blank" rel="noopener">[PDF]</a>`
                   : `<a class="btn s p" href="${googleUrl}" target="_blank" rel="noopener">[GOOGLE]</a>`
                 }
@@ -4673,7 +4673,7 @@ V.textos = () => {
                   `).join('')}
                 </div>
                 <div style="padding:12px 14px;background:var(--bg-subtle);border:2px solid var(--border-color);border-left:6px solid var(--crivos-red);">
-                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:var(--crivos-red);margin-bottom:5px;">PONTE DIRETA COM O PRÉ-PROJETO (CRIVOS PRIME)</div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;color:var(--crivos-red);margin-bottom:5px;">PONTE DIRETA COM O PRÉ-PROJETO</div>
                   <p style="font-size:12.5px;margin:0 0 6px 0;">${(curT.projeto && curT.projeto.uso) || ''}</p>
                   ${(curT.projeto && curT.projeto.prova) ? `<p style="font-size:12px;margin:0 0 5px 0;"><b>Na Prova Escrita:</b> ${curT.projeto.prova}</p>` : ''}
                   ${(curT.projeto && curT.projeto.arg) ? `<p style="font-size:12px;margin:0;"><b>Na Arguição Oral:</b> ${curT.projeto.arg}</p>` : ''}
@@ -5577,7 +5577,7 @@ V.links = () => {
               <button type="button" class="morph-pill ${filesSubTab === 'provas' ? 'active' : ''}" onclick="morphSelect(this, ()=>{filesSubTab='provas';V.links()})">04 · PROVAS & COMPLEMENTARES</button>
             </div>
           </div>
-          <span class="tag ar">CRIVOS PRIME</span>
+          <span class="tag ar">CRIVOS ELITE</span>
         </div>
 
         <div class="shell-body">
@@ -5799,7 +5799,7 @@ V.dados = () => {
   function getMsg(catId, extra) {
     const cat = SUPPORT_CATEGORIES.find(c => c.id === catId) || SUPPORT_CATEGORIES[0];
     let msg = `Olá, equipe CRIVOS!\n\n`;
-    msg += `Sou aluno(a) ${candName} (E-mail: ${candEmail}), matriculado(a) no plano PPGHS / UERJ 2027 // PRIME.\n\n`;
+    msg += `Sou aluno(a) ${candName} (E-mail: ${candEmail}), matriculado(a) no plano PPGHS / UERJ 2027 // ELITE.\n\n`;
     msg += `[CATEGORIA]: ${cat.title}\n`;
     msg += `[MOTIVO]: ${cat.template}`;
     if (extra && extra.trim()) {
@@ -5840,7 +5840,7 @@ V.dados = () => {
         </div>
 
         <div class="shell-dock">
-          <span class="mu" style="font-size:10px;">ATENDIMENTO PRIORITÁRIO CRIVOS PRIME</span>
+          <span class="mu" style="font-size:10px;">ATENDIMENTO PRIORITÁRIO CRIVOS ELITE</span>
           <a id="support-wa-btn" href="${waUrl}" target="_blank" rel="noopener" class="whatsapp-support-btn" style="padding:8px 16px;" onclick="haptic(16)">
             <span>[ENVIAR PROTOCOLO NO WHATSAPP]</span>
           </a>
@@ -6588,7 +6588,7 @@ window.inspectTextDetails = function(textId) {
     '<div class="mu" style="font-size:11px;">' + t.ref + ' · [■] ' + (m / 60).toFixed(1) + 'h estudadas</div>' +
   '</div>' +
   '<div class="row" style="margin:12px 0;">' +
-    ((currentPlanTier === 'prime')
+    ((currentPlanTier === 'elite')
       ? ('<a class="btn s p" href="' + pdf(t) + '" target="_blank" rel="noopener">[ABRIR ARQUIVO PDF]</a>')
       : ('<a class="btn s p" href="' + googleUrl + '" target="_blank" rel="noopener">[PESQUISAR NO GOOGLE]</a>')) +
   '</div>' +
